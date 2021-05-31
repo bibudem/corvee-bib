@@ -1,0 +1,25 @@
+{
+    "name": "corvee-bib",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "harvest": "node -r esm harvest.js",
+        "process": "node -r esm process.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "apify": "^0.17.0",
+        "colors": "^1.4.0",
+        "readline": "^1.3.0",
+        "table": "^5.4.6",
+        "underscore": "^1.9.1",
+        "yargs": "^15.0.2"
+    },
+    "devDependencies": {
+        "esm": "^3.2.25"
+    }
+}
