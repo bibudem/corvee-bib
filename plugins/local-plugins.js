@@ -12,10 +12,12 @@ import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3'
 import bibLienGuides from './local/bib-liens-guides'
+import bibListeAZ from './local/bib-liste-az'
 import bibPermalienSfx from './local/bib-permalien-sfx'
 import bibPretReseau from './local/bib-pret-reseau'
 
 import externalIgnoreUrls from './local/external-ignore-urls'
+import microsoft from './local/microsoft-forward-link'
 import publicAuthServices from './local/public-auth-services'
 
 import studiumLogin from './local/studium-login'
@@ -67,6 +69,10 @@ export const localPlugins = [
     bibLienBeTypo3,
     bibLienGuides,
     {
+        ...bibListeAZ,
+        priority: 1
+    },
+    {
         ...bibPermalienSfx,
         exclude: true
     },
@@ -80,6 +86,10 @@ export const localPlugins = [
     },
     {
         ...externalIgnoreUrls,
+        exclude: true
+    },
+    {
+        ...microsoft,
         exclude: true
     },
     studiumLogin,
