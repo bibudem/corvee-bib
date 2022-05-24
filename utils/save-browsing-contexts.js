@@ -1,10 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import {
-    console
-}
-    from '../../Corvee-2/packages/core/lib/logger'
+import { console } from '../../corvee/packages/core/lib/logger'
 
 export function saveBrowsingContexts(harvester, jobId) {
     const dir = path.join(__dirname, '..', 'data');

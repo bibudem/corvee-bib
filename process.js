@@ -3,43 +3,23 @@ import path from 'path'
 
 import yargs from 'yargs'
 
-import {
-    table,
-    getBorderCharacters
-} from 'table'
+import { table, getBorderCharacters } from 'table'
 
 import colors from 'colors/safe'
 
-import {
-    CorveeProcessor,
-    // plugins
-}
-    from '../../Corvee-2/packages/processor'
+import { CorveeProcessor } from '../corvee/packages/processor'
 
-import {
-    console as debug
-} from '../../Corvee-2/packages/core/lib'
+import { console as debug } from '../corvee/packages/core/lib'
 
-import {
-    plugins,
-    messages
-}
-    from '../plugins'
+import { plugins, messages } from './plugins'
 
-import {
-    toSql
-} from '../utils/to-sql'
+import { toSql } from './utils/to-sql'
 
-import {
-    toJsonl
-} from '../utils/to-jsonl'
+import { toJsonl } from './utils/to-jsonl'
 
-import {
-    getFinalStatus
-}
-    from '../../Corvee-2/packages/core/lib'
+import { getFinalStatus } from '../corvee/packages/core/lib'
 
-import * as config from '../config'
+import * as config from './config'
 
 const start = Date.now();
 const today = new Date();
@@ -62,7 +42,7 @@ const argv = yargs
     .argv;
 
 const jobId = argv.job;
-const baseDir = path.join(__dirname, '..', 'data');
+const baseDir = path.join(__dirname, 'data');
 const filePath = path.join(baseDir, `${jobId}_processed.json`);
 const excludedStatsPath = path.join(baseDir, `${jobId}_excluded.json`);
 const strictHttpsRedirectsPath = path.join(baseDir, `${jobId}_strict-https-redirects.json`);
@@ -127,6 +107,8 @@ async function doTest(records) {
 
         strictHttpsRedirects.set(report.url, report.finalUrl)
     })
+
+    console.log('Starting processor...')
 
     let result = await processor.process(records);
 
@@ -234,7 +216,7 @@ async function doTest(records) {
     console.debug(`Results saved in ${filePath}`)
 };
 
-import(path.join('..', 'data', `${jobId}_harvested.json`))
+import(path.join(baseDir, `${jobId}_harvested.json`))
     .then(records => records.default)
     .then(async records => {
 

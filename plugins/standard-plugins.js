@@ -3,7 +3,7 @@ import {
     plugins as _,
     messages
 }
-    from '../../Corvee-2/packages/processor'
+    from '../../corvee/packages/processor'
 
 export const standardPlugins = [{
     ..._.http200,

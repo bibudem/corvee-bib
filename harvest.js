@@ -3,7 +3,7 @@ import Apify from 'apify';
 
 import yargs from 'yargs'
 
-import { Harvester } from '../Corvee-2/packages/harvester/lib/harvester'
+import { Harvester } from '../corvee/packages/harvester/lib/harvester'
 
 import {
     saveBrowsingContexts,
@@ -14,11 +14,12 @@ import {
 } from './utils'
 
 
-import { console } from '../Corvee-2/packages/core/lib';
+import { console } from '../corvee/packages/core/lib';
 
 import { harvesterConfig } from './config'
 
-const links = require('./config/links.json')
+// const links = require('./config/links.json')
+const links = ['https://libguides.bib.umontreal.ca/az.php']
 
 const today = new Date();
 const year = today.getFullYear();

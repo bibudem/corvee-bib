@@ -4,9 +4,7 @@ import path from 'path'
 //     toXML
 // } from '../lib/utils/link-checker'
 
-import {
-    console
-} from '../../Corvee-2/packages/core/lib/logger'
+import { console } from '../../corvee/packages/core/lib/logger'
 
 export async function savePageTitles(harvester, filter) {
 

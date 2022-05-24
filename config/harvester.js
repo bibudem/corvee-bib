@@ -1,7 +1,7 @@
 import path from 'path'
 import {
     getRandomUserAgent
-} from '../../Corvee-2/packages/core/lib'
+} from '../../corvee/packages/core/lib'
 
 import {
     adressesSimplifiees
@@ -28,7 +28,7 @@ export const harvesterConfig = {
     // maxRequests: 400000,
     // maxRequests: 1,
     maxRequestRetries: 3,
-    waitInterval: 150,
+    waitInterval: 50,
     linkParserDelay: false,
 
     // URLs matching the given regular expressions / strings will be ignored and not checked.
@@ -43,11 +43,10 @@ export const harvesterConfig = {
         /^https:\/\/www\.bib\.umontreal\.ca\/publications/i,
 
         // Applications des Bibliothèques
-        /^https:\/\/api\.bib\.umontreal\.ca/,
+        // /^https:\/\/api\.bib\.umontreal\.ca/,
         /^http:\/\/geoindex\.bib\.umontreal\.ca/i,
         'testproxy.umontreal.ca',
         'http://expo.bib.umontreal.ca',
-        'https://www.questionpoint.org',
 
         // Adresses UdeM connues
         /^https:\/\/www\.umontreal\.ca\/?$/i, // page d'accueil de l'UdeM

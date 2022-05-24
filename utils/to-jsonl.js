@@ -2,9 +2,7 @@ import fs from 'fs'
 import { join, resolve } from 'path'
 import yargs from 'yargs'
 
-import {
-    toRecord
-} from '../../Corvee-2/packages/processor'
+import { toRecord } from '../../corvee/packages/processor'
 
 export async function toJsonl({
     jobId = '2019-12-01',
