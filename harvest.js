@@ -19,7 +19,8 @@ import { console } from '../corvee/packages/core/lib';
 import { harvesterConfig } from './config'
 
 // const links = require('./config/links.json')
-const links = ['https://libguides.bib.umontreal.ca/az.php']
+// const links = ['https://libguides.bib.umontreal.ca/az.php']
+const links = []
 
 const today = new Date();
 const year = today.getFullYear();

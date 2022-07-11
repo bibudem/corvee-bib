@@ -28,22 +28,6 @@ import messages from './local/messages'
 
 export const localMessages = messages;
 
-// export const localPlugins = {
-//     // bibHttp30xRedirectionTypo3,
-//     // udemHttp30xCalendrier,
-//     bibHttpsUpgrade,
-//     // bibAncienAtrium,
-//     // bibAtriumNonSecurise,
-//     // bibExamensAnneesAnterieures,
-//     // bibPretReseau,
-//     // isAdresseSimplifiee,
-//     // isBadAdresseSimplifiee,
-//     publicAuthServices,
-//     // studiumLogin,
-//     // excludeUrls,
-// }
-
-
 
 export const localPlugins = [
     {
@@ -72,10 +56,7 @@ export const localPlugins = [
         ...bibListeAZ,
         priority: 1
     },
-    {
-        ...bibPermalienSfx,
-        exclude: true
-    },
+    bibPermalienSfx,
     {
         ...bibHttpsUpgrade,
         exclude: true

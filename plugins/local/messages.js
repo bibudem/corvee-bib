@@ -73,11 +73,11 @@ export default {
     //     code: "bib-lien-libelle",
     //     msg: "Il est préférable d'utiliser des mots significatifs (par exemple le titre de la page) plutôt que l'adresse URL comme texte cliquable. Exception fréquentes : lorsque l'URL est citée dans une référence bibliographique; ou encore lorsqu'on on cite une adresse simplifiée. <span class=\"texte-petit\">( <a href=\"http://mentor.bib.umontreal.ca/comite-web/bpub/outils/Contribute/Aide-m%C3%A9moire%20Contribute.docx\" target=\"_blank\">plus d'infos</a>) </span>. "
     // },
-
-    // "bib-lien-obtenir-article": {
-    //     code: "bib-lien-obtenir-article",
-    //     msg: "Le lien a changé (avril 2018). Veuillez utiliser <a href=\"http://opurl.bib.umontreal.ca:9003/sfx_local/a-z?param_perform_value=citation&browse_type=not_mobile\">http://opurl.bib.umontreal.ca:9003/sfx_local/a-z?param_perform_value=citation&browse_type=not_mobile</a>"
-    // },
+    
+    "bib-permalien-sfx": {
+    			"code": "bib-permalien-sfx",
+    			"msg": "Ce lien pointe vers le serveur SFX. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\" target=\"_blank\">https://libguides.bib.umontreal.ca/az.php</a>")"
+    	},
 
     // "bib-lien-primo-test": {
     //     code: "bib-lien-primo-test",
