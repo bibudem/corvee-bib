@@ -13,7 +13,10 @@ export const standardPlugins = [{
     ..._.http30xAllTempRedirects,
     //  exclude: true
 },
-_.http30xPermanentRedirect,
+{
+    ..._.http30xPermanentRedirect,
+    // exclude: true
+},
 _.http307,
 {
     ..._.http30xMissingSlash,
@@ -26,7 +29,8 @@ _.http30xWelcomePage,
 },
 new _.http30xHttpsUpgrade({
     ignoreWww: false,
-    exclude: true
+    level: 'info'
+    // exclude: true
 }),
 new _.http30xHttpsUpgradeLoose({
     ignoreWww: true

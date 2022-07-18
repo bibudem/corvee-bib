@@ -19,8 +19,6 @@ import { toJsonl } from './utils/to-jsonl'
 
 import { getFinalStatus } from '../corvee/packages/core/lib'
 
-import * as config from './config'
-
 const start = Date.now();
 const today = new Date();
 const year = today.getFullYear();
@@ -108,6 +106,12 @@ async function doTest(records) {
         strictHttpsRedirects.set(report.url, report.finalUrl)
     })
 
+    processor.on('filtered', function (record, filter) {
+        if (record.id === 26355) {
+            console.log(filter)
+        }
+    })
+
     console.log('Starting processor...')
 
     let result = await processor.process(records);
@@ -130,9 +134,7 @@ async function doTest(records) {
             return 0;
         }).map(f => {
             let values = Object.values(f).map((value, i) => {
-                // if (arr[2]) {
-                //     return colors.grey(value);
-                // }
+
                 switch (i) {
                     case 1:
                         return value === 0 ? colors.grey(value) : value;
@@ -169,8 +171,17 @@ async function doTest(records) {
     console.log(`${result.excludedCount} items excluded.`);
     console.log(`${result.nbOut} items out.`);
 
-    // result.records = result.records.filter(record => {
-    //     return record.reports.some(report => ['error', 'warning'].includes(report.level))
+    result.records = result.records.filter(record => {
+        return record.reports.length > 0;
+    })
+
+    // result.records.forEach(record => {
+    //     if (record.parent.startsWith('https://libguides.bib.umontreal.ca/c.php')) {
+    //         const parent = new URL(record.parent)
+    //         const newParent = new URL('https://api.bib.umontreal.ca/guides/embed/' + parent.searchParams.get('g'))
+    //         newParent.searchParams.set('tab', parent.searchParams.get('p'))
+    //         record.parent = newParent.href;
+    //     }
     // })
 
     fs.writeFileSync(filePath, JSON.stringify(result.records, null, 2))
@@ -199,7 +210,7 @@ async function doTest(records) {
         })
         .filter(record => record.reports.length > 0);
 
-    console.log(result.records.length)
+    console.log('Found %s records with problem.', result.records.length)
 
     await toSql({
         data: result.records,

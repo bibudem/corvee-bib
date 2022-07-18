@@ -9,17 +9,22 @@ import bibAncienAtrium from './local/bib-ancien-atrium'
 import bibAtriumNonSecurise from './local/bib-atrium-non-securise'
 import bibAtrium from './local/bib-atrium'
 import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures'
+import bibGuidesBibUmontrealCa from './local/bib-guides-bib-umontreal-ca'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3'
-import bibLienGuides from './local/bib-liens-guides'
+import bibLienDeveloppementEdimestre from './local/bib-lien-developpement-edimestre'
+import bibLienLibguidesBibUmontrealCa from './local/bib-lien-libguides-bib-umontreal-ca'
+import bibLienGuideEmbed from './local/bib-liens-guide-embed'
 import bibListeAZ from './local/bib-liste-az'
-import bibPermalienSfx from './local/bib-permalien-sfx'
+import bibMaestro from './local/bib-Maestro'
+import bibPermalienBibUmontrealCa from './local/bib-permalien-bib-umontreal-ca'
 import bibPretReseau from './local/bib-pret-reseau'
 
 import externalIgnoreUrls from './local/external-ignore-urls'
 import microsoft from './local/microsoft-forward-link'
 import publicAuthServices from './local/public-auth-services'
 
+import sofiaRedirectionLinker2 from './local/sofia-redirection-linker2'
 import studiumLogin from './local/studium-login'
 import udemHttp30xCalendrier from './local/udem-http-30x-calendrier'
 import udemIgnoreUrls from './local/udem-ignore-urls'
@@ -50,17 +55,21 @@ export const localPlugins = [
         ...bibHttp30xRedirectionTypo3,
         exclude: true
     },
+    bibGuidesBibUmontrealCa,
     bibLienBeTypo3,
-    bibLienGuides,
+    bibLienDeveloppementEdimestre,
+    bibLienLibguidesBibUmontrealCa,
+    bibLienGuideEmbed,
     {
         ...bibListeAZ,
         priority: 1
     },
-    bibPermalienSfx,
+    bibMaestro,
     {
         ...bibHttpsUpgrade,
-        exclude: true
+        // exclude: true
     },
+    bibPermalienBibUmontrealCa,
     bibPretReseau, {
         ...publicAuthServices,
         exclude: true
@@ -73,6 +82,7 @@ export const localPlugins = [
         ...microsoft,
         exclude: true
     },
+    sofiaRedirectionLinker2,
     studiumLogin,
     udemHttp30xCalendrier,
     {

@@ -3,11 +3,14 @@ export default {
     test: (report) => {
         if ('httpStatusCode' in report &&
             report.httpStatusCode < 400 &&
+            report.httpStatusCode >= 300 &&
             'url' in report &&
-            /^http:\/\/([^\.]+\.)?bib\.umontreal\.ca/.test(report.url) &&
-            !report.url.startsWith('http://docs.bib.umontreal.ca')) {
-            return report.finalUrl
+            report.url.indexOf('bib.umontreal.ca') > 0) {
+            const finalUrl = report.url.replace('http:', 'https:')
+            if (report.finalUrl === finalUrl) {
+                return report.finalUrl
+            }
         }
     },
-    level: 'warning'
+    level: 'error'
 }

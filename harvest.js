@@ -50,6 +50,10 @@ const argv = yargs
 
 const jobId = argv.job;
 
+if (jobId) {
+    console.log('Using job ' + jobId)
+}
+
 const harvester = new Harvester(harvesterConfig);
 
 harvester.setLinkParser(function linkParser() {
