@@ -81,7 +81,7 @@ export default {
 
     "bib-Maestro": {
         "code": "bib-Maestro",
-        "msg": "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\" target=\"_blank\">https://libguides.bib.umontreal.ca/az.php</a>"
+        "msg": "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\" target=\"_blank\"><code>https://libguides.bib.umontreal.ca/az.php</code></a>)"
     },
 
     // "bib-lien-primo-test": {
