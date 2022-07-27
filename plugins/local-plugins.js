@@ -1,9 +1,7 @@
 import * as config from '../config'
 
 // local plugins
-import {
-    isBadAdresseSimplifiee
-} from './local/bib-adresses-simplifiees'
+import { isBadAdresseSimplifiee } from './local/bib-adresses-simplifiees'
 import bibHttpsUpgrade from './local/bib-https-upgrade'
 import bibAncienAtrium from './local/bib-ancien-atrium'
 import bibAtriumNonSecurise from './local/bib-atrium-non-securise'
@@ -28,6 +26,7 @@ import sofiaRedirectionLinker2 from './local/sofia-redirection-linker2'
 import studiumLogin from './local/studium-login'
 import udemHttp30xCalendrier from './local/udem-http-30x-calendrier'
 import udemIgnoreUrls from './local/udem-ignore-urls'
+import urlArobas from './local/url-@'
 
 import messages from './local/messages'
 
@@ -70,7 +69,8 @@ export const localPlugins = [
         // exclude: true
     },
     bibPermalienBibUmontrealCa,
-    bibPretReseau, {
+    bibPretReseau,
+    {
         ...publicAuthServices,
         exclude: true
     },
@@ -88,5 +88,6 @@ export const localPlugins = [
     {
         ...udemIgnoreUrls,
         exclude: true
-    }
+    },
+    urlArobas
 ]

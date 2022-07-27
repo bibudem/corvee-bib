@@ -1,22 +1,13 @@
 import fs from 'fs'
 import path from 'path'
-
 import yargs from 'yargs'
-
 import { table, getBorderCharacters } from 'table'
-
 import colors from 'colors/safe'
-
 import { CorveeProcessor } from '../corvee/packages/processor'
-
-import { console as debug } from '../corvee/packages/core/lib'
-
+import { console } from '../corvee/packages/core/lib'
 import { plugins, messages } from './plugins'
-
 import { toSql } from './utils/to-sql'
-
 import { toJsonl } from './utils/to-jsonl'
-
 import { getFinalStatus } from '../corvee/packages/core/lib'
 
 const start = Date.now();
@@ -106,11 +97,12 @@ async function doTest(records) {
         strictHttpsRedirects.set(report.url, report.finalUrl)
     })
 
-    processor.on('filtered', function (record, filter) {
-        if (record.id === 26355) {
-            console.log(filter)
-        }
-    })
+    // processor.on('filtered', function (record, filter) {
+    //     if (record.id === 113970) {
+    //         console.log(filter)
+    //         console.log(record)
+    //     }
+    // })
 
     console.log('Starting processor...')
 

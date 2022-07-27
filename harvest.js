@@ -1,19 +1,8 @@
 import readline from 'readline'
 import Apify from 'apify';
-
 import yargs from 'yargs'
-
 import { Harvester } from '../corvee/packages/harvester/lib/harvester'
-
-import {
-    saveBrowsingContexts,
-    saveErrorCodes,
-    savePageTitles,
-    saveRecords,
-    saveInternLinks,
-} from './utils'
-
-
+import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks, } from './utils'
 import { console } from '../corvee/packages/core/lib';
 
 import { harvesterConfig } from './config'

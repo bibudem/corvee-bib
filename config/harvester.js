@@ -1,11 +1,7 @@
 import path from 'path'
-import {
-    getRandomUserAgent
-} from '../../corvee/packages/core/lib'
+import { getRandomUserAgent } from '../../corvee/packages/core/lib'
 
-import {
-    adressesSimplifiees
-} from './adresses-simplifiees'
+import { adressesSimplifiees } from './adresses-simplifiees'
 
 export const harvesterConfig = {
     apifyLocalStorageDir: path.join(__dirname, '../.storage'),
@@ -24,7 +20,7 @@ export const harvesterConfig = {
     navigationOnly: true,
     userAgent: getRandomUserAgent(),
     useCache: true,
-    maxConcurrency: 50,
+    maxConcurrency: 40,
     // maxRequests: 400000,
     // maxRequests: 1,
     maxRequestRetries: 3,
