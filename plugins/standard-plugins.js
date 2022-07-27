@@ -1,9 +1,5 @@
 import * as config from '../config'
-import {
-    plugins as _,
-    messages
-}
-    from '../../corvee/packages/processor'
+import { plugins as _, messages } from '../../corvee/packages/processor'
 
 export const standardPlugins = [{
     ..._.http200,
@@ -29,7 +25,8 @@ _.http30xWelcomePage,
 },
 new _.http30xHttpsUpgrade({
     ignoreWww: false,
-    level: 'info'
+    level: 'warning',
+    limit: 1000,
     // exclude: true
 }),
 new _.http30xHttpsUpgradeLoose({
@@ -47,17 +44,9 @@ _.http502,
 _.http503,
 _.http550,
 _.net,
+_.netCert,
 _.urlIgnoreThese(config.excludedUrls),
-
-    //
-    //
-    //
-
-    // {
-    //     code: 'only-errors-or-warnings',
-    //     exclude: true,
-    //     test: record => !record.reports.some(report => report.level === 'info')
-    // }
+_.urlInvalidUrl,
 ]
 
 export const standardMessages = messages;

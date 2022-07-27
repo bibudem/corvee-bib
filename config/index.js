@@ -1,16 +1,8 @@
-import {
-    harvesterConfig
-}
-from './harvester'
+import { harvesterConfig } from './harvester'
 
-export {
-    default as excludedUrls
-}
-from './excluded-urls'
+export { default as excludedUrls } from './excluded-urls'
 
-import {
-    default as devExcludedUrls
-} from './dev-excluded-urls'
+import { default as devExcludedUrls } from './dev-excluded-urls'
 
 // export excludedUrls;
 export const urlsExcludedFromHarvester = harvesterConfig.ignore;
