@@ -1,8 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-// import {
-//     toXML
-// } from '../lib/utils/link-checker'
 
 import { console } from '../../corvee/packages/core/lib/logger'
 
@@ -74,11 +71,11 @@ export async function saveRecords(harvester, jobId, filter) {
     })
 
     harvester.on('end', () => {
-        console.z('on end...')
+        console.info('harvester on end...')
         try {
             stream.end('\n]');
         } catch (e) {
-            console.z(e)
+            console.todo(e)
         }
     })
 }

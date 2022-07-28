@@ -1,8 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-// import {
-//     toXML
-// } from '../lib/utils/link-checker'
 
 import { console } from '../../corvee/packages/core/lib/logger'
 
@@ -92,7 +89,7 @@ export async function savePageTitles(harvester, filter) {
             stream.end('\n]');
             console.info(`${urlIdx.size} pages titles saved to ${fileName}.`)
         } catch (e) {
-            console.z(e)
+            console.todo(e)
         }
     })
 }

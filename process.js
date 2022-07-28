@@ -4,11 +4,11 @@ import yargs from 'yargs'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe'
 import { CorveeProcessor } from '../corvee/packages/processor'
-import { console } from '../corvee/packages/core/lib'
+import { console } from '../corvee/packages/core'
 import { plugins, messages } from './plugins'
 import { toSql } from './utils/to-sql'
 import { toJsonl } from './utils/to-jsonl'
-import { getFinalStatus } from '../corvee/packages/core/lib'
+import { getFinalStatus } from '../corvee/packages/core'
 
 const start = Date.now();
 const today = new Date();
