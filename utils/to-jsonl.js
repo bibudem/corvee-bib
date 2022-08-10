@@ -1,25 +1,23 @@
 import fs from 'fs'
-import { join, resolve } from 'path'
+import { join } from 'path'
 import yargs from 'yargs'
 
 import { toRecord } from '../../corvee/packages/processor'
 
 export async function toJsonl({
-    jobId = '2019-12-01',
-    projectId = 'site-web',
+    job = '2019-12-01',
+    project = 'site-web',
     dir = process.cwd(),
     data
 } = {}) {
 
-    // const jobId = prefix.replace(/-/g, '');
-
-    const outFilePath = join(dir, `site-web-${jobId}_jsonl.json`);
+    const outFilePath = join(dir, `${project}-${job}_jsonl.json`);
 
     function jsonl(data) {
         return `${JSON.stringify(data)}\n`;
     }
 
-    const records = await toRecord({ jobId, data });
+    const records = await toRecord({ job, data });
 
     data = records.map(jsonl).join('');
 
@@ -56,7 +54,7 @@ if (require.main === module) {
 
 
     toJsonl({
-        jobId: argv.j,
+        job: argv.job,
         dir: process.cwd()
     });
 }

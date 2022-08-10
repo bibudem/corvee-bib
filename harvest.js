@@ -1,14 +1,14 @@
 import readline from 'readline'
-import Apify from 'apify';
+import Apify from 'apify'
 import yargs from 'yargs'
 import { Harvester } from '../corvee/packages/harvester/lib'
-import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks, } from './utils'
-import { console } from '../corvee/packages/core';
+import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks } from './utils'
+import { console, inspect } from '../corvee/packages/core'
 
 import { harvesterConfig } from './config'
 
 // const links = require('./config/links.json')
-// const links = ['https://libguides.bib.umontreal.ca/az.php']
+// const links = ['https://api.bib.umontreal.ca/guides/embed/730626&tab=5244990']
 const links = []
 
 const today = new Date();
@@ -16,14 +16,14 @@ const year = today.getFullYear();
 const month = `${today.getMonth() + 1}`.padStart(2, '0');
 const day = `${today.getDate()}`.padStart(2, '0');
 
-const defaultTodayDashedPrefix = `${year}-${month}-${day}`;
+const defaultJob = `${year}-${month}-${day}`;
 
 const argv = yargs
     .options({
         j: {
             alias: 'job',
-            default: defaultTodayDashedPrefix,
-            describe: `Job id. Defaults to today\'s date.`,
+            default: defaultJob,
+            describe: `Job id. Defaults to today\'s date: ${defaultJob}`,
             type: 'string'
         },
         r: {
@@ -37,11 +37,9 @@ const argv = yargs
     .help()
     .argv;
 
-const jobId = argv.job;
+const job = argv.job;
 
-if (jobId) {
-    console.log('Using job ' + jobId)
-}
+console.log('Using job ' + job)
 
 const harvester = new Harvester(harvesterConfig);
 
@@ -76,16 +74,20 @@ process.stdin.on('keypress', (str, key) => {
     }
 });
 
-saveRecords(harvester, jobId, (record) => {
+harvester.on('request', function onRequest(request) {
+    console.info(`[${request.retryCount}] Request url: ${request.url}`);
+})
+
+saveRecords(harvester, job, (record) => {
     //return record.extern && record.url && !record.url.startsWith('mailto:');
     return true;
 })
 
-saveBrowsingContexts(harvester, jobId);
+saveBrowsingContexts(harvester, job);
 
-saveInternLinks(harvester, jobId);
+saveInternLinks(harvester, job);
 
-saveErrorCodes(harvester, jobId);
+saveErrorCodes(harvester, job);
 
 // savePageTitles(harvester)
 

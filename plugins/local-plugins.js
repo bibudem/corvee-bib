@@ -11,7 +11,8 @@ import bibGuidesBibUmontrealCa from './local/bib-guides-bib-umontreal-ca'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3'
 import bibLienDeveloppementEdimestre from './local/bib-lien-developpement-edimestre'
-import bibLienLibguidesBibUmontrealCa from './local/bib-lien-libguides-bib-umontreal-ca'
+import bibLienGuidesWithOldTab from './local/bib-lien-guides-with-old-tab'
+import bibLienLibguides from './local/bib-lien-libguides'
 import bibLienGuideEmbed from './local/bib-liens-guide-embed'
 import bibListeAZ from './local/bib-liste-az'
 import bibMaestro from './local/bib-Maestro'
@@ -57,7 +58,8 @@ export const localPlugins = [
     bibGuidesBibUmontrealCa,
     bibLienBeTypo3,
     bibLienDeveloppementEdimestre,
-    bibLienLibguidesBibUmontrealCa,
+    bibLienGuidesWithOldTab,
+    bibLienLibguides,
     bibLienGuideEmbed,
     {
         ...bibListeAZ,

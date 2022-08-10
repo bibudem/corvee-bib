@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { console } from '../../corvee/packages/core/lib/logger'
+import { console } from '../../corvee/packages/core'
 
 export async function savePageTitles(harvester, filter) {
 

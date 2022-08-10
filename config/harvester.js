@@ -1,32 +1,11 @@
-import path from 'path'
-import { getRandomUserAgent } from '../../corvee/packages/core/lib'
+import { join } from 'path'
+import { getRandomUserAgent } from '../../corvee/packages/core'
 
 import { adressesSimplifiees } from './adresses-simplifiees'
 
 export const harvesterConfig = {
-    apifyLocalStorageDir: path.join(__dirname, '../.storage'),
-    puppeteerCacheDir: path.join(__dirname, '../.cache'),
-    startUrl: 'https://bib.umontreal.ca/',
-    internLinks: [
-        /https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
-        /https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
-        /https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
-        /https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
-        /https:\/\/87128\.account\.worldcat\.org(\/.*)?/
-    ],
-    fetchLinksOnce: true,
     checkExtern: true,
-    pageWaitUntil: ['load', 'domcontentloaded', 'networkidle0'],
-    navigationOnly: true,
-    userAgent: getRandomUserAgent(),
-    useCache: true,
-    maxConcurrency: 40,
-    // maxRequests: 400000,
-    // maxRequests: 1,
-    maxRequestRetries: 3,
-    waitInterval: 50,
-    linkParserDelay: false,
-
+    fetchLinksOnce: true,
     // URLs matching the given regular expressions / strings will be ignored and not checked.
     // /^https:\/\/bib\.umontreal\.ca\/[^#?]/, 
     ignore: [
@@ -77,7 +56,20 @@ export const harvesterConfig = {
         // Temporaire
         // 'https://atrium.umontreal.ca'
     ],
-
+    internLinks: [
+        /https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
+        /https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
+        /https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
+        /https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
+        /https:\/\/87128\.account\.worldcat\.org(\/.*)?/
+    ],
+    linkParserDelay: false,
+    logLevel: 'verbose',
+    maxConcurrency: 10,
+    maxRequestRetries: 3,
+    // maxRequests: 400000,
+    // maxRequests: 1,
+    navigationOnly: true,
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
     noFollow: [
         /^https:\/\/umontreal\.on\.worldcat\.org/,
@@ -91,17 +83,21 @@ export const harvesterConfig = {
         'http://olympe.bib.umontreal.ca',
         'http://opurl.bib.umontreal.ca',
         'https://papyrus.bib.umontreal.ca',
-        /^https?:\/\/pds\.bib\.umontreal\.ca/,
-        /^https?:\/\/primo-test\.bib\.umontreal\.ca/,
+        /^https:\/\/libguides\.bib\.umontreal\.ca\/c\.php/,
+        /^https:\/\/libguides\.bib\.umontreal\.ca\/prf\.php/,
+        /^https:\/\/libguides\.bib\.umontreal\.ca\/sb\.php/,
+        /^https:\/\/libguides\.bib\.umontreal\.ca\/srch\.php/,
+        /^https:\/\/umontreal\.libapps\.com/
     ],
-
-    /**
-     * Node.js URL class.
-     * @external URL
-     * @see {@link https://nodejs.org/api/url.html#url_class_url}
-     */
-
-    /** @member {(string|external:URL)} [proxy] - Url of a web proxy server (string or URL object) */
-    // proxy: 'some-url',
-    // proxy: 'http://localhost:8888'
+    notifyLogLevel: 'info',
+    pageWaitUntil: ['load', 'domcontentloaded', 'networkidle0'],
+    // startUrl: 'https://bib.umontreal.ca/',
+    schemes: ['mailto'],
+    startUrl: 'https://api.bib.umontreal.ca/guides/embed/729212',
+    storageDir: join(__dirname, '..', '.storage'),
+    userDataDir: join(__dirname, '..', '.userData'),
+    userAgent: getRandomUserAgent(),
+    useCache: true,
+    // useChrome: true,
+    waitInterval: 50,
 };

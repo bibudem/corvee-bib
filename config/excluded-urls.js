@@ -5,4 +5,5 @@ export default [
     /^http:\/\/ovidsp\.ovid\.com\/ovidweb/i,
     'https://jcr.clarivate.com',
     /https?:\/\/www\.gettyimages\.ca\/detail\/\d+$/i, // 
+    'https://unequestion.bib.umontreal.ca'
 ]

@@ -74,6 +74,17 @@ export default {
         msg: "Ce lien pointe vers l'espace de développement de l'édimestre. Ces pages ne sont pas destinées à être rendues publiques."
     },
 
+
+    "bib-lien-guides-with-old-tab": {
+        code: "bib-lien-guides-with-old-tab",
+        msg: "Ce lien pointe vers À La Carte. Veuillez mettre à jour le numéro de tab dans l'URL."
+    },
+
+    "bib-lien-libguides": {
+        code: "bib-lien-libguides",
+        msg: "Ce lien pointe vers un guide hébergé sur LibGuides (<code>https://libguides.bib.umontreal.ca/c.php?...</code>). Utilisez plutôt une adresse pointant vers le guide sur le site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)"
+    },
+
     // "bib-lien-libelle": {
     //     code: "bib-lien-libelle",
     //     msg: "Il est préférable d'utiliser des mots significatifs (par exemple le titre de la page) plutôt que l'adresse URL comme texte cliquable. Exception fréquentes : lorsque l'URL est citée dans une référence bibliographique; ou encore lorsqu'on on cite une adresse simplifiée. <span class=\"texte-petit\">( <a href=\"http://mentor.bib.umontreal.ca/comite-web/bpub/outils/Contribute/Aide-m%C3%A9moire%20Contribute.docx\" target=\"_blank\">plus d'infos</a>) </span>. "

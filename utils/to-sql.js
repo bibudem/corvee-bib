@@ -2,24 +2,21 @@ import fs from 'fs'
 import path from 'path'
 
 export async function toSql({
-    jobId = '2019-12-01',
+    job = '2019-12-01',
     projectId = 'site-web',
     dir,
     data
 }) {
 
-    // const jobId = prefix.replace(/-/g, '');
-
-    const outFilePath = path.join(dir, `site-web-${jobId}.sql`);
+    const outFilePath = path.join(dir, `site-web-${job}.sql`);
     const prologue = `
 /*
  * Insertion des données dans la table liens 
  */
 
-DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${jobId}';
+DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${job}';
 `;
     const sqlColumns = [
-        // 'lienId',
         'url',
         'libelle',
         'page',
@@ -54,7 +51,6 @@ DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${jobId}'
 
     function errCodesFor(reports) {
         return reports
-            // .filter(report => report.level !== 'info')
             .map(report => report.code)
             .join(', ')
     }
@@ -72,9 +68,8 @@ DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${jobId}'
             httpStatusCode,
             httpStatusText
         } = {
-            ...item
-        }) => {
-            const errCode = `http-${httpStatusCode}`;
+                ...item
+            }) => {
             const sqlData = {
                 lienId,
                 url,
@@ -88,7 +83,7 @@ DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${jobId}'
                 action: "to-be-fixed",
                 error_code: errCodesFor(reports),
                 projectId,
-                jobId
+                job
             };
 
             sqlQuery.push(sql(sqlData));

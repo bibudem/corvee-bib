@@ -1,14 +1,14 @@
 import fs from 'fs'
-import path from 'path'
+import { join } from 'path'
 import yargs from 'yargs'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe'
 import { CorveeProcessor } from '../corvee/packages/processor'
-import { console } from '../corvee/packages/core'
+import { getFinalStatus } from '../corvee/packages/harvester/lib'
+import { console, inspect } from '../corvee/packages/core'
 import { plugins, messages } from './plugins'
 import { toSql } from './utils/to-sql'
-import { toJsonl } from './utils/to-jsonl'
-import { getFinalStatus } from '../corvee/packages/core'
+// import { toJsonl } from './utils/to-jsonl'
 
 const start = Date.now();
 const today = new Date();
@@ -30,11 +30,12 @@ const argv = yargs
     .help()
     .argv;
 
-const jobId = argv.job;
-const baseDir = path.join(__dirname, 'data');
-const filePath = path.join(baseDir, `${jobId}_processed.json`);
-const excludedStatsPath = path.join(baseDir, `${jobId}_excluded.json`);
-const strictHttpsRedirectsPath = path.join(baseDir, `${jobId}_strict-https-redirects.json`);
+const job = argv.job;
+const baseDir = join(__dirname, 'data');
+const filePath = join(baseDir, `${job}_processed.json`);
+const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
+const excludedStatsPath = join(baseDir, `${job}_excluded.json`);
+const strictHttpsRedirectsPath = join(baseDir, `${job}_strict-https-redirects.json`);
 
 async function doTest(records) {
 
@@ -97,12 +98,12 @@ async function doTest(records) {
         strictHttpsRedirects.set(report.url, report.finalUrl)
     })
 
-    // processor.on('filtered', function (record, filter) {
-    //     if (record.id === 113970) {
-    //         console.log(filter)
-    //         console.log(record)
-    //     }
-    // })
+    processor.on('filtered', function (record, filter) {
+        if (record.id === 140704) {
+            console.log(inspect(filter))
+            console.log(inspect(record))
+        }
+    })
 
     console.log('Starting processor...')
 
@@ -177,6 +178,7 @@ async function doTest(records) {
     // })
 
     fs.writeFileSync(filePath, JSON.stringify(result.records, null, 2))
+    fs.writeFileSync(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
     fs.writeFileSync(excludedStatsPath, JSON.stringify(result.excluded, null, 2))
 
     const sortedRedirects = Array.from(strictHttpsRedirects.entries()).sort((a, b) => {
@@ -207,19 +209,19 @@ async function doTest(records) {
     await toSql({
         data: result.records,
         dir: baseDir,
-        jobId
+        job
     })
 
-    await toJsonl({
-        data: result.records,
-        dir: baseDir,
-        jobId
-    })
+    // await toJsonl({
+    //     data: result.records,
+    //     dir: baseDir,
+    //     job
+    // })
 
     console.debug(`Results saved in ${filePath}`)
 };
 
-import(path.join(baseDir, `${jobId}_harvested.json`))
+import(join(baseDir, `${job}_harvested.json`))
     .then(records => records.default)
     .then(async records => {
 

@@ -1,14 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-import { console } from '../../corvee/packages/core/lib/logger'
+import { console } from '../../corvee/packages/core'
 
 export async function saveRecords(harvester, jobId, filter) {
 
     const dir = path.join(__dirname, '..', 'data');
     const fileName = path.join(dir, `${jobId}_harvested.json`);
     var i = 1;
-    const records = [];
     let stream;
     try {
         stream = fs.createWriteStream(fileName, {
@@ -38,10 +37,11 @@ export async function saveRecords(harvester, jobId, filter) {
         try {
             str = JSON.stringify(data, null, 2);
         } catch (e) {
-            console.warn('Could not stringify data, so removing responses array.');
-            // console.warn(data);
+
+            console.warn(`Could not stringify data, so removing responses array. Data: ${data}`);
+
             if ('request' in data) {
-                delete data.request;
+                data.request = '[request]'
 
                 try {
                     str = JSON.stringify(data, null, 2);
@@ -64,7 +64,6 @@ export async function saveRecords(harvester, jobId, filter) {
         }
 
         write(json(record))
-        records.push(record)
 
         console.info(`[record] ${i++}`)
 

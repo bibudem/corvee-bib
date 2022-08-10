@@ -30,4 +30,6 @@ jspm_packages/
 tmp
 .cache
 .storage
+.userData
 data/
+.storage*

@@ -1,10 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-// import {
-//     toXML
-// } from '../lib/utils/link-checker'
 
-import { console } from '../../corvee/packages/core/lib/logger'
+import { console } from '../../corvee/packages/core'
 
 export async function saveInternLinks(harvester, jobId, filter) {
 
@@ -57,7 +54,7 @@ export async function saveInternLinks(harvester, jobId, filter) {
             stream.end('\n]');
             console.info(`${urlIdx.size} intern links saved to ${fileName}.`)
         } catch (e) {
-            console.z(e)
+            console.todo(e)
         }
     })
 }
