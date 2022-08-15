@@ -7,9 +7,9 @@ import { console, inspect } from '../corvee/packages/core'
 
 import { harvesterConfig } from './config'
 
-// const links = require('./config/links.json')
+const links = require('./config/links.json')
 // const links = ['https://api.bib.umontreal.ca/guides/embed/730626&tab=5244990']
-const links = []
+// const links = []
 
 const today = new Date();
 const year = today.getFullYear();
@@ -47,7 +47,7 @@ harvester.setLinkParser(function linkParser() {
     return Array
         .from(document.querySelectorAll('a[href]'))
         // Exclude those inside a rss module
-        .filter(link => !link.parentNode.closest('.module-rss-resource'))
+        .filter(link => !link.parentNode.closest('.s-lg-rss-list-item'))
         .map(link => ({
             url: link.href,
             text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
