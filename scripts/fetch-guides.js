@@ -16,7 +16,7 @@ axios
           i++;
           let link = `https://api.bib.umontreal.ca/guides/embed/${guideId}`
           if (i > 1) {
-            link += `&tab=${page.id}`
+            link += `?tab=${page.id}`
           }
           links.push(link)
         })
@@ -24,7 +24,7 @@ axios
       }
     });
 
-    writeFileSync(join(__dirname, 'config', 'links.json'), JSON.stringify(links, null, 2))
+    writeFileSync(join(__dirname, '..', 'config', 'links.json'), JSON.stringify(links, null, 2))
 
     process.exit()
   })

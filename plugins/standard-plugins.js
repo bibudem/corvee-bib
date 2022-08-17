@@ -2,8 +2,6 @@ import * as config from '../config'
 import { plugins as _, messages } from '../../corvee/packages/processor'
 
 export const standardPlugins = [
-    _.harvesterTimedOut,
-    _.harvesterUnsupportedScheme,
     {
         ..._.http200,
         // exclude: true // KEEP

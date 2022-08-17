@@ -26,8 +26,6 @@ import publicAuthServices from './local/public-auth-services'
 import sofiaRedirectionLinker2 from './local/sofia-redirection-linker2'
 import studiumLogin from './local/studium-login'
 import udemHttp30xCalendrier from './local/udem-http-30x-calendrier'
-import udemIgnoreUrls from './local/udem-ignore-urls'
-import urlArobas from './local/url-@'
 
 import messages from './local/messages'
 
@@ -87,9 +85,4 @@ export const localPlugins = [
     sofiaRedirectionLinker2,
     studiumLogin,
     udemHttp30xCalendrier,
-    {
-        ...udemIgnoreUrls,
-        exclude: true
-    },
-    urlArobas
 ]

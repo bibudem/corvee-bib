@@ -7,7 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "harvest": "node -r esm harvest.js",
         "process": "node -r esm process.js",
-        "fetch-guides": "node -r esm fetch-guides.js"
+        "fetch-guides": "node -r esm ./scripts/fetch-guides.js",
+        "add-contexts": "node -r esm ./scripts/add-contexts.js"
     },
     "keywords": [],
     "author": "",

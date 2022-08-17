@@ -8,6 +8,7 @@ import { getFinalStatus } from '../corvee/packages/harvester/lib'
 import { console, inspect } from '../corvee/packages/core'
 import { plugins, messages } from './plugins'
 import { toSql } from './utils/to-sql'
+import { addContexts } from './lib/add-contexts'
 // import { toJsonl } from './utils/to-jsonl'
 
 const start = Date.now();
@@ -32,12 +33,26 @@ const argv = yargs
 
 const job = argv.job;
 const baseDir = join(__dirname, 'data');
-const filePath = join(baseDir, `${job}_processed.json`);
+const harvestedFilePath = join(baseDir, `${job}_harvested.json`)
+const processedFilePath = join(baseDir, `${job}_processed.json`);
 const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
-const excludedStatsPath = join(baseDir, `${job}_excluded.json`);
-const strictHttpsRedirectsPath = join(baseDir, `${job}_strict-https-redirects.json`);
+const excludedFilePath = join(baseDir, `${job}_excluded.json`);
+const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
 
-async function doTest(records) {
+const browsingContexts = require(browsingContextsPath)
+
+const silentErrors = new Set()
+const harvestedRecords = require(harvestedFilePath)
+
+async function doProcess(records) {
+
+    harvestedRecords.forEach(record => {
+        if (record.reports.length) {
+            record.reports.forEach(report => {
+                silentErrors.add(report.code)
+            })
+        }
+    })
 
     records.forEach(r => {
         r.httpStatusCode = getFinalStatus(r);
@@ -91,23 +106,26 @@ async function doTest(records) {
         messages
     });
 
-    const strictHttpsRedirects = new Map();
-
-    processor.on('http-30x-https-upgrade', (report) => {
-
-        strictHttpsRedirects.set(report.url, report.finalUrl)
-    })
-
-    processor.on('filtered', function (record, filter) {
-        if (record.id === 140704) {
-            console.log(inspect(filter))
-            console.log(inspect(record))
-        }
-    })
+    // processor.on('filtered', function (record, filter) {
+    //     if (record.id === 108131) {
+    //         console.log(inspect(filter))
+    //         console.log(inspect(record))
+    //     }
+    // })
 
     console.log('Starting processor...')
 
     let result = await processor.process(records);
+
+    console.log('Adding browsing contexts...')
+
+    result.records = addContexts(result.records, browsingContexts)
+
+    result.records = result.records.filter(record => {
+        return record.reports.length > 0;
+    })
+
+    const timing = Date.now() - start;
 
     const perFilterData = result.perFilter
         .map(filterData => {
@@ -155,7 +173,6 @@ async function doTest(records) {
         }
     });
 
-    const timing = Date.now() - start;
     console.log(`Plugins stats:\n${perFilterTable}`);
 
     console.debug(`Processing done in ${timing / 1000}sec.`)
@@ -164,38 +181,9 @@ async function doTest(records) {
     console.log(`${result.excludedCount} items excluded.`);
     console.log(`${result.nbOut} items out.`);
 
-    result.records = result.records.filter(record => {
-        return record.reports.length > 0;
-    })
-
-    // result.records.forEach(record => {
-    //     if (record.parent.startsWith('https://libguides.bib.umontreal.ca/c.php')) {
-    //         const parent = new URL(record.parent)
-    //         const newParent = new URL('https://api.bib.umontreal.ca/guides/embed/' + parent.searchParams.get('g'))
-    //         newParent.searchParams.set('tab', parent.searchParams.get('p'))
-    //         record.parent = newParent.href;
-    //     }
-    // })
-
-    fs.writeFileSync(filePath, JSON.stringify(result.records, null, 2))
+    fs.writeFileSync(processedFilePath, JSON.stringify(result.records, null, 2))
     fs.writeFileSync(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
-    fs.writeFileSync(excludedStatsPath, JSON.stringify(result.excluded, null, 2))
-
-    const sortedRedirects = Array.from(strictHttpsRedirects.entries()).sort((a, b) => {
-        var nameA = a[0].toUpperCase(); // ignore upper and lowercase
-        var nameB = b[0].toUpperCase(); // ignore upper and lowercase
-        if (nameA < nameB) {
-            return -1;
-        }
-        if (nameA > nameB) {
-            return 1;
-        }
-
-        // names must be equal
-        return 0;
-    })
-    fs.writeFileSync(strictHttpsRedirectsPath, JSON.stringify(sortedRedirects, null, 2))
-
+    fs.writeFileSync(excludedFilePath, JSON.stringify(result.excluded, null, 2))
 
     result.records = result.records
         .map(record => {
@@ -218,14 +206,15 @@ async function doTest(records) {
     //     job
     // })
 
-    console.debug(`Results saved in ${filePath}`)
+    console.log('Found %s silent report types: ', silentErrors.size, [...silentErrors.values()].sort())
+
+    console.debug(`Results saved in ${processedFilePath}`)
 };
 
 import(join(baseDir, `${job}_harvested.json`))
     .then(records => records.default)
     .then(async records => {
-
-        await doTest(records);
+        await doProcess(records);
     })
     .catch(e => {
         console.error(e);

@@ -8,7 +8,6 @@ import { console, inspect } from '../corvee/packages/core'
 import { harvesterConfig } from './config'
 
 const links = require('./config/links.json')
-// const links = ['https://api.bib.umontreal.ca/guides/embed/730626&tab=5244990']
 // const links = []
 
 const today = new Date();
