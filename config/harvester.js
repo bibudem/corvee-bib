@@ -22,6 +22,7 @@ export const harvesterConfig = {
         /^http:\/\/geoindex\.bib\.umontreal\.ca/i,
         'testproxy.umontreal.ca',
         'http://expo.bib.umontreal.ca',
+        'https://umontreal.on.worldcat.org',
 
         // Adresses UdeM connues
         /^https:\/\/www\.umontreal\.ca\/?$/i, // page d'accueil de l'UdeM
@@ -92,10 +93,17 @@ export const harvesterConfig = {
     notifyLogLevel: 'info',
     pageWaitUntil: ['load', 'domcontentloaded', 'networkidle0'],
     schemes: ['mailto'],
-    startUrl: 'https://bib.umontreal.ca/',
-    // startUrl: 'http://Ensembles de données du recensement',
-    // startUrl: 'https://api.bib.umontreal.ca/guides/embed/729212',
+    // startUrl: 'https://bib.umontreal.ca/',
+    startUrl: 'https://static.scholarsportal.info/static/dataverse/2022-05-31_Voici_Borealis.pdf',
     storageDir: join(__dirname, '..', '.storage'),
+    urlNormalizeFunction: (url) => {
+
+        if (url.startsWith('https://libguides.bib.umontreal.ca/az.php?')) {
+            return url.split('?')[0]
+        }
+
+        return url
+    },
     userDataDir: join(__dirname, '..', '.userData'),
     useRandomUserAgent: true,
     useCache: true,

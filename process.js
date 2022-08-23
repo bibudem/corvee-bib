@@ -5,11 +5,11 @@ import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe'
 import { CorveeProcessor } from '../corvee/packages/processor'
 import { getFinalStatus } from '../corvee/packages/harvester/lib'
-import { console, inspect } from '../corvee/packages/core'
-import { plugins, messages } from './plugins'
+import { filters, messages } from './filters'
 import { toSql } from './utils/to-sql'
 import { addContexts } from './lib/add-contexts'
 // import { toJsonl } from './utils/to-jsonl'
+import { console, inspect } from '../corvee/packages/core'
 
 const start = Date.now();
 const today = new Date();
@@ -100,14 +100,14 @@ async function doProcess(records) {
     const processor = new CorveeProcessor({
         filters: [
             // devExcludeUrlsPlugin,
-            ...plugins,
+            ...filters,
             // tmpPlugin
         ],
         messages
     });
 
     // processor.on('filtered', function (record, filter) {
-    //     if (record.id === 108131) {
+    //     if (record.id === 121998) {
     //         console.log(inspect(filter))
     //         console.log(inspect(record))
     //     }

@@ -7,8 +7,8 @@ import { console, inspect } from '../corvee/packages/core'
 
 import { harvesterConfig } from './config'
 
-const links = require('./config/links.json')
-// const links = []
+// const links = require('./config/links.json')
+const links = []
 
 const today = new Date();
 const year = today.getFullYear();
@@ -38,64 +38,69 @@ const argv = yargs
 
 const job = argv.job;
 
-console.log('Using job ' + job)
+async function harvest() {
 
-const harvester = new Harvester(harvesterConfig);
+    console.log('Using job ' + job)
 
-harvester.setLinkParser(function linkParser() {
-    return Array
-        .from(document.querySelectorAll('a[href]'))
-        // Exclude those inside a rss module
-        .filter(link => !link.parentNode.closest('.s-lg-rss-list-item'))
-        .map(link => ({
-            url: link.href,
-            text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
-            urlData: link.getAttribute('href'),
-            isNavigationRequest: true
-        }))
-})
+    const harvester = new Harvester(harvesterConfig);
 
-harvester.addUrl(links);
+    harvester.setLinkParser(function linkParser() {
+        return Array
+            .from(document.querySelectorAll('a[href]'))
+            // Exclude those inside a rss module
+            .filter(link => !link.parentNode.closest('.s-lg-rss-list-item'))
+            .map(link => ({
+                url: link.href,
+                text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
+                urlData: link.getAttribute('href'),
+                isNavigationRequest: true
+            }))
+    })
 
-readline.emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
-process.stdin.on('keypress', (str, key) => {
-    if (key.ctrl && key.name === 'p') {
-        if (harvester.isPaused) {
-            harvester.resume();
-        } else {
-            harvester.pause();
+    await harvester.addUrl(links);
+
+    readline.emitKeypressEvents(process.stdin);
+    process.stdin.setRawMode(true);
+    process.stdin.on('keypress', (str, key) => {
+        if (key.ctrl && key.name === 'p') {
+            if (harvester.isPaused) {
+                harvester.resume();
+            } else {
+                harvester.pause();
+            }
         }
-    }
 
-    if (key.ctrl && key.name === 'c') {
+        if (key.ctrl && key.name === 'c') {
+            process.exit()
+        }
+    });
+
+    harvester.on('request', function onRequest(request) {
+        console.info(`[${request.retryCount}] Request url: ${request.url}`);
+    })
+
+    saveRecords(harvester, job, (record) => {
+        //return record.extern && record.url && !record.url.startsWith('mailto:');
+        return true;
+    })
+
+    saveBrowsingContexts(harvester, job);
+
+    saveInternLinks(harvester, job);
+
+    saveErrorCodes(harvester, job);
+
+    // savePageTitles(harvester)
+
+    const task = argv.resume ? 'resume' : 'run';
+
+    try {
+        console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
+        Apify.main(harvester[task]())
+    } catch (e) {
+        console.error(e)
         process.exit()
     }
-});
-
-harvester.on('request', function onRequest(request) {
-    console.info(`[${request.retryCount}] Request url: ${request.url}`);
-})
-
-saveRecords(harvester, job, (record) => {
-    //return record.extern && record.url && !record.url.startsWith('mailto:');
-    return true;
-})
-
-saveBrowsingContexts(harvester, job);
-
-saveInternLinks(harvester, job);
-
-saveErrorCodes(harvester, job);
-
-// savePageTitles(harvester)
-
-const task = argv.resume ? 'resume' : 'run';
-
-try {
-    console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
-    Apify.main(harvester[task]())
-} catch (e) {
-    console.error(e)
-    process.exit()
 }
+
+harvest();

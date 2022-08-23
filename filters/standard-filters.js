@@ -1,7 +1,7 @@
 import * as config from '../config'
-import { plugins as _, messages } from '../../corvee/packages/processor'
+import { filters as _, messagesFrCA } from '../../corvee/packages/processor'
 
-export const standardPlugins = [
+export const standardFilters = [
     {
         ..._.http200,
         // exclude: true // KEEP
@@ -44,10 +44,12 @@ export const standardPlugins = [
     _.http502,
     _.http503,
     _.http550,
-    _.net,
-    _.netCert,
+    _.netSystem,
+    _.netConnection,
+    _.netCertificate,
+    _.netHttp,
     _.urlIgnoreThese(config.excludedUrls),
     _.urlInvalidUrl,
 ]
 
-export const standardMessages = messages;
+export const standardMessages = messagesFrCA;

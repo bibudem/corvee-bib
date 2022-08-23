@@ -34,3 +34,4 @@ tmp
 .userData
 .userData*
 data/
+config/links.json

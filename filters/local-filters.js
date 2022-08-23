@@ -32,7 +32,7 @@ import messages from './local/messages'
 export const localMessages = messages;
 
 
-export const localPlugins = [
+export const localFilters = [
     {
         ...isBadAdresseSimplifiee({
             urls: config.adressesSimplifiees
