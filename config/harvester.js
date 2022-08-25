@@ -1,5 +1,4 @@
 import { join } from 'path'
-import { getRandomUserAgent } from '../../corvee/packages/core'
 
 import { adressesSimplifiees } from './adresses-simplifiees'
 
@@ -92,9 +91,11 @@ export const harvesterConfig = {
     ],
     notifyLogLevel: 'info',
     pageWaitUntil: ['load', 'domcontentloaded', 'networkidle0'],
+    requestTimeout: 5000,
     schemes: ['mailto'],
     // startUrl: 'https://bib.umontreal.ca/',
-    startUrl: 'https://static.scholarsportal.info/static/dataverse/2022-05-31_Voici_Borealis.pdf',
+    startUrl: 'http://fr.espacenet.com/',
+    // startUrl: 'https://static.scholarsportal.info/static/dataverse/2022-05-31_Voici_Borealis.pdf',
     storageDir: join(__dirname, '..', '.storage'),
     urlNormalizeFunction: (url) => {
 

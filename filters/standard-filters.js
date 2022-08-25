@@ -6,14 +6,13 @@ export const standardFilters = [
         ..._.http200,
         // exclude: true // KEEP
     },
+    _.http204,
     {
         ..._.http30xAllTempRedirects,
         //  exclude: true
     },
-    {
-        ..._.http30xPermanentRedirect,
-        // exclude: true
-    },
+    _.http30xPermanentRedirectSuccessfull,
+    _.http30xPermanentRedirectFailure,
     _.http307,
     {
         ..._.http30xMissingSlash,
@@ -39,15 +38,23 @@ export const standardFilters = [
     _.http403,
     _.http404,
     _.http404ByUrls(config.urlsAs404),
+    _.http408,
+    _.http410,
+    _.http429,
     _.http500,
     _.http501,
     _.http502,
     _.http503,
-    _.http550,
+    _.http512599,
+
+    _.mailInvalidSyntax,
+    _.mailUnverifiedAddress,
+
     _.netSystem,
     _.netConnection,
     _.netCertificate,
     _.netHttp,
+
     _.urlIgnoreThese(config.excludedUrls),
     _.urlInvalidUrl,
 ]

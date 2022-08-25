@@ -2,13 +2,11 @@ import readline from 'readline'
 import Apify from 'apify'
 import yargs from 'yargs'
 import { Harvester } from '../corvee/packages/harvester/lib'
+import { fetchGuides } from './lib/fetch-guides'
 import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks } from './utils'
 import { console, inspect } from '../corvee/packages/core'
 
 import { harvesterConfig } from './config'
-
-// const links = require('./config/links.json')
-const links = []
 
 const today = new Date();
 const year = today.getFullYear();
@@ -43,6 +41,9 @@ async function harvest() {
     console.log('Using job ' + job)
 
     const harvester = new Harvester(harvesterConfig);
+
+    // const links = await fetchGuides()
+    const links = []
 
     harvester.setLinkParser(function linkParser() {
         return Array

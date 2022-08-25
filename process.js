@@ -4,7 +4,6 @@ import yargs from 'yargs'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe'
 import { CorveeProcessor } from '../corvee/packages/processor'
-import { getFinalStatus } from '../corvee/packages/harvester/lib'
 import { filters, messages } from './filters'
 import { toSql } from './utils/to-sql'
 import { addContexts } from './lib/add-contexts'
@@ -33,7 +32,6 @@ const argv = yargs
 
 const job = argv.job;
 const baseDir = join(__dirname, 'data');
-const harvestedFilePath = join(baseDir, `${job}_harvested.json`)
 const processedFilePath = join(baseDir, `${job}_processed.json`);
 const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
 const excludedFilePath = join(baseDir, `${job}_excluded.json`);
@@ -41,61 +39,33 @@ const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
 
 const browsingContexts = require(browsingContextsPath)
 
-const silentErrors = new Set()
-const harvestedRecords = require(harvestedFilePath)
+const noisyErrors = new Set()
+const silentErrors = new Map()
+const httpStatuses = new Map()
 
 async function doProcess(records) {
 
-    harvestedRecords.forEach(record => {
+    records.forEach(record => {
+
+        if (!httpStatuses.has(record.httpStatusCode)) {
+            httpStatuses.set(record.httpStatusCode, 0)
+        }
+
+        let count = httpStatuses.get(record.httpStatusCode)
+        count++
+        httpStatuses.set(record.httpStatusCode, count)
+
         if (record.reports.length) {
             record.reports.forEach(report => {
-                silentErrors.add(report.code)
+                if (!silentErrors.has(report.code)) {
+                    silentErrors.set(report.code, 0)
+                }
+                var count = silentErrors.get(report.code)
+                count++
+                silentErrors.set(report.code, count)
             })
         }
     })
-
-    records.forEach(r => {
-        r.httpStatusCode = getFinalStatus(r);
-
-        if (typeof r.browsingContextStack === 'undefined') {
-            r.browsingContextStack = [];
-            if (r.parent === 'https://guides.bib.umontreal.ca/embed/guides/25-Droit-d-auteur?tab=129') {
-                r.parent = 'https://guides.bib.umontreal.ca/embed/guides/25?tab=129'
-                r.browsingContextStack.push(['https://bib.umontreal.ca/gerer-diffuser/droit-auteur?tab=129'])
-            }
-
-            if (r.parent === 'https://guides.bib.umontreal.ca/embed/guides/25-Droit-d-auteur?tab=130') {
-                r.parent = 'https://guides.bib.umontreal.ca/embed/guides/25?tab=130'
-                r.browsingContextStack.push(['https://bib.umontreal.ca/gerer-diffuser/droit-auteur?tab=130'])
-            }
-        }
-    });
-
-    // const tmpPlugin = {
-    //     code: 'tmp-plugin',
-    //     test: (report) => {
-    //         if ('responseChain' in report) {
-    //             report.responseChain = report.responseChain.filter(r => {
-    //                 if (r.url.startsWith('https://platform.twitter.com') ||
-    //                     r.url.startsWith('https://syndication.twitter.com') ||
-    //                     r.url.startsWith('https://s7.addthis.com') ||
-    //                     r.url.startsWith('http://www.facebook.com/plugins') ||
-    //                     r.url.startsWith('https://www.facebook.com/plugins') ||
-    //                     r.url.startsWith('https://staticxx.facebook.com') ||
-    //                     r.url.startsWith('https://www.bib.umontreal.ca/une-question') ||
-    //                     r.url.startsWith('https://www.questionpoint.org/crs/qwidgetV4')) {
-    //                     return false;
-    //                 }
-    //                 return true;
-    //             })
-    //         }
-
-    //         if ('reports' in report && report.reports.some(r => r.code === 'cv-timeout-error')) {
-    //             return true;
-    //         }
-    //     },
-    //     exclude: true
-    // }
 
     const processor = new CorveeProcessor({
         filters: [
@@ -113,6 +83,10 @@ async function doProcess(records) {
     //     }
     // })
 
+    processor.on('filtered', (record, filter) => {
+        noisyErrors.add(filter.code)
+    })
+
     console.log('Starting processor...')
 
     let result = await processor.process(records);
@@ -125,17 +99,23 @@ async function doProcess(records) {
         return record.reports.length > 0;
     })
 
+    silentErrors.forEach((value, silentErrorCode) => {
+        if (noisyErrors.has(silentErrorCode)) {
+            silentErrors.delete(silentErrorCode)
+        }
+    })
+
     const timing = Date.now() - start;
 
     const perFilterData = result.perFilter
         .map(filterData => {
-            filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('x') : '✓';
+            filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('x') : colors.green('✓');
 
             return filterData;
         })
         .sort((a, b) => {
-            var codeA = a.code.toUpperCase(); // ignore upper and lowercase
-            var codeB = b.code.toUpperCase(); // ignore upper and lowercase
+            const codeA = a.code.toUpperCase(); // ignore upper and lowercase
+            const codeB = b.code.toUpperCase(); // ignore upper and lowercase
             if (codeA < codeB) {
                 return -1;
             }
@@ -144,7 +124,7 @@ async function doProcess(records) {
             }
             return 0;
         }).map(f => {
-            let values = Object.values(f).map((value, i) => {
+            const values = Object.values(f).map((value, i) => {
 
                 switch (i) {
                     case 1:
@@ -206,7 +186,21 @@ async function doProcess(records) {
     //     job
     // })
 
-    console.log('Found %s silent report types: ', silentErrors.size, [...silentErrors.values()].sort())
+    const sortedSilentErrors = [...silentErrors.entries()].sort((a, b) => {
+        if (a[1] < b[1]) { return -1; }
+        if (a[1] > b[1]) { return 1; }
+        return 0;
+    }).reverse()
+
+    const sortedHttpStatuses = [...httpStatuses.entries()].sort((a, b) => {
+        if (a[0] < b[0]) { return -1; }
+        if (a[0] > b[0]) { return 1; }
+        return 0;
+    })
+
+    console.log('Found %s silent report types: ', silentErrors.size, sortedSilentErrors)
+
+    console.log('Found http status codes: ', sortedHttpStatuses)
 
     console.debug(`Results saved in ${processedFilePath}`)
 };

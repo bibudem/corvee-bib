@@ -31,7 +31,6 @@ import messages from './local/messages'
 
 export const localMessages = messages;
 
-
 export const localFilters = [
     {
         ...isBadAdresseSimplifiee({
