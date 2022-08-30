@@ -1,4 +1,5 @@
 import { join } from 'path'
+import { normalizeUrl } from '../../corvee/packages/core/lib';
 
 import { adressesSimplifiees } from './adresses-simplifiees'
 
@@ -91,13 +92,15 @@ export const harvesterConfig = {
     ],
     notifyLogLevel: 'info',
     pageWaitUntil: ['load', 'domcontentloaded', 'networkidle0'],
-    requestTimeout: 5000,
+    requestTimeout: 30000,
     schemes: ['mailto'],
-    // startUrl: 'https://bib.umontreal.ca/',
-    startUrl: 'http://fr.espacenet.com/',
-    // startUrl: 'https://static.scholarsportal.info/static/dataverse/2022-05-31_Voici_Borealis.pdf',
+    startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'http://fr.espacenet.com/', // empty response
+    // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
     storageDir: join(__dirname, '..', '.storage'),
-    urlNormalizeFunction: (url) => {
+    normalizeUrlFunction: (url) => {
+
+        url = normalizeUrl(url)
 
         if (url.startsWith('https://libguides.bib.umontreal.ca/az.php?')) {
             return url.split('?')[0]

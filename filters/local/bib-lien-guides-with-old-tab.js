@@ -1,5 +1,3 @@
-import { URL } from 'url'
-
 export default {
   code: 'bib-lien-guides-with-old-tab',
   test: (report) => {

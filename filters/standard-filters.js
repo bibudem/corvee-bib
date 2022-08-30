@@ -2,15 +2,10 @@ import * as config from '../config'
 import { filters as _, messagesFrCA } from '../../corvee/packages/processor'
 
 export const standardFilters = [
-    {
-        ..._.http200,
-        // exclude: true // KEEP
-    },
+    _.http200,
+    _.http201,
     _.http204,
-    {
-        ..._.http30xAllTempRedirects,
-        //  exclude: true
-    },
+    _.http30xAllTempRedirects,
     _.http30xPermanentRedirectSuccessfull,
     _.http30xPermanentRedirectFailure,
     _.http307,
@@ -37,7 +32,7 @@ export const standardFilters = [
     _.http401,
     _.http403,
     _.http404,
-    _.http404ByUrls(config.urlsAs404),
+    _.http404ByUrl(config.urlsAs404),
     _.http408,
     _.http410,
     _.http429,

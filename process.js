@@ -34,7 +34,6 @@ const job = argv.job;
 const baseDir = join(__dirname, 'data');
 const processedFilePath = join(baseDir, `${job}_processed.json`);
 const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
-const excludedFilePath = join(baseDir, `${job}_excluded.json`);
 const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
 
 const browsingContexts = require(browsingContextsPath)
@@ -76,9 +75,8 @@ async function doProcess(records) {
         messages
     });
 
-    // processor.on('filtered', function (record, filter) {
-    //     if (record.id === 121998) {
-    //         console.log(inspect(filter))
+    // processor.on('unfiltered', function (record) {
+    //     if (record.id === 106834) {
     //         console.log(inspect(record))
     //     }
     // })
@@ -158,12 +156,11 @@ async function doProcess(records) {
     console.debug(`Processing done in ${timing / 1000}sec.`)
     console.log(`${result.nbIn} items in.`);
     console.log(`${result.filtered} items filtered.`);
-    console.log(`${result.excludedCount} items excluded.`);
+    console.log(`${result.unfilteredRecords.length} items unfiltered.`);
     console.log(`${result.nbOut} items out.`);
 
     fs.writeFileSync(processedFilePath, JSON.stringify(result.records, null, 2))
     fs.writeFileSync(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
-    fs.writeFileSync(excludedFilePath, JSON.stringify(result.excluded, null, 2))
 
     result.records = result.records
         .map(record => {
@@ -180,12 +177,6 @@ async function doProcess(records) {
         job
     })
 
-    // await toJsonl({
-    //     data: result.records,
-    //     dir: baseDir,
-    //     job
-    // })
-
     const sortedSilentErrors = [...silentErrors.entries()].sort((a, b) => {
         if (a[1] < b[1]) { return -1; }
         if (a[1] > b[1]) { return 1; }
@@ -198,9 +189,9 @@ async function doProcess(records) {
         return 0;
     })
 
-    console.log('Found %s silent report types: ', silentErrors.size, sortedSilentErrors)
+    console.log(`Found ${silentErrors.size} silent report types: ${inspect(sortedSilentErrors)}`)
 
-    console.log('Found http status codes: ', sortedHttpStatuses)
+    console.log(`Found http status codes: ${inspect(sortedHttpStatuses)}`)
 
     console.debug(`Results saved in ${processedFilePath}`)
 };
