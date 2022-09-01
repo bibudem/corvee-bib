@@ -22,6 +22,7 @@ export const harvesterConfig = {
         /^http:\/\/geoindex\.bib\.umontreal\.ca/i,
         'testproxy.umontreal.ca',
         'http://expo.bib.umontreal.ca',
+        'http://geos.bib.umontreal.ca',
         'https://umontreal.on.worldcat.org',
 
         // Adresses UdeM connues
@@ -95,8 +96,9 @@ export const harvesterConfig = {
     requestTimeout: 30000,
     schemes: ['mailto'],
     startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'http://www.jpma.or.jp/english/', // 301 redirect
     // startUrl: 'http://fr.espacenet.com/', // empty response
-    // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
+    // startUrl: 'http://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
     storageDir: join(__dirname, '..', '.storage'),
     normalizeUrlFunction: (url) => {
 

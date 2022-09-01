@@ -10,24 +10,24 @@ export const standardFilters = [
     _.http30xPermanentRedirectFailure,
     _.http307,
     {
-        ..._.http30xMissingSlash,
-        exclude: true // KEEP
-    },
-    _.http30xWelcomePage,
-    {
         ..._.http30xCircularRedirection,
         exclude: true // KEEP
     },
-    new _.http30xHttpsUpgrade({
-        ignoreWww: false,
-        level: 'warning',
-        limit: 1000,
-        // exclude: true
-    }),
+    {
+        ..._.http30xMissingSlash,
+        exclude: true // KEEP
+    },
+    _.http30xHttpsUpgradeAny,
     new _.http30xHttpsUpgradeLoose({
         ignoreWww: true
     }),
-    _.http30xHttpsUpgradeAny,
+    new _.http30xHttpsUpgradeStrict({
+        ignoreWww: false,
+        level: 'info',
+        limit: 1000,
+        // exclude: true
+    }),
+    _.http30xWelcomePage,
     _.http400,
     _.http401,
     _.http403,

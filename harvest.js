@@ -40,7 +40,7 @@ async function harvest() {
 
     console.log('Using job ' + job)
 
-    const harvester = new Harvester(harvesterConfig);
+    const harvester = new Harvester(harvesterConfig)
 
     const links = await fetchGuides()
     // const links = []

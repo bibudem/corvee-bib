@@ -54,7 +54,7 @@ async function doProcess(records) {
         count++
         httpStatuses.set(record.httpStatusCode, count)
 
-        if (record.reports.length) {
+        if (record.reports) {
             record.reports.forEach(report => {
                 if (!silentErrors.has(report.code)) {
                     silentErrors.set(report.code, 0)
