@@ -42,8 +42,8 @@ async function harvest() {
 
     const harvester = new Harvester(harvesterConfig)
 
-    const links = await fetchGuides()
-    // const links = []
+    // const links = await fetchGuides()
+    const links = []
 
     harvester.setLinkParser(function linkParser() {
         return Array

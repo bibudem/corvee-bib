@@ -98,8 +98,8 @@ export const harvesterConfig = {
     startUrl: 'https://bib.umontreal.ca/',
     // startUrl: 'http://www.jpma.or.jp/english/', // 301 redirect
     // startUrl: 'http://fr.espacenet.com/', // empty response
-    // startUrl: 'http://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
-    storageDir: join(__dirname, '..', '.storage'),
+    startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
+    storageDir: join(__dirname, '..', 'apify_storage'),
     normalizeUrlFunction: (url) => {
 
         url = normalizeUrl(url)

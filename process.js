@@ -7,7 +7,6 @@ import { CorveeProcessor } from '../corvee/packages/processor'
 import { filters, messages } from './filters'
 import { toSql } from './utils/to-sql'
 import { addContexts } from './lib/add-contexts'
-// import { toJsonl } from './utils/to-jsonl'
 import { console, inspect } from '../corvee/packages/core'
 
 const start = Date.now();
