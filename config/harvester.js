@@ -4,13 +4,15 @@ import { normalizeUrl } from '../../corvee/packages/core/lib';
 import { adressesSimplifiees } from './adresses-simplifiees'
 
 export const harvesterConfig = {
+    browser: 'chrome',
     checkExtern: true,
     fetchLinksOnce: true,
+    getPerfData: false,
     // URLs matching the given regular expressions / strings will be ignored and not checked.
-    // /^https:\/\/bib\.umontreal\.ca\/[^#?]/, 
     ignore: [
         ...adressesSimplifiees,
         // 
+        // /^https:\/\/bib\.umontreal\.ca\/[^#?]/, 
         /^https:\/\/bib\.umontreal\.ca\/activites/i,
         /^https:\/\/bib\.umontreal\.ca\/communications\/nouvelles/i,
         'https://www.bib.umontreal.ca/une-question',
@@ -54,24 +56,22 @@ export const harvesterConfig = {
         'advance.lexis.com',
         /^https:\/\/fusion\.google\.com/i,
         /^https:\/\/books\.google\.com/i,
-
-        // Temporaire
-        // 'https://atrium.umontreal.ca'
+        /^https:\/\/documents\.un\.org\//i,
     ],
     internLinks: [
         /https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
         /https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
         /https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
         /https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
-        /https:\/\/87128\.account\.worldcat\.org(\/.*)?/
+        /https:\/\/87128\.account\.worldcat\.org(\/.*)?/,
+        'http://localhost[.*]'
     ],
     linkParserDelay: false,
     logLevel: 'verbose',
     maxConcurrency: 10,
     maxRequestRetries: 3,
-    // maxRequests: 400000,
     // maxRequests: 1,
-    navigationOnly: true,
+    navigationOnly: false,
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
     noFollow: [
         /^https:\/\/umontreal\.on\.worldcat\.org/,
@@ -92,14 +92,27 @@ export const harvesterConfig = {
         /^https:\/\/umontreal\.libapps\.com/
     ],
     notifyLogLevel: 'info',
-    pageWaitUntil: ['load', 'domcontentloaded', 'networkidle0'],
+    pageWaitUntil: 'networkidle',
     requestTimeout: 30000,
     schemes: ['mailto'],
-    startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'https://reseau.umontreal.ca/bib', // redirect
+    // startUrl: 'http://localhost/t.html', // redirected asset
+    // startUrl: 'https://eudocs.lib.byu.edu/index.php/main_page', // http-30x-permanent-redirect-failure
     // startUrl: 'http://www.jpma.or.jp/english/', // 301 redirect
     // startUrl: 'http://fr.espacenet.com/', // empty response
-    startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
-    storageDir: join(__dirname, '..', 'apify_storage'),
+    // startUrl: 'https://ambq.org/contenu_accueil.asp?categorie_code=302&chaine_recherche=&contenu_code=&date_spectacle=&ville_recherche=', // net-certificate
+    // startUrl: 'https://www.hivebench.com/', // net-connection
+    // startUrl: 'https://incites.help.clarivate.com/content/indicators-handbook/ih-about.htm', // net-http
+    // startUrl: 'http://mesh.inserm.fr/frenchmesh/search/index.jsp', // net-http
+    // startUrl: 'http://Ensembles de données du recensement', // url-invalid-url
+    // startUrl: 'https://1findr.1science.com/home', // net-name-not-resolved
+    // startUrl: 'http://www.openthesis.org/', // timeout
+    // startUrl: 'https://www.icj-cij.org/files/publications/bibliography-en.pdf', // 404
+    startUrl: 'https://urfist.chartes.psl.eu/sites/default/files/ab/bouchard_urfistparis_identitenumerique_synthese_072020.pdf',
+    // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
+    // storageDir: join(__dirname, '..', 'apify_storage'),
+    storageDir: join(__dirname, '..', '.storage'),
     normalizeUrlFunction: (url) => {
 
         url = normalizeUrl(url)

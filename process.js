@@ -74,6 +74,10 @@ async function doProcess(records) {
         messages
     });
 
+    // processor.on('http-30x-permanent-redirect-failure', function (record) {
+    //     console.log(inspect(record))
+    // })
+
     // processor.on('unfiltered', function (record) {
     //     if (record.id === 106834) {
     //         console.log(inspect(record))
