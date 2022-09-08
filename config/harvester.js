@@ -64,14 +64,14 @@ export const harvesterConfig = {
         /https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
         /https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
         /https:\/\/87128\.account\.worldcat\.org(\/.*)?/,
-        'http://localhost[.*]'
+        // 'http://localhost[.*]'
     ],
     linkParserDelay: false,
     logLevel: 'verbose',
     maxConcurrency: 10,
     maxRequestRetries: 3,
     // maxRequests: 1,
-    navigationOnly: false,
+    navigationOnly: true,
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
     noFollow: [
         /^https:\/\/umontreal\.on\.worldcat\.org/,
@@ -95,7 +95,7 @@ export const harvesterConfig = {
     pageWaitUntil: 'networkidle',
     requestTimeout: 30000,
     schemes: ['mailto'],
-    // startUrl: 'https://bib.umontreal.ca/',
+    startUrl: 'https://bib.umontreal.ca/',
     // startUrl: 'https://reseau.umontreal.ca/bib', // redirect
     // startUrl: 'http://localhost/t.html', // redirected asset
     // startUrl: 'https://eudocs.lib.byu.edu/index.php/main_page', // http-30x-permanent-redirect-failure
@@ -109,8 +109,10 @@ export const harvesterConfig = {
     // startUrl: 'https://1findr.1science.com/home', // net-name-not-resolved
     // startUrl: 'http://www.openthesis.org/', // timeout
     // startUrl: 'https://www.icj-cij.org/files/publications/bibliography-en.pdf', // 404
-    startUrl: 'https://urfist.chartes.psl.eu/sites/default/files/ab/bouchard_urfistparis_identitenumerique_synthese_072020.pdf',
+    // startUrl: 'https://urfist.chartes.psl.eu/sites/default/files/ab/bouchard_urfistparis_identitenumerique_synthese_072020.pdf',
     // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
+    // startUrl: 'http://www.cnbksy.cn/shlib_tsdc/en/do', // http-412
+    // startUrl: 'http://www.legislation.gov.uk/ukpga/Geo5/22-23/4', // http-504
     // storageDir: join(__dirname, '..', 'apify_storage'),
     storageDir: join(__dirname, '..', '.storage'),
     normalizeUrlFunction: (url) => {

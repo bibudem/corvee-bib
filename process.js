@@ -172,7 +172,7 @@ async function doProcess(records) {
         })
         .filter(record => record.reports.length > 0);
 
-    console.log('Found %s records with problem.', result.records.length)
+    console.log(`Found ${result.records.length} records with problem.`)
 
     await toSql({
         data: result.records,
