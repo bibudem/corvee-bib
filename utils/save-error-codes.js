@@ -1,18 +1,19 @@
-import fs from 'fs'
-import { join } from 'path'
+import { createWriteStream } from 'node:fs'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-import { console, inspect } from '../../corvee/packages/core'
+import { console, inspect } from '../../corvee/packages/core/index.js'
 
 export function saveErrorCodes(harvester, jobId) {
 
-    const dir = join(__dirname, '..', 'data');
+    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
     const fileName = join(dir, `${jobId}_error-codes.json`);
 
     const errorCodes = new Map();
 
     let i = 0;
 
-    const errorCodesStream = fs.createWriteStream(fileName, {
+    const errorCodesStream = createWriteStream(fileName, {
         autoClose: false
     })
 

@@ -1,13 +1,14 @@
-import fs from 'fs'
-import { join } from 'path'
+import { readFile, writeFile } from 'node:fs/promises'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import yargs from 'yargs'
 import { table, getBorderCharacters } from 'table'
-import colors from 'colors/safe'
-import { CorveeProcessor } from '../corvee/packages/processor'
-import { filters, messages } from './filters'
-import { toSql } from './utils/to-sql'
-import { addContexts } from './lib/add-contexts'
-import { console, inspect } from '../corvee/packages/core'
+import colors from 'colors/safe.js'
+import { CorveeProcessor } from '../corvee/packages/processor/index.js'
+import { filters, messages } from './filters/index.js'
+import { toSql } from './utils/to-sql.js'
+import { addContexts } from './lib/add-contexts.js'
+import { console, inspect } from '../corvee/packages/core/index.js'
 
 const start = Date.now();
 const today = new Date();
@@ -30,16 +31,24 @@ const argv = yargs
     .argv;
 
 const job = argv.job;
-const baseDir = join(__dirname, 'data');
+const baseDir = join(dirname(fileURLToPath(import.meta.url)), 'data');
 const processedFilePath = join(baseDir, `${job}_processed.json`);
 const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
 const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
+const harvestedDataPath = join(baseDir, `${job}_harvested.json`)
 
-const browsingContexts = require(browsingContextsPath)
+const browsingContexts = JSON.parse(await readFile(browsingContextsPath))
+const harvestedData = JSON.parse(await readFile(harvestedDataPath))
 
 const noisyErrors = new Set()
 const silentErrors = new Map()
 const httpStatuses = new Map()
+
+const _n = new Intl.NumberFormat('fr-CA')
+
+function n(n) {
+    return _n.format(n)
+}
 
 async function doProcess(records) {
 
@@ -124,12 +133,13 @@ async function doProcess(records) {
                 return 1;
             }
             return 0;
-        }).map(f => {
+        })
+        .map(f => {
             const values = Object.values(f).map((value, i) => {
 
                 switch (i) {
                     case 1:
-                        return value === 0 ? colors.grey(value) : value;
+                        return value === 0 ? colors.grey(value) : n(value);
                     case 2:
                         return value ? colors.green('✓') : ''
                     default:
@@ -157,13 +167,13 @@ async function doProcess(records) {
     console.log(`Plugins stats:\n${perFilterTable}`);
 
     console.debug(`Processing done in ${timing / 1000}sec.`)
-    console.log(`${result.nbIn} items in.`);
-    console.log(`${result.filtered} items filtered.`);
-    console.log(`${result.unfilteredRecords.length} items unfiltered.`);
-    console.log(`${result.nbOut} items out.`);
+    console.log(`${n(result.nbIn)} items in.`);
+    console.log(`${n(result.filtered)} items filtered.`);
+    console.log(`${n(result.unfilteredRecords.length)} items unfiltered.`);
+    console.log(`${n(result.nbOut)} items out.`);
 
-    fs.writeFileSync(processedFilePath, JSON.stringify(result.records, null, 2))
-    fs.writeFileSync(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
+    await writeFile(processedFilePath, JSON.stringify(result.records, null, 2))
+    await writeFile(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
 
     result.records = result.records
         .map(record => {
@@ -172,7 +182,7 @@ async function doProcess(records) {
         })
         .filter(record => record.reports.length > 0);
 
-    console.log(`Found ${result.records.length} records with problem.`)
+    console.log(`Found ${n(result.records.length)} records with problem.`)
 
     await toSql({
         data: result.records,
@@ -180,31 +190,45 @@ async function doProcess(records) {
         job
     })
 
-    const sortedSilentErrors = [...silentErrors.entries()].sort((a, b) => {
-        if (a[1] < b[1]) { return -1; }
-        if (a[1] > b[1]) { return 1; }
-        return 0;
-    }).reverse()
+    const sortedSilentErrors = [...silentErrors.entries()]
+        .sort((a, b) => {
+            if (a[1] < b[1]) { return -1; }
+            if (a[1] > b[1]) { return 1; }
+            return 0;
+        })
+        .reverse()
+        .map(item => [item[0], n(item[1])])
+    sortedSilentErrors.unshift(['Code d\'erreur', ''])
 
-    const sortedHttpStatuses = [...httpStatuses.entries()].sort((a, b) => {
-        if (a[0] < b[0]) { return -1; }
-        if (a[0] > b[0]) { return 1; }
-        return 0;
-    })
+    const sortedHttpStatuses = [...httpStatuses.entries()]
+        .sort((a, b) => {
+            if (a[0] < b[0]) { return -1; }
+            if (a[0] > b[0]) { return 1; }
+            return 0;
+        })
+        .map(item => [`${item[0]}`, n(item[1])])
+    sortedHttpStatuses.unshift(['Code HTTP', ''])
 
-    console.log(`Found ${silentErrors.size} silent report types: ${inspect(sortedSilentErrors)}`)
+    const tableConfig = {
+        border: getBorderCharacters('norc'),
+        columns: {
+            1: {
+                alignment: 'right'
+            }
+        }
+    }
 
-    console.log(`Found http status codes: ${inspect(sortedHttpStatuses)}`)
+    console.log(`Found ${n(silentErrors.size)} silent report types:\n${table(sortedSilentErrors, tableConfig)}`)
+
+    console.log(`Found http status codes:\n${table(sortedHttpStatuses, tableConfig)}`)
 
     console.debug(`Results saved in ${processedFilePath}`)
 };
 
-import(join(baseDir, `${job}_harvested.json`))
-    .then(records => records.default)
-    .then(async records => {
-        await doProcess(records);
-    })
-    .catch(e => {
-        console.error(e);
-        process.exit();
-    });
+try {
+    await doProcess(harvestedData);
+    process.exit()
+} catch (error) {
+    console.error(error);
+    process.exit();
+}

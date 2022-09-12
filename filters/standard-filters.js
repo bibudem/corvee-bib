@@ -1,5 +1,5 @@
-import * as config from '../config'
-import { filters as _, messagesFrCA } from '../../corvee/packages/processor'
+import * as config from '../config/index.js'
+import { filters as _, messagesFrCA } from '../../corvee/packages/processor/index.js'
 
 export const standardFilters = [
     _.http200,

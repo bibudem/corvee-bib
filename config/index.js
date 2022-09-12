@@ -7,6 +7,6 @@ import { default as devExcludedUrls } from './dev-excluded-urls.js'
 // export excludedUrls;
 export const urlsExcludedFromHarvester = harvesterConfig.ignore;
 export const devExcludeUrls = [...devExcludedUrls, ...harvesterConfig.ignore];
-export * from './adresses-simplifiees';
+export * from './adresses-simplifiees.js';
 export * from './urls-as-404.js'
-export * from './harvester'
+export * from './harvester.js'

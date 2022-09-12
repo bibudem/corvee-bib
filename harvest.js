@@ -1,12 +1,12 @@
 import readline from 'readline'
 import Apify from 'apify'
 import yargs from 'yargs'
-import { Harvester } from '../corvee/packages/harvester/lib'
-import { fetchGuides } from './lib/fetch-guides'
-import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks } from './utils'
-import { console, inspect } from '../corvee/packages/core'
+import { Harvester } from '../corvee/packages/harvester/index.js'
+import { fetchGuides } from './lib/fetch-guides.js'
+import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks } from './utils/index.js'
+import { console, inspect } from '../corvee/packages/core/index.js'
 
-import { harvesterConfig } from './config'
+import { harvesterConfig } from './config/index.js'
 
 const today = new Date();
 const year = today.getFullYear();

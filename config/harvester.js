@@ -1,7 +1,8 @@
-import { join } from 'path'
-import { normalizeUrl } from '../../corvee/packages/core/lib';
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { normalizeUrl } from '../../corvee/packages/core/lib/index.js';
 
-import { adressesSimplifiees } from './adresses-simplifiees'
+import { adressesSimplifiees } from './adresses-simplifiees.js'
 
 export const harvesterConfig = {
     browser: 'chrome',
@@ -113,8 +114,8 @@ export const harvesterConfig = {
     // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
     // startUrl: 'http://www.cnbksy.cn/shlib_tsdc/en/do', // http-412
     // startUrl: 'http://www.legislation.gov.uk/ukpga/Geo5/22-23/4', // http-504
-    // storageDir: join(__dirname, '..', 'apify_storage'),
-    storageDir: join(__dirname, '..', '.storage'),
+    // storageDir: join(dirname(import.meta.url), '..', 'apify_storage'),
+    storageDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.storage'),
     normalizeUrlFunction: (url) => {
 
         url = normalizeUrl(url)
@@ -125,7 +126,7 @@ export const harvesterConfig = {
 
         return url
     },
-    userDataDir: join(__dirname, '..', '.userData'),
+    userDataDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.userData'),
     useRandomUserAgent: true,
     useCache: true,
     // useChrome: true,

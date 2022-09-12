@@ -1,15 +1,16 @@
-import fs from 'fs'
-import path from 'path'
+import { writeFileSync } from 'node:fs'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-import { console } from '../../corvee/packages/core'
+import { console } from '../../corvee/packages/core/index.js'
 
 export function saveBrowsingContexts(harvester, jobId) {
-    const dir = path.join(__dirname, '..', 'data');
-    const fileName = path.join(dir, `${jobId}_browsing-contexts.json`);
+    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
+    const fileName = join(dir, `${jobId}_browsing-contexts.json`);
 
     harvester.on('browsing-contexts', function onBrowsingContexts(data) {
 
-        fs.writeFileSync(fileName, JSON.stringify(data, null, 2), 'utf8');
+        writeFileSync(fileName, JSON.stringify(data, null, 2), 'utf8');
 
     })
 }

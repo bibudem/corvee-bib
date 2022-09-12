@@ -1,16 +1,17 @@
-import fs from 'fs'
-import path from 'path'
+import { createWriteStream } from 'node:fs'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-import { console } from '../../corvee/packages/core'
+import { console } from '../../corvee/packages/core/index.js'
 
 export async function saveRecords(harvester, jobId, filter) {
 
-    const dir = path.join(__dirname, '..', 'data');
-    const fileName = path.join(dir, `${jobId}_harvested.json`);
+    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
+    const fileName = join(dir, `${jobId}_harvested.json`);
     var i = 1;
     let stream;
     try {
-        stream = fs.createWriteStream(fileName, {
+        stream = createWriteStream(fileName, {
             flags: 'w'
         })
     } catch (e) {
