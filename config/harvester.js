@@ -93,10 +93,16 @@ export const harvesterConfig = {
         /^https:\/\/umontreal\.libapps\.com/
     ],
     notifyLogLevel: 'info',
-    pageWaitUntil: 'networkidle',
+    pageWaitUntil: {
+        intern: 'networkidle',
+        extern: 'load'
+    },
     requestTimeout: 30000,
     schemes: ['mailto'],
-    startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'http://www.collectionscanada.gc.ca/thesescanada/', // http-404
+    startUrl: 'https://oer.avu.org/handle/123456789/89', // net-connection-refused
+    // startUrl: 'https://nouveau.eureka.cc/Search/AdvancedMobile', // redirect-to-login-page
     // startUrl: 'https://reseau.umontreal.ca/bib', // redirect
     // startUrl: 'http://localhost/t.html', // redirected asset
     // startUrl: 'https://eudocs.lib.byu.edu/index.php/main_page', // http-30x-permanent-redirect-failure
