@@ -87,12 +87,6 @@ async function doProcess(records) {
     //     console.log(inspect(record))
     // })
 
-    // processor.on('unfiltered', function (record) {
-    //     if (record.id === 106834) {
-    //         console.log(inspect(record))
-    //     }
-    // })
-
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
     })
