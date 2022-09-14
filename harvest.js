@@ -1,5 +1,4 @@
 import readline from 'readline'
-import Apify from 'apify'
 import yargs from 'yargs'
 import { Harvester } from '../corvee/packages/harvester/index.js'
 import { fetchGuides } from './lib/fetch-guides.js'
@@ -38,6 +37,22 @@ const job = argv.job;
 
 async function harvest() {
 
+    readline.emitKeypressEvents(process.stdin);
+    process.stdin.setRawMode(true);
+    process.stdin.on('keypress', (str, key) => {
+        if (key.ctrl && key.name === 'p') {
+            if (harvester.isPaused) {
+                harvester.resume();
+            } else {
+                harvester.pause();
+            }
+        }
+
+        if (key.ctrl && key.name === 'c') {
+            process.exit()
+        }
+    });
+
     console.log('Using job ' + job)
 
     const harvester = new Harvester(harvesterConfig)
@@ -60,22 +75,6 @@ async function harvest() {
 
     await harvester.addUrl(links);
 
-    readline.emitKeypressEvents(process.stdin);
-    process.stdin.setRawMode(true);
-    process.stdin.on('keypress', (str, key) => {
-        if (key.ctrl && key.name === 'p') {
-            if (harvester.isPaused) {
-                harvester.resume();
-            } else {
-                harvester.pause();
-            }
-        }
-
-        if (key.ctrl && key.name === 'c') {
-            process.exit()
-        }
-    });
-
     harvester.on('request', function onRequest(request) {
         console.info(`[${request.retryCount}] Request url: ${request.url}`);
     })
@@ -97,7 +96,7 @@ async function harvest() {
 
     try {
         console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
-        Apify.main(harvester[task]())
+        await harvester[task]()
     } catch (e) {
         console.error(e)
         process.exit()

@@ -71,7 +71,7 @@ export const harvesterConfig = {
     logLevel: 'verbose',
     maxConcurrency: 10,
     maxRequestRetries: 3,
-    // maxRequests: 1,
+    // maxRequests: 10,
     navigationOnly: true,
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
     noFollow: [
@@ -100,8 +100,9 @@ export const harvesterConfig = {
     requestTimeout: 30000,
     schemes: ['mailto'],
     // startUrl: 'https://bib.umontreal.ca/',
+    startUrl: 'https://bib.umontreal.ca/amenagement/architecture',
     // startUrl: 'http://www.collectionscanada.gc.ca/thesescanada/', // http-404
-    startUrl: 'https://oer.avu.org/handle/123456789/89', // net-connection-refused
+    // startUrl: 'https://oer.avu.org/handle/123456789/89', // net-connection-refused
     // startUrl: 'https://nouveau.eureka.cc/Search/AdvancedMobile', // redirect-to-login-page
     // startUrl: 'https://reseau.umontreal.ca/bib', // redirect
     // startUrl: 'http://localhost/t.html', // redirected asset
@@ -120,7 +121,6 @@ export const harvesterConfig = {
     // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf',
     // startUrl: 'http://www.cnbksy.cn/shlib_tsdc/en/do', // http-412
     // startUrl: 'http://www.legislation.gov.uk/ukpga/Geo5/22-23/4', // http-504
-    // storageDir: join(dirname(import.meta.url), '..', 'apify_storage'),
     storageDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.storage'),
     normalizeUrlFunction: (url) => {
 
@@ -133,7 +133,6 @@ export const harvesterConfig = {
         return url
     },
     userDataDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.userData'),
-    useRandomUserAgent: true,
     useCache: true,
     // useChrome: true,
     waitInterval: 50,
