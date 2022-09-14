@@ -6,6 +6,7 @@ import bibHttpsUpgrade from './local/bib-https-upgrade.js'
 import bibAncienAtrium from './local/bib-ancien-atrium.js'
 import bibAtriumNonSecurise from './local/bib-atrium-non-securise.js'
 import bibAtrium from './local/bib-atrium.js'
+import bibCommunicationsLienManquant from './local/bib-communications-lien-manquant.js'
 import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures.js'
 import bibGuidesBibUmontrealCa from './local/bib-guides-bib-umontreal-ca.js'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3.js'
@@ -17,7 +18,6 @@ import bibLienGuideEmbed from './local/bib-liens-guide-embed.js'
 import bibListeAZ from './local/bib-liste-az.js'
 import bibMaestro from './local/bib-Maestro.js'
 import bibPermalienBibUmontrealCa from './local/bib-permalien-bib-umontreal-ca.js'
-import bibPretReseau from './local/bib-pret-reseau.js'
 
 import externalIgnoreUrls from './local/external-ignore-urls.js'
 import microsoft from './local/microsoft-forward-link.js'
@@ -44,6 +44,7 @@ export const localFilters = [
         ...bibAncienAtrium,
         priority: 1
     },
+    bibCommunicationsLienManquant,
     bibAtriumNonSecurise,
     {
         ...bibAtrium,
@@ -70,7 +71,6 @@ export const localFilters = [
         // exclude: true
     },
     bibPermalienBibUmontrealCa,
-    bibPretReseau,
     {
         ...publicAuthServices,
         exclude: true
