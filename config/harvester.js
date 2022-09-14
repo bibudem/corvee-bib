@@ -90,7 +90,8 @@ export const harvesterConfig = {
         /^https:\/\/libguides\.bib\.umontreal\.ca\/prf\.php/,
         /^https:\/\/libguides\.bib\.umontreal\.ca\/sb\.php/,
         /^https:\/\/libguides\.bib\.umontreal\.ca\/srch\.php/,
-        /^https:\/\/umontreal\.libapps\.com/
+        /^https:\/\/umontreal\.libapps\.com/,
+        /^https:\/\/bib\.umontreal\.ca\/(?:.+)\/news\/\-\/\-\//, // Liens vers une nouvelle qui n'a pas d'URL
     ],
     notifyLogLevel: 'info',
     pageWaitUntil: {
