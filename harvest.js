@@ -1,8 +1,9 @@
 import readline from 'readline'
 import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 import { Harvester } from '../corvee/packages/harvester/index.js'
 import { fetchGuides } from './lib/fetch-guides.js'
-import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks } from './utils/index.js'
+import { saveBrowsingContexts, saveErrorCodes, saveRecords } from './utils/index.js'
 import { console, inspect } from '../corvee/packages/core/index.js'
 
 import { harvesterConfig } from './config/index.js'
@@ -14,7 +15,7 @@ const day = `${today.getDate()}`.padStart(2, '0');
 
 const defaultJob = `${year}-${month}-${day}`;
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
     .options({
         j: {
             alias: 'job',
@@ -85,8 +86,6 @@ async function harvest() {
     })
 
     saveBrowsingContexts(harvester, job);
-
-    saveInternLinks(harvester, job);
 
     saveErrorCodes(harvester, job);
 
