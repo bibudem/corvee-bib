@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe.js'
 import { CorveeProcessor } from '../corvee/packages/processor/index.js'
@@ -18,7 +19,7 @@ const day = `${today.getDate()}`.padStart(2, '0');
 
 const defaultTodayDashedPrefix = `${year}-${month}-${day}`;
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
     .options({
         j: {
             alias: 'job',
