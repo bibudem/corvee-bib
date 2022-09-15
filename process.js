@@ -193,7 +193,7 @@ async function doProcess(records) {
         })
         .reverse()
         .map(item => [item[0], n(item[1])])
-    sortedSilentErrors.unshift(['Code d\'erreur', ''])
+    sortedSilentErrors.unshift(['Code d\'erreur', ' '])
 
     const sortedHttpStatuses = [...httpStatuses.entries()]
         .sort((a, b) => {
@@ -202,7 +202,7 @@ async function doProcess(records) {
             return 0;
         })
         .map(item => [`${item[0]}`, n(item[1])])
-    sortedHttpStatuses.unshift(['Code HTTP', ''])
+    sortedHttpStatuses.unshift(['Code HTTP', ' '])
 
     const tableConfig = {
         border: getBorderCharacters('norc'),
