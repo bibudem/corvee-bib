@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import { join } from 'node:path'
 
 export async function toSql({
     job = '2019-12-01',
@@ -8,7 +8,7 @@ export async function toSql({
     data
 }) {
 
-    const outFilePath = path.join(dir, `site-web-${job}.sql`);
+    const outFilePath = join(dir, `site-web-${job}.sql`);
     const prologue = `
 /*
  * Insertion des données dans la table liens 

@@ -1,19 +1,19 @@
-import fs from 'fs'
-import path from 'path'
+import { createWriteStream } from 'node:fs'
+import { join, dirname } from 'node:path'
 
-import { console } from '../../corvee/packages/core'
+import { console } from '../../corvee/packages/core/index.js'
 
 export async function savePageTitles(harvester, filter) {
 
     const today = new Date();
-    const dir = path.join(__dirname, '..', 'data');
-    const fileName = path.join(dir, `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}_page-titles.json`);
+    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
+    const fileName = join(dir, `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}_page-titles.json`);
     const urlIdx = new Set();
 
 
     let stream;
     try {
-        stream = fs.createWriteStream(fileName, {
+        stream = createWriteStream(fileName, {
             flags: 'w'
         })
     } catch (e) {

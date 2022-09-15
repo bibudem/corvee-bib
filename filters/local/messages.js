@@ -18,6 +18,10 @@ export default {
         msg: "Veuillez utiliser la version <code>https</code> de cette adresse."
     },
 
+    "bib-communication-lien-manquant": {
+        msg: "Cette nouvelle n'a pas d'URL."
+    },
+
     "bib-guides-bib-umontreal-ca": {
         msg: "Ce lien pointe vers https://guides.bib.umontreal.ca/... Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
     },

@@ -1,8 +1,8 @@
-import { writeFileSync } from 'fs'
-import { join } from 'path'
+import { readFile, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 import yargs from 'yargs'
-import { addContexts } from '../lib/add-contexts'
-import { console, inspect } from '../../corvee/packages/core/lib'
+import { addContexts } from '../lib/add-contexts.js'
+import { console, inspect } from '../../corvee/packages/core/lib/index.js'
 
 const today = new Date();
 const year = today.getFullYear();
@@ -31,10 +31,11 @@ const argv = yargs
   .argv;
 
 const job = argv.job;
-const processedFileName = join(__dirname, '..', 'data', `${job}_processed.json`);
-const addedContextFileName = join(__dirname, '..', 'data', `${job}_processed-with-added-contexts.json`);
-const browsingContexts = require(join(__dirname, '..', 'data', `${job}_browsing-contexts.json`))
-const records = require(processedFileName)
+const dataDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data',)
+const processedFileName = join(dataDir, `${job}_processed.json`);
+const addedContextFileName = join(dataDir, `${job}_processed-with-added-contexts.json`);
+const browsingContexts = JSON.parse(await readFile(dataDir, `${job}_browsing-contexts.json`))
+const records = JSON.parse(await readFile(processedFileName))
 
 const results = addContexts(records, browsingContexts)
 

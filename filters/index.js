@@ -1,5 +1,5 @@
-import { standardFilters, standardMessages } from './standard-filters'
-import { localFilters, localMessages } from './local-filters'
+import { standardFilters, standardMessages } from './standard-filters.js'
+import { localFilters, localMessages } from './local-filters.js'
 
 export const filters = [
     ...localFilters,

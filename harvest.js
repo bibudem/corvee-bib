@@ -1,12 +1,12 @@
 import readline from 'readline'
-import Apify from 'apify'
 import yargs from 'yargs'
-import { Harvester } from '../corvee/packages/harvester/lib'
-import { fetchGuides } from './lib/fetch-guides'
-import { saveBrowsingContexts, saveErrorCodes, saveRecords, saveInternLinks } from './utils'
-import { console, inspect } from '../corvee/packages/core'
+import { hideBin } from 'yargs/helpers'
+import { Harvester } from '../corvee/packages/harvester/index.js'
+import { fetchGuides } from './lib/fetch-guides.js'
+import { saveBrowsingContexts, saveErrorCodes, saveRecords } from './utils/index.js'
+import { console, inspect } from '../corvee/packages/core/index.js'
 
-import { harvesterConfig } from './config'
+import { harvesterConfig } from './config/index.js'
 
 const today = new Date();
 const year = today.getFullYear();
@@ -15,7 +15,7 @@ const day = `${today.getDate()}`.padStart(2, '0');
 
 const defaultJob = `${year}-${month}-${day}`;
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
     .options({
         j: {
             alias: 'job',
@@ -38,28 +38,6 @@ const job = argv.job;
 
 async function harvest() {
 
-    console.log('Using job ' + job)
-
-    const harvester = new Harvester(harvesterConfig)
-
-    const links = await fetchGuides()
-    // const links = []
-
-    harvester.setLinkParser(function linkParser() {
-        return Array
-            .from(document.querySelectorAll('a[href]'))
-            // Exclude those inside a rss module
-            .filter(link => !link.parentNode.closest('.s-lg-rss-list-item'))
-            .map(link => ({
-                url: link.href,
-                text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
-                urlData: link.getAttribute('href'),
-                isNavigationRequest: true
-            }))
-    })
-
-    await harvester.addUrl(links);
-
     readline.emitKeypressEvents(process.stdin);
     process.stdin.setRawMode(true);
     process.stdin.on('keypress', (str, key) => {
@@ -76,6 +54,28 @@ async function harvest() {
         }
     });
 
+    console.log('Using job ' + job)
+
+    const harvester = new Harvester(harvesterConfig)
+
+    // const links = await fetchGuides()
+    const links = []
+
+    harvester.setLinkParser(function linkParser() {
+        return Array
+            .from(document.querySelectorAll('a[href]'))
+            // Exclude those inside a rss module
+            .filter(link => !link.parentNode.closest('.s-lg-rss-list-item'))
+            .map(link => ({
+                url: link.href,
+                text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
+                urlData: link.getAttribute('href'),
+                isNavigationRequest: true
+            }))
+    })
+
+    await harvester.addUrl(links);
+
     harvester.on('request', function onRequest(request) {
         console.info(`[${request.retryCount}] Request url: ${request.url}`);
     })
@@ -87,8 +87,6 @@ async function harvest() {
 
     saveBrowsingContexts(harvester, job);
 
-    saveInternLinks(harvester, job);
-
     saveErrorCodes(harvester, job);
 
     // savePageTitles(harvester)
@@ -97,7 +95,7 @@ async function harvest() {
 
     try {
         console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
-        Apify.main(harvester[task]())
+        await harvester[task]()
     } catch (e) {
         console.error(e)
         process.exit()
