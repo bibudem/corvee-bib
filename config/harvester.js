@@ -93,12 +93,21 @@ export const harvesterConfig = {
         /^https:\/\/umontreal\.libapps\.com/,
         /^https:\/\/bib\.umontreal\.ca\/(?:.+)\/news\/\-\/\-\//, // Liens vers une nouvelle qui n'a pas d'URL
     ],
+    normalizeUrlFunction: (url) => {
+
+        url = normalizeUrl(url)
+
+        if (url.startsWith('https://libguides.bib.umontreal.ca/az.php?')) {
+            return url.split('?')[0]
+        }
+
+        return url
+    },
     notifyLogLevel: 'info',
     pageWaitUntil: {
         intern: 'networkidle',
         extern: 'load'
     },
-    requestTimeout: 30000,
     schemes: ['mailto'],
     startUrl: 'https://bib.umontreal.ca/',
     // startUrl: 'https://bib.umontreal.ca/amenagement/architecture',
@@ -124,16 +133,6 @@ export const harvesterConfig = {
     // startUrl: 'http://www.cnbksy.cn/shlib_tsdc/en/do', // http-412
     // startUrl: 'http://www.legislation.gov.uk/ukpga/Geo5/22-23/4', // http-504
     storageDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.storage'),
-    normalizeUrlFunction: (url) => {
-
-        url = normalizeUrl(url)
-
-        if (url.startsWith('https://libguides.bib.umontreal.ca/az.php?')) {
-            return url.split('?')[0]
-        }
-
-        return url
-    },
     userDataDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.userData'),
     useCache: true,
     // useChrome: true,

@@ -42,7 +42,7 @@ const browsingContexts = JSON.parse(await readFile(browsingContextsPath))
 const harvestedData = JSON.parse(await readFile(harvestedDataPath))
 
 const noisyErrors = new Set()
-const silentErrors = new Map()
+const silentReports = new Map()
 const httpStatuses = new Map()
 
 const _n = new Intl.NumberFormat('fr-CA')
@@ -65,12 +65,12 @@ async function doProcess(records) {
 
         if (record.reports) {
             record.reports.forEach(report => {
-                if (!silentErrors.has(report.code)) {
-                    silentErrors.set(report.code, 0)
+                if (!silentReports.has(report.code)) {
+                    silentReports.set(report.code, 0)
                 }
-                var count = silentErrors.get(report.code)
+                var count = silentReports.get(report.code)
                 count++
-                silentErrors.set(report.code, count)
+                silentReports.set(report.code, count)
             })
         }
     })
@@ -104,9 +104,9 @@ async function doProcess(records) {
         return record.reports.length > 0;
     })
 
-    silentErrors.forEach((value, silentErrorCode) => {
+    silentReports.forEach((value, silentErrorCode) => {
         if (noisyErrors.has(silentErrorCode)) {
-            silentErrors.delete(silentErrorCode)
+            silentReports.delete(silentErrorCode)
         }
     })
 
@@ -185,7 +185,7 @@ async function doProcess(records) {
         job
     })
 
-    const sortedSilentErrors = [...silentErrors.entries()]
+    const sortedSilentErrors = [...silentReports.entries()]
         .sort((a, b) => {
             if (a[1] < b[1]) { return -1; }
             if (a[1] > b[1]) { return 1; }
@@ -213,7 +213,7 @@ async function doProcess(records) {
         }
     }
 
-    console.log(`Found ${n(silentErrors.size)} silent report types:\n${table(sortedSilentErrors, tableConfig)}`)
+    console.log(`Found ${n(silentReports.size)} silent report types:\n${table(sortedSilentErrors, tableConfig)}`)
 
     console.log(`Found http status codes:\n${table(sortedHttpStatuses, tableConfig)}`)
 

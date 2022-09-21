@@ -3,7 +3,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { Harvester } from '../corvee/packages/harvester/index.js'
 import { fetchGuides } from './lib/fetch-guides.js'
-import { saveBrowsingContexts, saveErrorCodes, saveRecords } from './utils/index.js'
+import { saveBrowsingContexts, saveReportCodes, saveRecords } from './utils/index.js'
 import { console, inspect } from '../corvee/packages/core/index.js'
 
 import { harvesterConfig } from './config/index.js'
@@ -87,7 +87,7 @@ async function harvest() {
 
     saveBrowsingContexts(harvester, job);
 
-    saveErrorCodes(harvester, job);
+    saveReportCodes(harvester, job);
 
     // savePageTitles(harvester)
 

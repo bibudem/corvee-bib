@@ -1,5 +1,5 @@
 export * from './save-browsing-contexts.js'
-export * from './save-error-codes.js'
+export * from './save-report-codes.js'
 export * from './save-intern-links.js'
 export * from './save-page-titles.js'
 export * from './save-records.js'

@@ -4,55 +4,55 @@ import { fileURLToPath } from 'node:url'
 
 import { console, inspect } from '../../corvee/packages/core/index.js'
 
-export function saveErrorCodes(harvester, jobId) {
+export function saveReportCodes(harvester, jobId) {
 
     const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
-    const fileName = join(dir, `${jobId}_error-codes.json`);
+    const fileName = join(dir, `${jobId}_report-codes.json`);
 
-    const errorCodes = new Map();
+    const reportCodes = new Map();
 
     let i = 0;
 
-    const errorCodesStream = createWriteStream(fileName, {
+    const reportCodesStream = createWriteStream(fileName, {
         autoClose: false
     })
 
     harvester.on('record', function onRecord(record) {
         if ('reports' in record && Array.isArray(record.reports)) {
             record.reports.forEach(report => {
-                let errorCode = null;
-                let errorType;
+                let reportCode = null;
+                let reportType;
 
                 i++
 
                 if ('code' in report) {
-                    errorCode = report.code
+                    reportCode = report.code
 
                     if ('type' in report) {
-                        errorType = report.type
+                        reportType = report.type
                     }
                 } else {
                     console.todo('This report has no code')
                     console.todo(inspect(record))
-                    errorCode = '???'
+                    reportCode = '???'
                 }
 
-                if (!errorCodes.has(errorCode)) {
-                    errorCodes.set(errorCode, {
-                        errorCode,
-                        errorType,
+                if (!reportCodes.has(reportCode)) {
+                    reportCodes.set(reportCode, {
+                        reportCode,
+                        reportType,
                         count: 0
                     })
                 }
-                errorCodes.get(errorCode).count++
+                reportCodes.get(reportCode).count++
             })
         }
     })
 
     harvester.on('end', () => {
-        errorCodesStream.write(JSON.stringify([...errorCodes.values()].sort((a, b) => {
-            const nameA = a.errorCode.toUpperCase(); // ignore upper and lowercase
-            const nameB = b.errorCode.toUpperCase(); // ignore upper and lowercase
+        reportCodesStream.write(JSON.stringify([...reportCodes.values()].sort((a, b) => {
+            const nameA = a.reportCode.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.reportCode.toUpperCase(); // ignore upper and lowercase
             if (nameA < nameB) {
                 return -1;
             }
@@ -64,8 +64,8 @@ export function saveErrorCodes(harvester, jobId) {
             return 0;
         }), null, 2))
 
-        console.info(`${errorCodes.size} error codes types saved to ${fileName}`)
+        console.info(`${reportCodes.size} report codes types saved to ${fileName}`)
 
-        errorCodesStream.end()
+        reportCodesStream.end()
     })
 }
