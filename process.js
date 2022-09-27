@@ -5,11 +5,11 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe.js'
-import { CorveeProcessor } from '../corvee/packages/processor/index.js'
+import { CorveeProcessor } from '@corvee/processor'
 import { filters, messages } from './filters/index.js'
 import { toSql } from './utils/to-sql.js'
-import { addContexts } from './lib/add-contexts.js'
-import { console, inspect } from '../corvee/packages/core/index.js'
+// import { addContexts } from './lib/add-contexts.js'
+import { console, inspect } from '@corvee/core'
 
 const start = Date.now();
 const today = new Date();
@@ -35,10 +35,10 @@ const job = argv.job;
 const baseDir = join(dirname(fileURLToPath(import.meta.url)), 'data');
 const processedFilePath = join(baseDir, `${job}_processed.json`);
 const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
-const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
+// const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
 const harvestedDataPath = join(baseDir, `${job}_harvested.json`)
 
-const browsingContexts = JSON.parse(await readFile(browsingContextsPath))
+// const browsingContexts = JSON.parse(await readFile(browsingContextsPath))
 const harvestedData = JSON.parse(await readFile(harvestedDataPath))
 
 const noisyErrors = new Set()
@@ -96,9 +96,9 @@ async function doProcess(records) {
 
     let result = await processor.process(records);
 
-    console.log('Adding browsing contexts...')
+    // console.log('Adding browsing contexts...')
 
-    result.records = addContexts(result.records, browsingContexts)
+    // result.records = addContexts(result.records, browsingContexts)
 
     result.records = result.records.filter(record => {
         return record.reports.length > 0;

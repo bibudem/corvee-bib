@@ -1,10 +1,10 @@
 import readline from 'readline'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { Harvester } from '../corvee/packages/harvester/index.js'
+import { Harvester } from '@corvee/harvester'
 import { fetchGuides } from './lib/fetch-guides.js'
 import { saveBrowsingContexts, saveReportCodes, saveRecords } from './utils/index.js'
-import { console, inspect } from '../corvee/packages/core/index.js'
+import { console, inspect } from '@corvee/core'
 
 import { harvesterConfig } from './config/index.js'
 

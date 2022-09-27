@@ -1,11 +1,14 @@
 import { writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { fetchGuides } from '../lib/fetch-guides.js'
-import { console } from '../../corvee/packages/core/index.js'
+import { console } from '@corvee/core'
+
+console.log('Fetching links...')
 
 fetchGuides()
   .then(links => {
-    const linksFilePath = join(import.meta.url, '..', 'config', 'links.json')
+    const linksFilePath = join(dirname(fileURLToPath(import.meta.url)), '..', 'config', 'links.json')
     writeFileSync(linksFilePath, JSON.stringify(links, null, 2))
     console.info(`${links.length} links saved to ${linksFilePath}`)
     process.exit()

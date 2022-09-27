@@ -1,10 +1,7 @@
 import * as config from '../config/index.js'
-import { filters as _, messagesFrCA } from '../../corvee/packages/processor/index.js'
+import { filters as _, messagesFrCA } from '@corvee/processor'
 
 export const standardFilters = [
-    _.http200,
-    _.http201,
-    _.http204,
     _.http30xAllTempRedirects,
     _.http30xPermanentRedirectSuccessfull,
     _.http30xPermanentRedirectFailure,
@@ -41,6 +38,7 @@ export const standardFilters = [
     _.http502,
     _.http503,
     _.http512599,
+    _.http6xx,
 
     _.mailInvalidSyntax,
     _.mailUnverifiedAddress,

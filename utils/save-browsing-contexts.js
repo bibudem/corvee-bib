@@ -2,7 +2,7 @@ import { writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { console } from '../../corvee/packages/core/index.js'
+import { console } from '@corvee/core'
 
 export function saveBrowsingContexts(harvester, jobId) {
     const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');

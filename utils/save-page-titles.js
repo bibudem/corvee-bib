@@ -1,7 +1,7 @@
 import { createWriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 
-import { console } from '../../corvee/packages/core/index.js'
+import { console } from '@corvee/core'
 
 export async function savePageTitles(harvester, filter) {
 
