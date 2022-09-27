@@ -35,3 +35,4 @@ tmp
 .userData*
 data/
 config/links.json
+*_site-links.txt
