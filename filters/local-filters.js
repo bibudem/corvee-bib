@@ -12,6 +12,7 @@ import bibGuidesBibUmontrealCa from './local/bib-guides-bib-umontreal-ca.js'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3.js'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3.js'
 import bibLienDeveloppementEdimestre from './local/bib-lien-developpement-edimestre.js'
+import bibLienDeveloppementWebmestre from './local/bib-lien-developpement-webmestre.js'
 import bibLienGuidesWithOldTab from './local/bib-lien-guides-with-old-tab.js'
 import bibLienLibguides from './local/bib-lien-libguides.js'
 import bibLienGuideEmbed from './local/bib-liens-guide-embed.js'
@@ -58,6 +59,7 @@ export const localFilters = [
     bibGuidesBibUmontrealCa,
     bibLienBeTypo3,
     bibLienDeveloppementEdimestre,
+    bibLienDeveloppementWebmestre,
     bibLienGuidesWithOldTab,
     bibLienLibguides,
     bibLienGuideEmbed,

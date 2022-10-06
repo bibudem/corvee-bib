@@ -36,3 +36,4 @@ tmp
 data/
 config/links.json
 *_site-links.txt
+/storage

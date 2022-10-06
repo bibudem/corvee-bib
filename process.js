@@ -29,7 +29,7 @@ const argv = yargs(hideBin(process.argv))
         }
     })
     .help()
-    .argv;
+    .parseSync();
 
 const job = argv.job;
 const baseDir = join(dirname(fileURLToPath(import.meta.url)), 'data');
@@ -39,18 +39,25 @@ const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
 const harvestedDataPath = join(baseDir, `${job}_harvested.json`)
 
 // const browsingContexts = JSON.parse(await readFile(browsingContextsPath))
-const harvestedData = JSON.parse(await readFile(harvestedDataPath))
+const harvestedData = JSON.parse(await readFile(harvestedDataPath, 'utf-8'))
 
 const noisyErrors = new Set()
 const silentReports = new Map()
 const httpStatuses = new Map()
+const reportProperties = new Set()
 
 const _n = new Intl.NumberFormat('fr-CA')
 
+/**
+ * @param {number} n
+ */
 function n(n) {
     return _n.format(n)
 }
 
+/**
+ * @param {Array<Record>} records
+ */
 async function doProcess(records) {
 
     records.forEach(record => {
@@ -99,6 +106,10 @@ async function doProcess(records) {
     // console.log('Adding browsing contexts...')
 
     // result.records = addContexts(result.records, browsingContexts)
+
+    result.records.forEach(record => {
+        Object.keys(record).forEach(prop => reportProperties.add(prop))
+    })
 
     result.records = result.records.filter(record => {
         return record.reports.length > 0;
@@ -166,6 +177,7 @@ async function doProcess(records) {
     console.log(`${n(result.filtered)} items filtered.`);
     console.log(`${n(result.unfilteredRecords.length)} items unfiltered.`);
     console.log(`${n(result.nbOut)} items out.`);
+    console.log(`Records properties: ${[...reportProperties.values()].sort().join(', ')}`)
 
     await writeFile(processedFilePath, JSON.stringify(result.records, null, 2))
     await writeFile(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))

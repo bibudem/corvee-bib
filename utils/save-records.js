@@ -1,14 +1,23 @@
-import { createWriteStream } from 'node:fs'
+import { createWriteStream, WriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { console } from '@corvee/core'
 
+/**
+ * @param {import("@corvee/harvester").Harvester} harvester
+ * @param {string} jobId
+ * @param {{ (record: any): boolean; (arg0: any): any; }} filter
+ */
 export async function saveRecords(harvester, jobId, filter) {
 
     const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
     const fileName = join(dir, `${jobId}_harvested.json`);
     var i = 1;
+
+    /**
+     * @type WriteStream
+     */
     let stream;
     try {
         stream = createWriteStream(fileName, {
@@ -66,7 +75,8 @@ export async function saveRecords(harvester, jobId, filter) {
 
         write(json(record))
 
-        console.info(`[record] ${i++}`)
+        // console.info(`[record] ${i++}`)
+        i++
 
     })
 

@@ -3,7 +3,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { Harvester } from '@corvee/harvester'
 import { fetchGuides } from './lib/fetch-guides.js'
-import { saveBrowsingContexts, saveReportCodes, saveRecords } from './utils/index.js'
+import { saveBrowsingContexts, saveReportCodes, saveRecords, saveSystemInfo } from './utils/index.js'
 import { console, inspect } from '@corvee/core'
 
 import { harvesterConfig } from './config/index.js'
@@ -58,6 +58,9 @@ async function harvest() {
 
     const harvester = new Harvester(harvesterConfig)
 
+    /**
+     * @type {Array<HTMLAnchorElement>}
+     */
     // const links = await fetchGuides()
     const links = []
 
@@ -65,7 +68,7 @@ async function harvest() {
         return Array
             .from(document.querySelectorAll('a[href]'))
             // Exclude those inside a rss module
-            .filter(link => !link.parentNode.closest('.s-lg-rss-list-item'))
+            .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.parentNode.closest('.s-lg-rss-list-item')))
             .map(link => ({
                 url: link.href,
                 text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
@@ -80,6 +83,10 @@ async function harvest() {
         console.info(`[${request.retryCount}] Request url: ${request.url}`);
     })
 
+    harvester.on('systemInfo', function onSystemInfo(data) {
+        console.info(`[systemInfo] ${inspect(data)}`)
+    })
+
     saveRecords(harvester, job, (record) => {
         //return record.extern && record.url && !record.url.startsWith('mailto:');
         return true;
@@ -89,16 +96,32 @@ async function harvest() {
 
     saveReportCodes(harvester, job);
 
+    saveSystemInfo(harvester, job)
+
     // savePageTitles(harvester)
 
     const task = argv.resume ? 'resume' : 'run';
 
+    console.info(`Running with config: ${inspect(harvester.config)}`);
+
+    harvester.on('start', function onStart() {
+        console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
+    })
+
+    console.info(`autoscaledPool options: ${inspect(harvester.autoscaledPoolOptions)}`)
+    console.info(`browserPool options: ${inspect(harvester.browserPoolOptions)}`)
+    console.info(`launchContext options: ${inspect(harvester.launchContextOptions)}`)
+    console.info(`playwrightCrawler options: ${inspect(harvester.playwrightCrawlerOptions)}`)
+
+    console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
+
     try {
-        console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
         await harvester[task]()
     } catch (e) {
         console.error(e)
-        process.exit()
+        process.nextTick(function () {
+            process.exit()
+        })
     }
 }
 
