@@ -59,14 +59,14 @@ async function harvest() {
     const harvester = new Harvester(harvesterConfig)
 
     /**
-     * @type {Array<HTMLAnchorElement>}
+     * @type {Array<object>}
      */
     // const links = await fetchGuides()
     const links = []
 
     harvester.setLinkParser(function linkParser() {
         return Array
-            .from(document.querySelectorAll('a[href]'))
+            .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
             // Exclude those inside a rss module
             .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.parentNode.closest('.s-lg-rss-list-item')))
             .map(link => ({

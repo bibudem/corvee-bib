@@ -21,7 +21,7 @@ export function saveSystemInfo(harvester, jobId) {
   const csvStream = csv.format({ headers: true })
   csvStream.pipe(systemInfoStream).on('end', () => process.exit());
 
-  harvester.on('systemInfo', function (data) {
+  harvester.on('system-info', function (data) {
     csvStream.write(data)
   })
 

@@ -37,6 +37,7 @@ const processedFilePath = join(baseDir, `${job}_processed.json`);
 const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
 // const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
 const harvestedDataPath = join(baseDir, `${job}_harvested.json`)
+const reportTypesPath = join(baseDir, `${job}_reports-types.json`)
 
 // const browsingContexts = JSON.parse(await readFile(browsingContextsPath))
 const harvestedData = JSON.parse(await readFile(harvestedDataPath, 'utf-8'))
@@ -45,6 +46,7 @@ const noisyErrors = new Set()
 const silentReports = new Map()
 const httpStatuses = new Map()
 const reportProperties = new Set()
+const reportTypes = new Map()
 
 const _n = new Intl.NumberFormat('fr-CA')
 
@@ -97,6 +99,16 @@ async function doProcess(records) {
 
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
+    })
+
+    processor.on('filtered', record => {
+        record.reports?.forEach(report => {
+            if (!reportTypes.has(report.code)) {
+                reportTypes.set(report.code, new Set())
+            }
+
+            reportTypes.get(report.code).add(record.url)
+        })
     })
 
     console.log('Starting processor...')
@@ -181,6 +193,16 @@ async function doProcess(records) {
 
     await writeFile(processedFilePath, JSON.stringify(result.records, null, 2))
     await writeFile(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
+
+    /**
+     * @type {Partial<{string: Array<string>}>}
+     */
+    const reportTypesObj = {}
+    const sortedReportTypesKeys = [...reportTypes.keys()].sort()
+    sortedReportTypesKeys.forEach(key => {
+        reportTypesObj[key] = [...reportTypes.get(key).values()].sort()
+    })
+    await writeFile(reportTypesPath, JSON.stringify(reportTypesObj, null, 2))
 
     result.records = result.records
         .map(record => {
