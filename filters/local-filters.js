@@ -25,6 +25,7 @@ import microsoft from './local/microsoft-forward-link.js'
 import publicAuthServices from './local/public-auth-services.js'
 
 import sofiaRedirectionLinker2 from './local/sofia-redirection-linker2.js'
+import sofiaWorldcatReponse503 from './local/sofia-worldcat-reponse-503.js'
 import studiumLogin from './local/studium-login.js'
 import udemHttp30xCalendrier from './local/udem-http-30x-calendrier.js'
 
@@ -86,6 +87,7 @@ export const localFilters = [
         exclude: true
     },
     sofiaRedirectionLinker2,
+    sofiaWorldcatReponse503,
     studiumLogin,
     udemHttp30xCalendrier,
     pupTimeoutRedirect,
