@@ -58,7 +58,7 @@ function n(n) {
 }
 
 /**
- * @param {Array<Record>} records
+ * @param {Array<import('corvee-harvester').RecordType>} records
  */
 async function doProcess(records) {
 
