@@ -2,7 +2,7 @@ import { createWriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { console } from '@corvee/core'
+import { console } from 'corvee-core'
 
 export async function saveInternLinks(harvester, jobId, filter) {
 

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { console, inspect } from '@corvee/core'
+import { console, inspect } from 'corvee-core'
 import { fetchGuides } from '../lib/fetch-guides.js'
 
 const inputFile = join('data', '2022-10-05_harvested.json')

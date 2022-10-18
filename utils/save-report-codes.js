@@ -2,7 +2,7 @@ import { createWriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { console, inspect } from '@corvee/core'
+import { console, inspect } from 'corvee-core'
 
 export function saveReportCodes(harvester, jobId) {
 

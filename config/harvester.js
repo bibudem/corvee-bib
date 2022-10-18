@@ -1,6 +1,6 @@
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { normalizeUrl } from '@corvee/core'
+import { normalizeUrl } from 'corvee-core'
 
 import { adressesSimplifiees } from './adresses-simplifiees.js'
 
@@ -49,12 +49,9 @@ export const harvesterConfig = {
         /^https?:\/\/([^.\/]+\.)?sharethis.com/i,
 
         // Abonnements
-        /^http:\/\/ovidsp\.ovid\.com/i,
-        'http://canlii.ca', // Redirige vers une page de captcha
+        'https://www.canlii.org/', // Affiche une page de captcha avec le status 429 (Too Many Requests)
 
         // Autres
-        'cairn.info',
-        'advance.lexis.com',
         /^https:\/\/fusion\.google\.com/i,
         /^https:\/\/books\.google\.com/i,
         /^https:\/\/documents\.un\.org\//i,
@@ -69,10 +66,11 @@ export const harvesterConfig = {
     ],
     linkParserDelay: false,
     logLevel: 'verbose',
-    maxConcurrency: 1,
+    maxConcurrency: 2,
     maxRequestRetries: 3,
     // maxRequests: 10,
     navigationOnly: true,
+    // navigationTimeoutSecs: 5,
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
     noFollow: [
         /^https:\/\/umontreal\.on\.worldcat\.org/,
@@ -108,17 +106,20 @@ export const harvesterConfig = {
         intern: 'networkidle',
         extern: 'load'
     },
+    // requestHandlerTimeoutSecs: 60,
     schemes: ['mailto'],
-    // startUrl: 'https://bib.umontreal.ca/',
+    startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'https://www.cairn.info/', // DataDome
     // startUrl: 'http://www.canlii.org/fr/', // http-429
     // startUrl: 'https://bib.umontreal.ca/amenagement/architecture',
     // startUrl: 'https://playwright.dev/docs/api/class-response', // http-200
+    // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf', // http-200
     // startUrl: 'http://www.jpma.or.jp/english/', // http-301
     // startUrl: 'https://eudocs.lib.byu.edu/index.php/main_page', // http-30x-permanent-redirect-successful
     // startUrl: 'https://nouveau.eureka.cc/Search/AdvancedMobile', // redirect-to-login-page
     // startUrl: 'https://reseau.umontreal.ca/bib', // http-302
     // startUrl: 'http://www.facebook.com/Banquemondiale', // http-307-HSTS-redirect
-    startUrl: 'http://www.zotero.org/support/screencast_tutorials', // http-HSTS-redirect
+    // startUrl: 'http://www.zotero.org/support/screencast_tutorials', // http-HSTS-redirect
     // startUrl: 'http://localhost/t.html', // redirected asset
     // startUrl: 'https://fnp-ppn.aadnc-aandc.gc.ca/fnp/Main/?lang=fra', // http-403
     // startUrl: 'http://awefdkiofkdjnxmsklwoidjmsmsdldoslld.coz', // http-404
@@ -133,9 +134,9 @@ export const harvesterConfig = {
     // startUrl: 'https://1findr.1science.com/home', // net-empty-response (net-http)
     // startUrl: 'http://www.worldcat.org/oclc/196570217', // http-503
     // startUrl: 'http://www.openthesis.org/', // http-504 Gateway Timeout
-    // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf', // http-200
     // startUrl: 'http://www.cnbksy.cn/shlib_tsdc/en/do', // http-412
     // startUrl: 'http://www.legislation.gov.uk/ukpga/Geo5/22-23/4', // http-504
+    // startUrl: 'http://www.baisserlesbarrieres.org/videos/BLB-film_1-Entreprises_et_stagiaires_BLB_%28Daniel%29-fra.mp4', // TimeoutError (config.requestHandlerTimeoutSecs)
     storageDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.storage'),
     userDataDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.userData'),
     useCache: true,

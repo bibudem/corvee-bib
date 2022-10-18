@@ -3,8 +3,6 @@ import * as config from '../config/index.js'
 // local plugins
 import { isBadAdresseSimplifiee } from './local/bib-adresses-simplifiees.js'
 import bibHttpsUpgrade from './local/bib-https-upgrade.js'
-import bibAncienAtrium from './local/bib-ancien-atrium.js'
-import bibAtriumNonSecurise from './local/bib-atrium-non-securise.js'
 import bibAtrium from './local/bib-atrium.js'
 import bibCommunicationsLienManquant from './local/bib-communications-lien-manquant.js'
 import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures.js'
@@ -42,12 +40,7 @@ export const localFilters = [
         }),
         priority: 1
     },
-    {
-        ...bibAncienAtrium,
-        priority: 1
-    },
     bibCommunicationsLienManquant,
-    bibAtriumNonSecurise,
     {
         ...bibAtrium,
         priority: 1

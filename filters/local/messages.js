@@ -4,14 +4,6 @@ export default {
         msg: "Ce lien pointe vers <em>Atrium</em> alors qu'il devrait pointer vers Sofia. Veuillez le mettre à jour"
     },
 
-    "bib-ancien-atrium": {
-        msg: "Ce lien pointe vers une ancienne version. Veuillez le mettre à jour"
-    },
-
-    "bib-atrium-non-securise": {
-        msg: "Veuillez utiliser la version <code>https</code> de cette adresse."
-    },
-
     "bib-bad-adresses-simplifiees": {
         pattern: "^(http)(.+)$",
         substitution: "Utilisez la version sécurisée: $1s$2",

@@ -2,10 +2,10 @@ import { createWriteStream, WriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { console } from '@corvee/core'
+import { console } from 'corvee-core'
 
 /**
- * @param {import("@corvee/harvester").Harvester} harvester
+ * @param {import("corvee-harvester").Harvester} harvester
  * @param {string} jobId
  * @param {{ (record: any): boolean; (arg0: any): any; }} filter
  */

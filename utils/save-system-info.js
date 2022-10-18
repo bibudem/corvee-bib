@@ -3,10 +3,10 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as csv from 'fast-csv'
 
-import { console, inspect } from '@corvee/core'
+import { console, inspect } from 'corvee-core'
 
 /**
- * @param {import("@corvee/harvester").Harvester} harvester
+ * @param {import("corvee-harvester").Harvester} harvester
  * @param {string} jobId
  */
 export function saveSystemInfo(harvester, jobId) {

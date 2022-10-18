@@ -22,9 +22,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@corvee/core": "file:../corvee/packages/core",
-        "@corvee/harvester": "file:../corvee/packages/harvester",
-        "@corvee/processor": "file:../corvee/packages/processor",
+        "corvee-core": "file:../corvee/packages/core",
+        "corvee-harvester": "file:../corvee/packages/harvester",
+        "corvee-processor": "file:../corvee/packages/processor",
         "axios": "^0.27.2",
         "colors": "^1.4.0",
         "es-main": "^1.2.0",

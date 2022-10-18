@@ -1,11 +1,12 @@
 import * as config from '../config/index.js'
-import { filters as _, messagesFrCA } from '@corvee/processor'
+import { filters as _, messagesFrCA } from 'corvee-processor'
 
 export const standardFilters = [
     _.http30xAllTempRedirects,
-    _.http30xPermanentRedirectSuccessfull,
+    new _.Http30xPermanentRedirectSuccessful({
+        level: 'error'
+    }),
     _.http30xPermanentRedirectFailure,
-    // _.http307,
     {
         ..._.http30xCircularRedirection,
         exclude: true // KEEP
@@ -15,7 +16,7 @@ export const standardFilters = [
         exclude: true // KEEP
     },
     _.http30xHttpsUpgradeAny,
-    new _.http30xHttpsUpgradeLoose({
+    new _.Http30xHttpsUpgradeLoose({
         ignoreWww: true
     }),
     new _.http30xHttpsUpgradeStrict({

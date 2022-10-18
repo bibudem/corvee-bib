@@ -1,10 +1,10 @@
 import readline from 'readline'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { Harvester } from '@corvee/harvester'
+import { Harvester } from 'corvee-harvester'
 import { fetchGuides } from './lib/fetch-guides.js'
 import { saveBrowsingContexts, saveReportCodes, saveRecords, saveSystemInfo } from './utils/index.js'
-import { console, inspect } from '@corvee/core'
+import { console, inspect } from 'corvee-core'
 
 import { harvesterConfig } from './config/index.js'
 
@@ -17,14 +17,14 @@ const defaultJob = `${year}-${month}-${day}`;
 
 const argv = yargs(hideBin(process.argv))
     .options({
-        j: {
-            alias: 'job',
+        job: {
+            alias: 'j',
             default: defaultJob,
             describe: `Job id. Defaults to today\'s date: ${defaultJob}`,
             type: 'string'
         },
-        r: {
-            alias: 'resume',
+        resume: {
+            alias: 'r',
             default: false,
             type: 'boolean',
             describe: 'Resumes a previously stoped job. Requires --job options.',
@@ -32,9 +32,12 @@ const argv = yargs(hideBin(process.argv))
         }
     })
     .help()
-    .argv;
+    .parseSync();
 
 const job = argv.job;
+
+let internLinks = new Set()
+let externLinks = new Set()
 
 async function harvest() {
 
@@ -81,11 +84,17 @@ async function harvest() {
 
     harvester.on('request', function onRequest(request) {
         console.info(`[${request.retryCount}] Request url: ${request.url}`);
+
+        if (request.extern) {
+            externLinks.add(request.url)
+        } else {
+            internLinks.add(request.url)
+        }
     })
 
-    harvester.on('systemInfo', function onSystemInfo(data) {
-        console.info(`[systemInfo] ${inspect(data)}`)
-    })
+    // harvester.on('system-info', function onSystemInfo(data) {
+    //     console.info(`[systemInfo] ${inspect(data)}`)
+    // })
 
     saveRecords(harvester, job, (record) => {
         //return record.extern && record.url && !record.url.startsWith('mailto:');
@@ -106,6 +115,11 @@ async function harvest() {
 
     harvester.on('start', function onStart() {
         console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
+    })
+
+    harvester.on('end', function onEnd() {
+        console.info(`Found ${internLinks.size} intern pages.`)
+        console.info(`Found ${externLinks.size} extern pages.`)
     })
 
     console.info(`autoscaledPool options: ${inspect(harvester.autoscaledPoolOptions)}`)

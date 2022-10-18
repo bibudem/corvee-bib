@@ -2,7 +2,7 @@ import { writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { fetchGuides } from '../lib/fetch-guides.js'
-import { console } from '@corvee/core'
+import { console } from 'corvee-core'
 
 console.log('Fetching links...')
 

@@ -2,7 +2,7 @@ import { readFile, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import yargs from 'yargs'
 import { addContexts } from '../lib/add-contexts.js'
-import { console, inspect } from '@corvee/core'
+import { console, inspect } from 'corvee-core'
 
 const today = new Date();
 const year = today.getFullYear();

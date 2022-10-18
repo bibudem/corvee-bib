@@ -5,11 +5,11 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe.js'
-import { CorveeProcessor } from '@corvee/processor'
+import { CorveeProcessor } from 'corvee-processor'
 import { filters, messages } from './filters/index.js'
 import { toSql } from './utils/to-sql.js'
 // import { addContexts } from './lib/add-contexts.js'
-import { console, inspect } from '@corvee/core'
+import { console, inspect } from 'corvee-core'
 
 const start = Date.now();
 const today = new Date();
@@ -93,9 +93,9 @@ async function doProcess(records) {
         messages
     });
 
-    // processor.on('http-30x-permanent-redirect-failure', function (record) {
-    //     console.log(inspect(record))
-    // })
+    processor.on('http-30x-permanent-redirect-successful', function (record) {
+        console.log(inspect(record))
+    })
 
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
