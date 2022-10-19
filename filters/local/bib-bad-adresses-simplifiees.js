@@ -1,21 +1,25 @@
-export function isAdresseSimplifiee({
-    urls = [],
-    exclude = false
-} = {}) {
-    return {
-        code: `bib-adresses-simplifiees`,
-        test: report => {
-            return urls.find(testUrl => typeof testUrl === 'string' ? report.url.includes(testUrl) : testUrl.test(report.url))
-        },
-        level: 'info',
-        exclude
-    }
-}
+const CODE = `bib-bad-adresses-simplifiees`
 
-export function isBadAdresseSimplifiee({
+/**
+ * @protected
+ * @typedef { Array<string|RegExp> } UrlParamType
+ */
+
+/**
+ *
+ *
+ * @param {object} params
+ * @param { UrlParamType } params.urls
+ * @param {boolean} [params.exclude = false]
+ * @param {number} [params.priority = 1]
+ * 
+ * @returns {object}
+ */
+export default function isBadAdresseSimplifiee({
     urls = [],
-    exclude = false
-} = {}) {
+    exclude = false,
+    priority = 0
+}) {
 
     const badUrls = urls.map(url => {
         if (typeof url === 'string') {
@@ -27,19 +31,23 @@ export function isBadAdresseSimplifiee({
         return new RegExp(src.replace('https', 'http'), flags);
     })
 
+    /**
+     * @param {UrlParamType} url
+     */
     function isBadUrl(url) {
         return badUrls.find(testUrl => typeof testUrl === 'string' ? url.includes(testUrl) : testUrl.test(url))
     }
 
     return {
-        code: `bib-bad-adresses-simplifiees`,
+        code: CODE,
         test: report => {
             const b = isBadUrl(report.url);
             if (b) {
-                // console.warn(report.url)
+
                 return report.url;
             }
         },
-        exclude
+        exclude,
+        priority
     }
 }

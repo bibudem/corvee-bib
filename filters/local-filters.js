@@ -1,11 +1,12 @@
 import * as config from '../config/index.js'
 
 // local plugins
-import { isBadAdresseSimplifiee } from './local/bib-adresses-simplifiees.js'
-import bibHttpsUpgrade from './local/bib-https-upgrade.js'
 import bibAtrium from './local/bib-atrium.js'
+import bibBadAdresseSimplifiee from './local/bib-bad-adresses-simplifiees.js'
+import bibHttpsUpgrade from './local/bib-https-upgrade.js'
 import bibCommunicationsLienManquant from './local/bib-communications-lien-manquant.js'
 import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures.js'
+import bibGif from './local/bib-gif.js'
 import bibGuidesBibUmontrealCa from './local/bib-guides-bib-umontreal-ca.js'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3.js'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3.js'
@@ -35,17 +36,18 @@ export const localMessages = messages;
 
 export const localFilters = [
     {
-        ...isBadAdresseSimplifiee({
+        ...bibAtrium,
+        priority: 1
+    },
+    {
+        ...bibBadAdresseSimplifiee({
             urls: config.adressesSimplifiees
         }),
         priority: 1
     },
     bibCommunicationsLienManquant,
-    {
-        ...bibAtrium,
-        priority: 1
-    },
     bibExamensAnneesAnterieures,
+    bibGif,
     {
         ...bibHttp30xRedirectionTypo3,
         exclude: true
