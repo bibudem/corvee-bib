@@ -93,9 +93,9 @@ async function doProcess(records) {
         messages
     });
 
-    processor.on('http-30x-permanent-redirect-successful', function (record) {
-        console.log(inspect(record))
-    })
+    // processor.on('http-30x-permanent-redirect-successful', function (record) {
+    //     console.log(inspect(record))
+    // })
 
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
