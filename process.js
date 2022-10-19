@@ -137,7 +137,7 @@ async function doProcess(records) {
 
     const perFilterData = result.perFilter
         .map(filterData => {
-            filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('x') : colors.green('✓');
+            filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('-') : colors.green('✓');
 
             return filterData;
         })
