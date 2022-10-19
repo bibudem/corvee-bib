@@ -7,7 +7,7 @@ import { console } from 'corvee-core'
 /**
  * @param {import("corvee-harvester").Harvester} harvester
  * @param {string} jobId
- * @param {{ (record: any): boolean; (arg0: any): any; }} filter
+ * @param {{ (record: any): boolean; (arg0: any): any; }} [filter]
  */
 export async function saveRecords(harvester, jobId, filter) {
 
@@ -19,6 +19,7 @@ export async function saveRecords(harvester, jobId, filter) {
      * @type WriteStream
      */
     let stream;
+
     try {
         stream = createWriteStream(fileName, {
             flags: 'w'
@@ -28,6 +29,9 @@ export async function saveRecords(harvester, jobId, filter) {
         process.exit()
     }
 
+    /**
+     * @param {string} data
+     */
     function write(data) {
         if (stream.pending) {
             process.nextTick(() => {
@@ -42,6 +46,9 @@ export async function saveRecords(harvester, jobId, filter) {
         stream.write('[')
     })
 
+    /**
+     * @param { Object<string, *> } data
+     */
     function json(data) {
         let str = '';
         try {
