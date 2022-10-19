@@ -85,7 +85,7 @@ async function harvest() {
     harvester.on('request', function onRequest(request) {
         console.info(`[${request.retryCount}] Request url: ${request.url}`);
 
-        if (request.extern) {
+        if (request.userData.extern) {
             externLinks.add(request.url)
         } else {
             internLinks.add(request.url)
@@ -96,10 +96,7 @@ async function harvest() {
     //     console.info(`[systemInfo] ${inspect(data)}`)
     // })
 
-    saveRecords(harvester, job, (record) => {
-        //return record.extern && record.url && !record.url.startsWith('mailto:');
-        return true;
-    })
+    saveRecords(harvester, job)
 
     saveBrowsingContexts(harvester, job);
 
