@@ -93,8 +93,15 @@ async function doProcess(records) {
         messages
     });
 
-    // processor.on('http-30x-permanent-redirect-successful', function (record) {
+    // processor.on('bib-lien-libguides', function (record) {
     //     console.log(inspect(record))
+    // })
+
+    // processor.on('filtered', function (record, filter) {
+    //     if (record.id === 281022) {
+    //         console.log('=== filtered ===')
+    //         console.log(inspect(filter))
+    //     }
     // })
 
     processor.on('filtered', (record, filter) => {

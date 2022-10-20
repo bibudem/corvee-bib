@@ -26,22 +26,22 @@ export default {
         substitution: "L'adresse a changé. Veuillez utiliser $1."
     },
 
-    "bib-lien-guides-bib-umontreal-ca": {
-        pattern: "(.+)",
-        substitution: "Ce lien pointe vers <em><A La Carte</em> (<a href=\"$1\">$1</a>) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.",
-        msg: "Ce lien pointe vers <em><A La Carte</em> (https://guides.bib.umontreal.ca/...) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
-    },
-
-    "bib-lien-guide-embed": {
-        msg: "Utilisez l'URL publique du guide, celle débutant par <code class=\"cvw-url\">https://bib.umontreal.ca/</code>...."
-    },
-
     "bib-lien-be-typo3": {
         msg: "Évitez ces liens <code class=\"cvw-url\">http://bib.umontreal.ca/index.php?id=12345</code> générés par TYPO3. Utilisez plutôt le lien tel qu'obtenu en navigant dans le site."
     },
 
     "bib-lien-developpement-edimestre": {
         msg: "Ce lien pointe vers l'espace de développement de l'édimestre. Ces pages ne sont pas destinées à être rendues publiques."
+    },
+
+    "bib-lien-guide-embed": {
+        msg: "Utilisez l'URL publique du guide, celle débutant par <code class=\"cvw-url\">https://bib.umontreal.ca/</code>...."
+    },
+
+    "bib-lien-guides-bib-umontreal-ca": {
+        pattern: "(.+)",
+        substitution: "Ce lien pointe vers <em><A La Carte</em> (<a href=\"$1\">$1</a>) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.",
+        msg: "Ce lien pointe vers <em><A La Carte</em> (https://guides.bib.umontreal.ca/...) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
     },
 
     "bib-lien-guides-with-old-tab": {
