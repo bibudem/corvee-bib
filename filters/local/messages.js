@@ -20,14 +20,16 @@ export default {
         msg: "Ce lien mène à l'application GIF. Veuillez plutôt utiliser l'application Calendrier LibCal."
     },
 
-    "bib-guides-bib-umontreal-ca": {
-        msg: "Ce lien pointe vers https://guides.bib.umontreal.ca/... Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
-    },
-
     "bib-https-upgrade": {
         msg: "L'adresse a changé",
         pattern: "(.+)",
         substitution: "L'adresse a changé. Veuillez utiliser $1."
+    },
+
+    "bib-lien-guides-bib-umontreal-ca": {
+        pattern: "(.+)",
+        substitution: "Ce lien pointe vers <em><A La Carte</em> (<a href=\"$1\">$1</a>) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.",
+        msg: "Ce lien pointe vers <em><A La Carte</em> (https://guides.bib.umontreal.ca/...) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
     },
 
     "bib-lien-guide-embed": {
@@ -46,8 +48,16 @@ export default {
         msg: "Ce lien pointe vers À La Carte. Veuillez mettre à jour le numéro de tab dans l'URL."
     },
 
-    "bib-lien-libguides": {
-        msg: "Ce lien pointe vers un guide hébergé sur LibGuides (<code>https://libguides.bib.umontreal.ca/c.php?...</code>). Utilisez plutôt une adresse pointant vers le guide sur le site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)"
+    "bib-lien-libguides-admin": {
+        msg: "Ce lien pointe vers l'interface d'administration de LibGuides. Utilisez plutôt une adresse publique du guide (<code>https://bib.umontreal.ca/...</code>)."
+    },
+
+    "bib-lien-libguides-guides": {
+        msg: "Ce lien pointe vers un guide hébergé sur LibGuides (<code>https://libguides.bib.umontreal.ca/c.php?...</code>). Utilisez plutôt une adresse pointant vers le guide sur le site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)."
+    },
+
+    "bib-lien-libguides-natif": {
+        msg: "Ce lien pointe vers une page sur LibGuides (<code>https://libguides.bib.umontreal.ca/...</code>). Utilisez plutôt une page du site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)."
     },
 
     "bib-Maestro": {

@@ -2,6 +2,8 @@
 export default {
   code: 'bib-guides-bib-umontreal-ca',
   test: (report) => {
-    return 'url' in report && (report.url.startsWith('https://guides.bib.umontreal.ca'))
+    if (report.url && report.url.startsWith('https://guides.bib.umontreal.ca')) {
+      return report.url
+    }
   }
 }

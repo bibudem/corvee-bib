@@ -7,13 +7,15 @@ import bibHttpsUpgrade from './local/bib-https-upgrade.js'
 import bibCommunicationsLienManquant from './local/bib-communications-lien-manquant.js'
 import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures.js'
 import bibGif from './local/bib-gif.js'
-import bibGuidesBibUmontrealCa from './local/bib-guides-bib-umontreal-ca.js'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3.js'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3.js'
 import bibLienDeveloppementEdimestre from './local/bib-lien-developpement-edimestre.js'
 import bibLienDeveloppementWebmestre from './local/bib-lien-developpement-webmestre.js'
+import bibLienGuidesBibUmontrealCa from './local/bib-lien-guides-bib-umontreal-ca.js'
 import bibLienGuidesWithOldTab from './local/bib-lien-guides-with-old-tab.js'
-import bibLienLibguides from './local/bib-lien-libguides.js'
+import bibLienLibguidesAdmin from './local/bib-lien-libguides-admin.js'
+import bibLienLibguidesGuides from './local/bib-lien-libguides-guides.js'
+import bibLienLibguidesNatif from './local/bib-lien-libguides-natif.js'
 import bibLienGuideEmbed from './local/bib-liens-guide-embed.js'
 import bibListeAZ from './local/bib-liste-az.js'
 import bibMaestro from './local/bib-Maestro.js'
@@ -52,12 +54,14 @@ export const localFilters = [
         ...bibHttp30xRedirectionTypo3,
         exclude: true
     },
-    bibGuidesBibUmontrealCa,
+    bibLienGuidesBibUmontrealCa,
     bibLienBeTypo3,
     bibLienDeveloppementEdimestre,
     bibLienDeveloppementWebmestre,
     bibLienGuidesWithOldTab,
-    bibLienLibguides,
+    bibLienLibguidesAdmin,
+    bibLienLibguidesGuides,
+    bibLienLibguidesNatif,
     bibLienGuideEmbed,
     {
         ...bibListeAZ,

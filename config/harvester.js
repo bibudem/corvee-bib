@@ -27,6 +27,10 @@ export const harvesterConfig = {
         'http://expo.bib.umontreal.ca',
         'http://geos.bib.umontreal.ca',
         'https://umontreal.on.worldcat.org',
+        // Liste AZ
+        'https://libguides.bib.umontreal.ca/az.php',
+        /^https:\/\/libguides\.bib\.umontreal\.ca\/[A-Za-z_]+/i,
+        /^https:\/\/umontreal\.libapps\.com\/libapps\/login\.php/i,
 
         // Adresses UdeM connues
         /^https:\/\/www\.umontreal\.ca\/?$/i, // page d'accueil de l'UdeM
@@ -66,7 +70,7 @@ export const harvesterConfig = {
     ],
     linkParserDelay: false,
     logLevel: 'verbose',
-    maxConcurrency: 2,
+    maxConcurrency: 4,
     maxRequestRetries: 3,
     // maxRequests: 10,
     navigationOnly: true,
@@ -81,7 +85,6 @@ export const harvesterConfig = {
         /^https?:\/\/calypso\.bib\.umontreal\.ca/,
         'https://jupiter.bib.umontreal.ca/GIF',
         'http://mentor.bib.umontreal.ca',
-        'http://olympe.bib.umontreal.ca',
         'http://opurl.bib.umontreal.ca',
         'https://papyrus.bib.umontreal.ca',
         /^https:\/\/libguides\.bib\.umontreal\.ca\/c\.php/,
