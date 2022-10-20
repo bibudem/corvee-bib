@@ -78,6 +78,15 @@ async function harvest() {
                 urlData: link.getAttribute('href'),
                 isNavigationRequest: true
             }))
+            .concat(Array
+                .from(/** @type {NodeListOf<HTMLImageElement>} */(document.querySelectorAll('img[src]')))
+                .map(img => ({
+                    url: img.src,
+                    text: img.alt || img.title || null,
+                    urlData: img.getAttribute('src'),
+                    isNavigationRequest: false
+                }))
+            )
     })
 
     await harvester.addUrl(links);
