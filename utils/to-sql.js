@@ -65,8 +65,6 @@ DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${job}';
             browsingContextStack,
             extern,
             reports,
-            httpStatusCode,
-            httpStatusText
         } = {
                 ...item
             }) => {
@@ -83,7 +81,7 @@ DELETE FROM corvee.dbo.liens WHERE projectId = 'site-web' AND jobId = '${job}';
                 action: "to-be-fixed",
                 error_code: errCodesFor(reports),
                 projectId,
-                job
+                jobId: job
             };
 
             sqlQuery.push(sql(sqlData));

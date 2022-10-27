@@ -93,9 +93,9 @@ async function doProcess(records) {
         messages
     });
 
-    // processor.on('bib-lien-libguides', function (record) {
-    //     console.log(inspect(record))
-    // })
+    processor.on('http-30x-root-to-path-permanent-redirect', function (record) {
+        // console.log(inspect(record))
+    })
 
     // processor.on('filtered', function (record, filter) {
     //     if (record.id === 281022) {
@@ -107,6 +107,7 @@ async function doProcess(records) {
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
     })
+
 
     processor.on('filtered', record => {
         record.reports?.forEach(report => {
@@ -131,7 +132,7 @@ async function doProcess(records) {
     })
 
     result.records = result.records.filter(record => {
-        return record.reports.length > 0;
+        return record.reports && record.reports.length > 0;
     })
 
     silentReports.forEach((value, silentErrorCode) => {

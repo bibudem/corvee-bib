@@ -4,7 +4,8 @@ import { filters as _, messagesFrCA } from 'corvee-processor'
 export const standardFilters = [
     _.http30xAllTempRedirects,
     new _.Http30xPermanentRedirectSuccessful({
-        level: 'error'
+        level: 'error',
+        limit: 1000
     }),
     _.http30xPermanentRedirectFailure,
     {
@@ -12,37 +13,25 @@ export const standardFilters = [
         exclude: true // KEEP
     },
     {
-        ..._.http30xMissingSlash,
+        ..._.http30xSlash,
         exclude: true // KEEP
     },
     _.http30xHttpsUpgradeAny,
     new _.Http30xHttpsUpgradeLoose({
         ignoreWww: true
     }),
-    new _.http30xHttpsUpgradeStrict({
+    new _.Http30xHttpsUpgradeStrict({
         ignoreWww: false,
         level: 'info',
-        limit: 1000,
+        // limit: 1000,
         // exclude: true
     }),
-    _.http30xWelcomePage,
+    new _.Http30xRootToPathPermanentRedirect(),
+    _.http30xRedirectToWelcomePage,
     _.http307HSTSRedirect,
-    // _.http400,
-    // _.http401,
-    // _.http403,
-    // _.http404,
     _.http404ByUrl(config.urlsAs404),
-    // _.http408,
-    // _.http410,
-    // _.http429,
-    // _.http500,
-    // _.http501,
-    // _.http502,
-    // _.http503,
-    // _.http512599,
 
     // _.mailInvalidSyntax,
-    // _.mailUnverifiedAddress,
 
     _.netSystem,
     _.netConnection,
@@ -50,7 +39,6 @@ export const standardFilters = [
     _.netHttp,
 
     _.urlIgnoreThese(config.excludedUrls),
-    // _.urlInvalidUrl,
 ]
 
 export const standardMessages = messagesFrCA;

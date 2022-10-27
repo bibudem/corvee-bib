@@ -6,7 +6,7 @@ export default {
 
     "bib-bad-adresses-simplifiees": {
         pattern: "^(http)(.+)$",
-        substitution: "Utilisez la version sécurisée: $1s$2",
+        substitution: "Utilisez la version sécurisée: <code class=\"cvw-url\">$1s$2</code>",
         msg: "Veuillez utiliser la version <code>https</code> de cette adresse."
     },
 
@@ -16,7 +16,7 @@ export default {
 
     "bib-gif": {
         pattern: "(.+)",
-        substitution: "Ce lien mène à l'application GIF (<a href=\"$1\"><code>$1</code></a>). Veuillez plutôt utiliser l'application Calendrier LibCal (<a href=\"https://bib.umontreal.ca/formations/calendrier\"><code>https://bib.umontreal.ca/formations/calendrier</code></a>).",
+        substitution: "Ce lien mène à l'application GIF (<a href=\"$1\"><code class=\"cvw-url\">$1</code></a>). Veuillez plutôt utiliser l'application Calendrier LibCal (<a href=\"https://bib.umontreal.ca/formations/calendrier\"><code class=\"cvw-url\">https://bib.umontreal.ca/formations/calendrier</code></a>).",
         msg: "Ce lien mène à l'application GIF. Veuillez plutôt utiliser l'application Calendrier LibCal."
     },
 
@@ -40,8 +40,8 @@ export default {
 
     "bib-lien-guides-bib-umontreal-ca": {
         pattern: "(.+)",
-        substitution: "Ce lien pointe vers <em><A La Carte</em> (<a href=\"$1\">$1</a>) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.",
-        msg: "Ce lien pointe vers <em><A La Carte</em> (https://guides.bib.umontreal.ca/...) Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
+        substitution: "Ce lien pointe vers <em>À La Carte</em> (<a href=\"$1\" class=\"cvw-url\">$1</a>). Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.",
+        msg: "Ce lien pointe vers <em>À La Carte</em> (https://guides.bib.umontreal.ca/...). Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
     },
 
     "bib-lien-guides-with-old-tab": {
@@ -61,8 +61,8 @@ export default {
     },
 
     "bib-Maestro": {
-        "code": "bib-Maestro",
-        "msg": "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\"><code>https://libguides.bib.umontreal.ca/az.php</code></a>)"
+        code: "bib-Maestro",
+        msg: "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\"><code class=\"cvw-url\">https://libguides.bib.umontreal.ca/az.php</code></a>)"
     },
 
     "bib-wrong-domain": {
