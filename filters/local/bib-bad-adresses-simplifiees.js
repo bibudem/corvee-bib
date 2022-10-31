@@ -23,12 +23,12 @@ export default function isBadAdresseSimplifiee({
 
     const badUrls = urls.map(url => {
         if (typeof url === 'string') {
-            return url.replace('https', 'http')
+            return url.replace('https:', 'http:')
         }
         const flags = url.flags,
             src = url.source;
 
-        return new RegExp(src.replace('https', 'http'), flags);
+        return new RegExp(src.replace('https:', 'http:'), flags);
     })
 
     /**
@@ -40,11 +40,11 @@ export default function isBadAdresseSimplifiee({
 
     return {
         code: CODE,
-        test: report => {
-            const b = isBadUrl(report.url);
+        test: record => {
+            const b = isBadUrl(record.url);
             if (b) {
 
-                return report.url;
+                return record.url.replace('http:', 'https:').replace('www.', '');
             }
         },
         exclude,

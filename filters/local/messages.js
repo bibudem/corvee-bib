@@ -5,9 +5,9 @@ export default {
     },
 
     "bib-bad-adresses-simplifiees": {
-        pattern: "^(http)(.+)$",
-        substitution: "Utilisez la version sécurisée: <code class=\"cvw-url\">$1s$2</code>",
-        msg: "Veuillez utiliser la version <code>https</code> de cette adresse."
+        pattern: "(.+)",
+        substitution: "Utilisez la version sécurisée: <code class=\"cvw-url\">$1</code> de cette adresse simplifiée.",
+        msg: "Veuillez utiliser la version <code>https</code> de cette adresse simplifiée."
     },
 
     "bib-communication-lien-manquant": {
