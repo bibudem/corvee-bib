@@ -21,12 +21,13 @@ export const harvesterConfig = {
         /^https:\/\/www\.bib\.umontreal\.ca\/publications/i,
 
         // Applications des Bibliothèques
-        // /^https:\/\/api\.bib\.umontreal\.ca/,
         /^http:\/\/geoindex\.bib\.umontreal\.ca/i,
         'testproxy.umontreal.ca',
         'http://expo.bib.umontreal.ca',
         'http://geos.bib.umontreal.ca',
         'https://umontreal.on.worldcat.org',
+        /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])/i // ?tab=0 à ?tab=9999
+
         // Liste AZ
         'https://libguides.bib.umontreal.ca/az.php',
         /^https:\/\/libguides\.bib\.umontreal\.ca\/[A-Za-z_]+/i,
