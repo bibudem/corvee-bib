@@ -26,7 +26,7 @@ export const harvesterConfig = {
         'http://expo.bib.umontreal.ca',
         'http://geos.bib.umontreal.ca',
         'https://umontreal.on.worldcat.org',
-        /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])/i // ?tab=0 à ?tab=9999
+        /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])/i, // ?tab=0 à ?tab=9999
 
         // Liste AZ
         'https://libguides.bib.umontreal.ca/az.php',
