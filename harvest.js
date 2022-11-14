@@ -41,6 +41,10 @@ let externLinks = new Set()
 
 async function harvest() {
 
+    const guidesParams = new Set();
+
+    (await fetchGuides()).forEach(guide => guidesParams.add(guide.aliasUrl.split('?tab=')[1]))
+
     readline.emitKeypressEvents(process.stdin);
     process.stdin.setRawMode(true);
     process.stdin.on('keypress', (str, key) => {
@@ -101,9 +105,19 @@ async function harvest() {
         }
     })
 
-    // harvester.on('system-info', function onSystemInfo(data) {
-    //     console.info(`[systemInfo] ${inspect(data)}`)
-    // })
+    harvester.on('add-link', function onAddLink(link) {
+        try {
+            const url = new URL(link.url)
+            if (url.hostname === 'bib.umontreal.ca' && url.searchParams.has('tab') && guidesParams.has(url.searchParams.get('tab'))) {
+                url.searchParams.delete('tab')
+                link.url = url.href
+                link.userData.url = url.href
+            }
+        } catch (e) {
+            console.error(e)
+        }
+
+    })
 
     saveRecords(harvester, job)
 

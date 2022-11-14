@@ -26,7 +26,7 @@ export const harvesterConfig = {
         'http://expo.bib.umontreal.ca',
         'http://geos.bib.umontreal.ca',
         'https://umontreal.on.worldcat.org',
-        /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])/i, // ?tab=0 à ?tab=9999
+        // /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])($|#)/i, // ?tab=0 à ?tab=9999
 
         // Liste AZ
         'https://libguides.bib.umontreal.ca/az.php',
@@ -112,7 +112,8 @@ export const harvesterConfig = {
     },
     // requestHandlerTimeoutSecs: 60,
     schemes: ['mailto'],
-    startUrl: 'https://bib.umontreal.ca/',
+    startUrl: 'https://bib.umontreal.ca/droit/business-law-global-context?tab=5238528',
+    // startUrl: 'https://bib.umontreal.ca/',
     // startUrl: 'https://www.cairn.info/', // DataDome
     // startUrl: 'http://www.canlii.org/fr/', // http-429
     // startUrl: 'https://bib.umontreal.ca/amenagement/architecture',
