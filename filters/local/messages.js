@@ -40,7 +40,7 @@ export default {
 
     "bib-lien-guides-bib-umontreal-ca": {
         pattern: "(.+)",
-        substitution: "<p>Ce lien pointe vers <em>À La Carte</em>. Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.</p><p class=\"cv-i-download--container text-center\"><a href=\"$1\" download class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span> Télécharger ce fichier</a></p>",
+        substitution: "<p>Ce lien pointe vers <em>À La Carte</em>. Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.</p><p class=\"cv-download-asset--container text-center\"><a href=\"$1\" download class=\"cv-download-asset btn btn-primary\"><span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span> Télécharger ce fichier</a></p>",
         msg: "Ce lien pointe vers <em>À La Carte</em> (https://guides.bib.umontreal.ca/...). Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
     },
 
