@@ -6,6 +6,7 @@ import { hideBin } from 'yargs/helpers'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe.js'
 import { CorveeProcessor } from 'corvee-processor'
+import { addSections } from './lib/sections.js'
 import { filters, messages } from './filters/index.js'
 import { toSql } from './utils/to-sql.js'
 // import { addContexts } from './lib/add-contexts.js'
@@ -126,6 +127,11 @@ async function doProcess(records) {
     // console.log('Adding browsing contexts...')
 
     // result.records = addContexts(result.records, browsingContexts)
+
+    console.log('Adding sections...')
+    result.records.forEach(record => addSections(record))
+
+    result.records.forEach(record => record.job = job)
 
     result.records.forEach(record => {
         Object.keys(record).forEach(prop => reportProperties.add(prop))

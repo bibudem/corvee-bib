@@ -4,9 +4,11 @@ import { hideBin } from 'yargs/helpers'
 import { Harvester } from 'corvee-harvester'
 import { fetchGuides } from './lib/fetch-guides.js'
 import { saveBrowsingContexts, saveReportCodes, saveRecords, saveSystemInfo } from './utils/index.js'
+import pageSnippetPlugin from './plugins/page-snippet.js'
 import { console, inspect } from 'corvee-core'
 
 import { harvesterConfig } from './config/index.js'
+import { savePageSnippets } from './utils/save-page-snippets.js'
 
 const today = new Date();
 const year = today.getFullYear();
@@ -71,6 +73,8 @@ async function harvest() {
     // const links = await fetchGuides()
     const links = []
 
+    harvester.addPlugins(pageSnippetPlugin)
+
     harvester.setLinkParser(function linkParser() {
         return Array
             .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
@@ -118,6 +122,8 @@ async function harvest() {
         }
 
     })
+
+    savePageSnippets(harvester, job)
 
     saveRecords(harvester, job)
 
