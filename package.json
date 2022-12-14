@@ -25,7 +25,7 @@
         "corvee-core": "file:../corvee/packages/core",
         "corvee-harvester": "file:../corvee/packages/harvester",
         "corvee-processor": "file:../corvee/packages/processor",
-        "axios": "^1.2.0",
+        "axios": "^1.2.1",
         "colors": "^1.4.0",
         "es-main": "^1.2.0",
         "fast-csv": "^4.3.6",
