@@ -17,6 +17,7 @@ export const harvesterConfig = {
         /^https:\/\/bib\.umontreal\.ca\/activites/i,
         /^https:\/\/bib\.umontreal\.ca\/communications\/nouvelles/i,
         'https://www.bib.umontreal.ca/une-question',
+        /^https:\/\/unequestion\.bib\.umontreal\.ca\//i,
         /^https:\/\/www\.bib\.umontreal\.ca\/ideale/i,
         /^https:\/\/www\.bib\.umontreal\.ca\/publications/i,
 
@@ -25,7 +26,8 @@ export const harvesterConfig = {
         'testproxy.umontreal.ca',
         'http://expo.bib.umontreal.ca',
         'http://geos.bib.umontreal.ca',
-        'https://umontreal.on.worldcat.org',
+        // 'https://umontreal.on.worldcat.org',
+        /^https:\/\/[^\/]+\.worldcat\.org\//i,
         // /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])($|#)/i, // ?tab=0 à ?tab=9999
 
         // Liste AZ
@@ -112,8 +114,9 @@ export const harvesterConfig = {
     },
     // requestHandlerTimeoutSecs: 60,
     schemes: ['mailto'],
-    startUrl: 'https://bib.umontreal.ca/droit/business-law-global-context?tab=5238528',
-    // startUrl: 'https://bib.umontreal.ca/',
+    startUrl: 'https://bib.umontreal.ca/',
+    // startUrl: 'https://bib.umontreal.ca/typo3conf/ext/udem_bib/Resources/Public/Images/logo-bib.svg',
+    // startUrl: 'https://api.bib.umontreal.ca/guides/embed/729885?tab=5238527',
     // startUrl: 'https://www.cairn.info/', // DataDome
     // startUrl: 'http://www.canlii.org/fr/', // http-429
     // startUrl: 'https://bib.umontreal.ca/amenagement/architecture',
