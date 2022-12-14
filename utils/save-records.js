@@ -75,10 +75,15 @@ export async function saveRecords(harvester, jobId, filter) {
         return `${i === 1 ? `\n` : `,\n`}${str.replace(/(^)/gm, '$1  ')}`
     }
 
-    harvester.on('record', function onRecord(record) {
+    /**
+     * 
+     */
+    harvester.on('record', function onRecord(/** @type {import('corvee-harvester').RecordType} */ record) {
         if (filter && !filter(record)) {
             return
         }
+
+        record.job = job
 
         write(json(record))
 
