@@ -8,6 +8,7 @@ import { hideBin } from 'yargs/helpers'
 import { console, inspect } from 'corvee-core'
 import { BrowsingContextStore } from 'corvee-harvester'
 import sectionsData from '../config/sections.js'
+import {algoliasearchOptions} from '../config/local.js'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --job=2022-09-01')
@@ -215,8 +216,8 @@ pageSnippetsIndex.sort((a, b) => {
 
 writeFile(outFilePath, JSON.stringify(pageSnippetsIndex, null, 2))
 
-const client = algoliasearch('DVUHFZXXNR', '2b2f762335ac4dd4698b6088f91f8332')
-const index = client.initIndex('bib_udem_corvee')
+const client = algoliasearch(algoliasearchOptions.applicationId, algoliasearchOptions.writeApiKey)
+const index = client.initIndex(algoliasearchOptions.index)
 
 console.log(`Deleting records for job ${job}`)
 

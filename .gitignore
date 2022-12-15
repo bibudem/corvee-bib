@@ -35,5 +35,6 @@ tmp
 .userData*
 data/
 config/links.json
+config/local*
 *_site-links.txt
 /storage
