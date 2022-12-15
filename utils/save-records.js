@@ -6,13 +6,13 @@ import { console } from 'corvee-core'
 
 /**
  * @param {import("corvee-harvester").Harvester} harvester
- * @param {string} jobId
+ * @param {string} job
  * @param {{ (record: any): boolean; (arg0: any): any; }} [filter]
  */
-export async function saveRecords(harvester, jobId, filter) {
+export async function saveRecords(harvester, job, filter) {
 
     const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
-    const fileName = join(dir, `${jobId}_harvested.json`);
+    const fileName = join(dir, `${job}_harvested.json`);
     var i = 1;
 
     /**
