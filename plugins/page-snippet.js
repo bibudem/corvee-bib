@@ -3,12 +3,16 @@ import { console } from 'corvee-core'
 export default {
   name: 'page-snippet',
   emits: true,
+  /**
+   * @this import('corvee-harvester').Harvester
+   * 
+  */
   onNavigationResponse: async function getPageSnippet({ page, response }) {
     if (
       response.ok()
       && response.request().resourceType() === 'document'
       && this.isInternLink(response.url())
-      && !this.shouldIgnore(response.url())
+      && !this.shouldIgnoreUrl(response.url())
       && response.headers()['content-type']
       && response.headers()['content-type'].startsWith('text/html')
     ) {
