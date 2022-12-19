@@ -98,12 +98,24 @@ async function doProcess(records) {
         // console.log(inspect(record))
     })
 
-    // processor.on('filtered', function (record, filter) {
-    //     if (record.id === 281022) {
-    //         console.log('=== filtered ===')
-    //         console.log(inspect(filter))
-    //     }
-    // })
+    const excluded301Redirections = new Map()
+
+    processor.on('filtered', function (record, filter) {
+        if ((record?.httpStatusCode === 301 || record?.httpStatusCode === 308) && filter.exclude) {
+            if (!excluded301Redirections.has(filter.code)) {
+                excluded301Redirections.set(filter.code, 0)
+            }
+
+            excluded301Redirections.set(filter.code, excluded301Redirections.get(filter.code) + 1)
+
+            // if (!['external-ignore-urls', 'udem-http-30x-calendrier', 'http-30x-circular-redirection', 'http-30x-slash', 'http-30x-root-to-path-permanent-redirect'].includes(filter.code)) {
+            //     console.log('=== filtered ===')
+            //     console.log(inspect(filter))
+            //     console.log(inspect(record))
+            //     process.exit()
+            // }
+        }
+    })
 
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
@@ -129,7 +141,8 @@ async function doProcess(records) {
     // result.records = addContexts(result.records, browsingContexts)
 
     console.log('Adding sections...')
-    result.records.forEach(record => addSections(record))
+
+    addSections(result)
 
     result.records.forEach(record => record.job = job)
 
@@ -166,16 +179,20 @@ async function doProcess(records) {
             }
             return 0;
         })
-        .map(f => {
-            const values = Object.values(f).map((value, i) => {
+        .map(filter => {
+            const values = Object.values(filter).map((value, i) => {
 
                 switch (i) {
+                    case 0:
+                        return filter.excluded ? colors.gray(value) : value
                     case 1:
-                        return value === 0 ? colors.grey(value) : n(value);
-                    case 2:
+                        return n(value);
+                    case 3:
+                        return value === Infinity ? '' : `${value}`
+                    case 5:
                         return value ? colors.green('✓') : ''
                     default:
-                        return value;
+                        return `${value}`;
                 }
             })
             return values;
@@ -192,6 +209,15 @@ async function doProcess(records) {
             },
             3: {
                 alignment: 'center'
+            },
+            4: {
+                alignment: 'center'
+            },
+            5: {
+                alignment: 'center'
+            },
+            6: {
+                alignment: 'center'
             }
         }
     });
@@ -203,7 +229,8 @@ async function doProcess(records) {
     console.log(`${n(result.filtered)} items filtered.`);
     console.log(`${n(result.unfilteredRecords.length)} items unfiltered.`);
     console.log(`${n(result.nbOut)} items out.`);
-    console.log(`Records properties: ${[...reportProperties.values()].sort().join(', ')}`)
+    // console.log(`Records properties: ${[...reportProperties.values()].sort().join(', ')}`)
+    console.log(`Filters that triggered an exclusion on a record that has a http status code of 301: ${inspect([...excluded301Redirections.entries()])}`)
 
     await writeFile(processedFilePath, JSON.stringify(result.records, null, 2))
     await writeFile(unfilteredFilePath, JSON.stringify(result.unfilteredRecords, null, 2))
