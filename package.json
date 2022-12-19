@@ -14,6 +14,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "harvest": "node harvest.js",
         "process": "node process.js",
+        "index": "node ./scripts/generate-index.js",
         "fetch-guides": "node ./scripts/fetch-guides.js",
         "add-contexts": "node ./scripts/add-contexts.js",
         "find-route": "node ./scripts/find-route.js"
