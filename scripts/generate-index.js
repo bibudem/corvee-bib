@@ -8,7 +8,7 @@ import { hideBin } from 'yargs/helpers'
 import { console, inspect } from 'corvee-core'
 import { BrowsingContextStore } from 'corvee-harvester'
 import sectionsData from '../config/sections.js'
-import {algoliasearchOptions} from '../config/local.js'
+import { algoliasearchOptions } from '../config/local.js'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --job=2022-09-01')
@@ -63,11 +63,10 @@ const sections = sectionsData
     }
   })
 
-// TEMPORAIRE
+// DEBUT TEMPORAIRE
 import { harvesterConfig } from '../config/harvester.js'
 import { isRegExp, isFunction } from 'underscore'
 function shouldIgnoreUrl(url) {
-  const self = this;
 
   function doCheck(url) {
     if (harvesterConfig.ignore.length === 0) {
@@ -95,6 +94,7 @@ function shouldIgnoreUrl(url) {
 
   return shouldIgnore;
 }
+// FIN TEMPORAIRE
 
 function hash(string) {
   return createHash('sha1').update(string).digest('hex').slice(0, 10)
@@ -119,6 +119,11 @@ let pageSnippetsIndex = []
 pageSnippets.forEach(pageSnippet => {
 
   if (shouldIgnoreUrl(pageSnippet.url)) {
+    pagesToRemove.add(pageSnippet.url)
+    return
+  }
+
+  if (/^https:\/\/api\.bib\.umontreal\.ca\/guides\/embed\/\d+\/contact/.test(pageSnippet.url)) {
     pagesToRemove.add(pageSnippet.url)
     return
   }
@@ -179,11 +184,13 @@ pageSnippets.forEach(pageSnippet => {
 })
 
 pageSnippetsIndex.push(...pagesToAdd.values())
+
 guides.forEach(guide => {
   if (guide.pages) {
     guide.pages = [...(new Set(guide.pages))]
   }
 })
+
 pageSnippetsIndex.push(...guides.values())
 
 pageSnippetsIndex = pageSnippetsIndex.reduce((pageSnippets, pageSnippet) => {
