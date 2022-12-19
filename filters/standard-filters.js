@@ -5,7 +5,7 @@ export const standardFilters = [
     _.http30xAllTempRedirects,
     new _.Http30xPermanentRedirectSuccessful({
         level: 'error',
-        limit: 500
+        // limit: 500
     }),
     _.http30xPermanentRedirectFailure,
     {
@@ -18,14 +18,15 @@ export const standardFilters = [
     },
     _.http30xHttpsUpgradeAny,
     new _.Http30xHttpsUpgradeLoose({
-        ignoreWww: true
+        ignoreWww: true,
+        exclude: true
     }),
     new _.Http30xHttpsUpgradeStrict({
         ignoreWww: false,
         level: 'error',
         priority: 1,
-        limit: 500,
-        // exclude: true
+        // limit: 500,
+        exclude: true
     }),
     new _.Http30xRootToPathPermanentRedirect(),
     _.http30xRedirectToWelcomePage,
