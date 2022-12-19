@@ -74,15 +74,15 @@ export const localFilters = [
     },
     bibPermalienBibUmontrealCa,
     {
-        ...publicAuthServices,
-        exclude: true
-    },
-    {
         ...externalIgnoreUrls,
         exclude: true
     },
     {
         ...microsoft,
+        exclude: true
+    },
+    {
+        ...publicAuthServices,
         exclude: true
     },
     sofiaRedirectionLinker2,
