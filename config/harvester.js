@@ -62,6 +62,7 @@ export const harvesterConfig = {
         /^https:\/\/fusion\.google\.com/i,
         /^https:\/\/books\.google\.com/i,
         /^https:\/\/documents\.un\.org\//i,
+        /^https:\/\/news\.google\.com\//i, // 
     ],
     internLinks: [
         /https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
