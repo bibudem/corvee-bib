@@ -31,7 +31,7 @@ const recordsPages = new Set()
 
 records.forEach(record => {
 
-  const pageUrl = record.browsingContextStack ? record.browsingContextStack.flat(2)[0] : record.parent
+  let pageUrl = record.browsingContextStack ? record.browsingContextStack.flat(2)[0] : record.parent
 
   if (shouldIgnoreUrl(pageUrl)) {
     return
@@ -100,6 +100,10 @@ function hash(string) {
   return createHash('sha1').update(string).digest('hex').slice(0, 10)
 }
 
+function cleanURL(url) {
+  return url.replace(/\/$/, '')
+}
+
 function getSectionKeys(url) {
   const keys = []
   for (const section of sections) {
@@ -111,38 +115,40 @@ function getSectionKeys(url) {
 }
 
 const pagesToRemove = new Set()
-const pagesToAdd = new Set()
 const guides = new Map()
 
 let pageSnippetsIndex = []
 
 pageSnippets.forEach(pageSnippet => {
 
-  if (shouldIgnoreUrl(pageSnippet.url)) {
-    pagesToRemove.add(pageSnippet.url)
+  const pageSnippetURL = cleanURL(pageSnippet.url)
+
+  if (shouldIgnoreUrl(pageSnippetURL)) {
+    pagesToRemove.add(pageSnippetURL)
     return
   }
 
-  if (/^https:\/\/api\.bib\.umontreal\.ca\/guides\/embed\/\d+\/contact/.test(pageSnippet.url)) {
-    pagesToRemove.add(pageSnippet.url)
+  if (/^https:\/\/api\.bib\.umontreal\.ca\/guides\/embed\/\d+\/contact/.test(pageSnippetURL)) {
+    pagesToRemove.add(pageSnippetURL)
     return
   }
 
-  if (/\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])(?:$|#|&)/.test(pageSnippet.url)) {
-    pagesToRemove.add(pageSnippet.url)
+  if (/\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])(?:$|#|&)/.test(pageSnippetURL)) {
+    pagesToRemove.add(pageSnippetURL)
     return
   }
 
-  if (pageSnippet.url.startsWith('https://api.bib.umontreal.ca/guides/embed/')) {
-    pagesToRemove.add(pageSnippet.url)
-    const context = browsingContextStore.getContext(pageSnippet.url)
+  if (pageSnippetURL.startsWith('https://api.bib.umontreal.ca/guides/embed/')) {
+    pagesToRemove.add(pageSnippetURL)
+    const context = browsingContextStore.getContext(pageSnippetURL)
     if (context) {
-      const parentUrl = context.flat()[0]
+      const parentUrl = cleanURL(context.flat(2)[0])
+
       pagesToRemove.add(parentUrl)
 
-      const guidePageUrl = new URL(context)
+      const guidePageUrl = new URL(parentUrl)
       guidePageUrl.hash = ''
-      const guideCanonicalUrl = new URL(context)
+      const guideCanonicalUrl = new URL(parentUrl)
       guideCanonicalUrl.search = ''
       guideCanonicalUrl.hash = ''
 
@@ -151,8 +157,10 @@ pageSnippets.forEach(pageSnippet => {
       const subTitle = titleArray.join(' - ')
 
       let guideSnippet
+
       if (!guides.has(guideCanonicalUrl.href)) {
         guideSnippet = structuredClone(pageSnippet)
+
         guideSnippet.url = guideCanonicalUrl.href
         guideSnippet.pages = []
 
@@ -183,8 +191,6 @@ pageSnippets.forEach(pageSnippet => {
   }
 })
 
-pageSnippetsIndex.push(...pagesToAdd.values())
-
 guides.forEach(guide => {
   if (guide.pages) {
     guide.pages = [...(new Set(guide.pages))]
@@ -203,6 +209,7 @@ pageSnippetsIndex = pageSnippetsIndex.reduce((pageSnippets, pageSnippet) => {
     pageSnippet.key = hash(pageSnippet.url)
     pageSnippet.objectID = pageSnippet.key
     pageSnippet.job = job
+
     pageSnippets.push(pageSnippet)
   }
 
@@ -220,7 +227,14 @@ pageSnippetsIndex.sort((a, b) => {
 
   return 0
 })
-
+var found = 0
+pageSnippetsIndex.forEach(pageSnippet => {
+  if (pageSnippet.url.includes(',')) {
+    console.log(pageSnippet)
+    found++
+  }
+})
+console.log('Found %s', found)
 writeFile(outFilePath, JSON.stringify(pageSnippetsIndex, null, 2))
 
 const client = algoliasearch(algoliasearchOptions.applicationId, algoliasearchOptions.writeApiKey)
