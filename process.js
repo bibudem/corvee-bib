@@ -229,6 +229,7 @@ async function doProcess(records) {
     console.log(`${n(result.filtered)} items filtered.`);
     console.log(`${n(result.unfilteredRecords.length)} items unfiltered.`);
     console.log(`${n(result.nbOut)} items out.`);
+
     // console.log(`Records properties: ${[...reportProperties.values()].sort().join(', ')}`)
     console.log(`Filters that triggered an exclusion on a record that has a http status code of 301: ${inspect([...excluded301Redirections.entries()])}`)
 
@@ -270,14 +271,40 @@ async function doProcess(records) {
         .map(item => [item[0], n(item[1])])
     sortedSilentErrors.unshift(['Code d\'erreur', ' '])
 
+    let totalHttpStatuses = 0
+    let totalErrorsByStatusCode = 0
+
     const sortedHttpStatuses = [...httpStatuses.entries()]
         .sort((a, b) => {
             if (a[0] < b[0]) { return -1; }
             if (a[0] > b[0]) { return 1; }
             return 0;
         })
-        .map(item => [`${item[0]}`, n(item[1])])
+        .map(item => {
+            const status = item[0]
+            const counts = item[1]
+
+            totalHttpStatuses += counts
+
+            switch (true) {
+                case status === null:
+                    totalErrorsByStatusCode += counts
+                    break
+                case status < 300:
+                case status === 302:
+                case status === 307:
+                    break;
+
+                default:
+                    totalErrorsByStatusCode += counts
+            }
+
+            return [`${item[0]}`, n(item[1])]
+        })
+
     sortedHttpStatuses.unshift(['Code HTTP', ' '])
+    sortedHttpStatuses.push(['Total errors', n(totalErrorsByStatusCode)])
+    sortedHttpStatuses.push(['Total', n(totalHttpStatuses)])
 
     const tableConfig = {
         border: getBorderCharacters('norc'),
