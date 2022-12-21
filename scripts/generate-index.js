@@ -114,6 +114,16 @@ function getSectionKeys(url) {
   return keys.length > 0 ? keys : null
 }
 
+function getPageTitle(str) {
+  str = str.replace(/ - Université de Montréal$/, '').replace(/ - Bibliothèques$/, '')
+
+  const titleArray = str.split(' - ')
+  const title = titleArray.pop()
+  const subTitle = titleArray.join(' - ')
+
+  return { title, subTitle }
+}
+
 const pagesToRemove = new Set()
 const guides = new Map()
 
@@ -152,9 +162,7 @@ pageSnippets.forEach(pageSnippet => {
       guideCanonicalUrl.search = ''
       guideCanonicalUrl.hash = ''
 
-      const titleArray = pageSnippet.title.split(' - ')
-      const title = titleArray.pop()
-      const subTitle = titleArray.join(' - ')
+      const { title, subTitle } = getPageTitle(pageSnippet.title)
 
       let guideSnippet
 
@@ -227,14 +235,7 @@ pageSnippetsIndex.sort((a, b) => {
 
   return 0
 })
-var found = 0
-pageSnippetsIndex.forEach(pageSnippet => {
-  if (pageSnippet.url.includes(',')) {
-    console.log(pageSnippet)
-    found++
-  }
-})
-console.log('Found %s', found)
+
 writeFile(outFilePath, JSON.stringify(pageSnippetsIndex, null, 2))
 
 const client = algoliasearch(algoliasearchOptions.applicationId, algoliasearchOptions.writeApiKey)

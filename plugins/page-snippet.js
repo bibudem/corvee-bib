@@ -18,14 +18,12 @@ export default {
     ) {
       try {
         const url = page.url()
-        let title = ''
+        const title = await page.title()
         let text = ''
 
         if (/https:\/\/api\.bib\.umontreal\.ca\/guides\/embed\/\d+(\?|$)/.test(url)) {
-          title = (await page.title()).replace(/ - LibGuides at Université de Montréal$/, '')
           text = (await page.$eval('#s-lg-guide-main', node => node.innerText)).slice(0, 200)
         } else {
-          title = (await page.title()).replace(/ - Université de Montréal$/, '').replace(/ - Bibliothèques$/, '')
           try {
             text = (await page.$eval('.content-main', node => node.innerText)).slice(0, 200)
           } catch {
