@@ -115,6 +115,7 @@ export const harvesterConfig = {
     },
     // requestHandlerTimeoutSecs: 60,
     schemes: ['mailto'],
+    // startUrl: 'https://sium.umontreal.ca/',
     startUrl: 'https://bib.umontreal.ca/',
     // startUrl: 'https://bib.umontreal.ca/typo3conf/ext/udem_bib/Resources/Public/Images/logo-bib.svg',
     // startUrl: 'https://api.bib.umontreal.ca/guides/embed/729885?tab=5238527',
