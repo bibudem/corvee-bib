@@ -60,6 +60,10 @@ export default {
         msg: "Ce lien pointe vers une page sur LibGuides (<code>https://libguides.bib.umontreal.ca/...</code>). Utilisez plutôt une page du site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)."
     },
 
+    "bib-lien-typo3-interne": {
+        msg: "Il s'agit d'une URL interne de TTPO3 (<code>https://bib.umontreal.ca/index.php?id=...</code>). Utilise plutôt L'URL canonique de la page, par exemple: <code class=\"cvw-url\">https://bib.umontreal.ca/etudes-religieuses-histoire-philosophie/etudes-classiques</code>)."
+    },
+
     "bib-Maestro": {
         code: "bib-Maestro",
         msg: "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\"><code class=\"cvw-url\">https://libguides.bib.umontreal.ca/az.php</code></a>)"

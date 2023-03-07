@@ -16,6 +16,7 @@ import bibLienGuidesWithOldTab from './local/bib-lien-guides-with-old-tab.js'
 import bibLienLibguidesAdmin from './local/bib-lien-libguides-admin.js'
 import bibLienLibguidesGuides from './local/bib-lien-libguides-guides.js'
 import bibLienLibguidesNatif from './local/bib-lien-libguides-natif.js'
+import bibLienTypo3Interne from './local/bib-lien-typo3-interne.js'
 import bibLienGuideEmbed from './local/bib-liens-guide-embed.js'
 import bibListeAZ from './local/bib-liste-az.js'
 import bibMaestro from './local/bib-Maestro.js'
@@ -62,6 +63,7 @@ export const localFilters = [
     bibLienLibguidesAdmin,
     bibLienLibguidesGuides,
     bibLienLibguidesNatif,
+    bibLienTypo3Interne,
     bibLienGuideEmbed,
     {
         ...bibListeAZ,
