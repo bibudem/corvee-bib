@@ -44,7 +44,7 @@ export const harvesterConfig = {
         'http://bottin.dgtic.umontreal.ca',
         /^http:\/\/jade\.daa\.umontreal\.ca/,
         /^https:\/\/plancampus\.umontreal\.ca\/?$/, // redirige vers https://plancampus.umontreal.ca/montreal/
-        'http://donner.umontreal.ca/',
+        'https://reseau.umontreal.ca/BIB', // Lien "Je donne" du bandeau UdeM
 
         // Widgets / médias sociaux
         /^https?:\/\/platform\.twitter\.com\/widgets/i,
@@ -97,6 +97,7 @@ export const harvesterConfig = {
         /^https:\/\/libguides\.bib\.umontreal\.ca\/srch\.php/,
         /^https:\/\/umontreal\.libapps\.com/,
         /^https:\/\/bib\.umontreal\.ca\/(?:.+)\/news\/\-\/\-\//, // Liens vers une nouvelle qui n'a pas d'URL
+        'https://bib.umontreal.ca/en/',
     ],
     normalizeUrlFunction: (url) => {
 
@@ -152,4 +153,4 @@ export const harvesterConfig = {
     useCache: true,
     // useChrome: true,
     waitInterval: 50,
-};
+}

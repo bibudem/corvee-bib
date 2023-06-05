@@ -70,12 +70,12 @@ function shouldIgnoreUrl(url) {
 
   function doCheck(url) {
     if (harvesterConfig.ignore.length === 0) {
-      return false;
+      return false
     }
 
     return harvesterConfig.ignore.find(testUrl => {
       if (typeof testUrl === 'string') {
-        return url.includes(testUrl);
+        return url.includes(testUrl)
       }
       if (isRegExp(testUrl)) {
         return testUrl.test(url)
@@ -86,13 +86,13 @@ function shouldIgnoreUrl(url) {
     })
   }
 
-  const shouldIgnore = doCheck(url);
+  const shouldIgnore = doCheck(url)
 
   if (shouldIgnore) {
     console.verbose(`Ignoring url <${url}> based on rule ${shouldIgnore}`)
   }
 
-  return shouldIgnore;
+  return shouldIgnore
 }
 // FIN TEMPORAIRE
 
@@ -114,8 +114,13 @@ function getSectionKeys(url) {
   return keys.length > 0 ? keys : null
 }
 
+function cleanTitle(title) {
+  title = title.replace(/ - Université de Montréal$/, '').replace(/ - Bibliothèques$/, '').normalize()
+  return title
+}
+
 function getPageTitle(str) {
-  str = str.replace(/ - Université de Montréal$/, '').replace(/ - Bibliothèques$/, '')
+  str = cleanTitle(str)
 
   const titleArray = str.split(' - ')
   const title = titleArray.pop()
@@ -188,8 +193,12 @@ pageSnippets.forEach(pageSnippet => {
       }
 
     }
+
     return
   }
+
+  // Regular page
+  pageSnippet.title = cleanTitle(pageSnippet.title)
 
 })
 

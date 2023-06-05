@@ -19,14 +19,14 @@ export const standardFilters = [
     _.http30xHttpsUpgradeAny,
     new _.Http30xHttpsUpgradeLoose({
         ignoreWww: true,
-        exclude: true
+        // exclude: true
     }),
     new _.Http30xHttpsUpgradeStrict({
         ignoreWww: false,
         level: 'error',
         priority: 1,
-        // limit: 500,
-        exclude: true
+        limit: 243,
+        // exclude: true
     }),
     new _.Http30xRootToPathPermanentRedirect(),
     _.http30xRedirectToWelcomePage,
@@ -43,4 +43,4 @@ export const standardFilters = [
     _.urlIgnoreThese(config.excludedUrls),
 ]
 
-export const standardMessages = messagesFrCA;
+export const standardMessages = messagesFrCA
