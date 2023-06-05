@@ -15,6 +15,7 @@
         "harvest": "node harvest.js",
         "process": "node process.js",
         "index": "node ./scripts/generate-index.js",
+        "upload": "node ./scripts/upload.js",
         "fetch-guides": "node ./scripts/fetch-guides.js",
         "add-contexts": "node ./scripts/add-contexts.js",
         "find-route": "node ./scripts/find-route.js"
@@ -31,6 +32,7 @@
         "corvee-processor": "file:../corvee/packages/processor",
         "es-main": "^1.2.0",
         "fast-csv": "^4.3.6",
+        "mongodb": "^5.5.0",
         "progress": "^2.0.3",
         "readline": "^1.3.0",
         "table": "^6.8.1",
