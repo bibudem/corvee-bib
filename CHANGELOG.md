@@ -13,4 +13,3 @@
 
 * release 2.0.0 ([75f1fef](https://github.com/bibudem/corvee-bib/commit/75f1fefecad999d9ffb89aac0ea316c6721b80e6))
 
-## Changelog
