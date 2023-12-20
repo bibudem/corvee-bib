@@ -1,5 +1,6 @@
 const authServices = [
-    /https?:\/\/accounts\.google\.com/i
+    /https?:\/\/accounts\.google\.com/i,
+    /https:\/\/login\.microsoftonline\.com\//i
 ]
 
 export default {
