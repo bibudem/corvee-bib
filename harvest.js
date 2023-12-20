@@ -79,7 +79,7 @@ async function harvest() {
         return Array
             .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
             // Exclude those inside a rss module
-            .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.parentNode.closest('.s-lg-rss-list-item')))
+            .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.closest('.s-lg-rss')))
             .map(link => ({
                 url: link.href,
                 text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
