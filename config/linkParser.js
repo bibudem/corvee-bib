@@ -1,21 +1,51 @@
 export function linkParser() {
   return Array
-      .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
-      // Exclude those inside a rss module
-      .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.closest('.s-lg-rss')))
-      .map(link => ({
-          url: link.href,
-          text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
-          urlData: link.getAttribute('href'),
-          isNavigationRequest: true
+    .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
+    // Exclude those inside a rss module
+    .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.closest('.s-lg-rss')))
+    .map(link => (
+      {
+        url: link.href,
+        text: getNodeText(link),
+        urlData: link.getAttribute('href'),
+        isNavigationRequest: true
+      }
+    ))
+    .concat(Array
+      .from(/** @type {NodeListOf<HTMLImageElement>} */(document.querySelectorAll('img[src]')))
+      .map(img => ({
+        url: img.src,
+        text: getNodeText(img),
+        urlData: img.getAttribute('src'),
+        isNavigationRequest: false
       }))
-      .concat(Array
-          .from(/** @type {NodeListOf<HTMLImageElement>} */(document.querySelectorAll('img[src]')))
-          .map(img => ({
-              url: img.src,
-              text: img.alt || img.title || null,
-              urlData: img.getAttribute('src'),
-              isNavigationRequest: false
-          }))
-      )
+    )
+}
+
+function normalizeText(str) {
+  return str.replace(/\n/g, '').trim()
+}
+
+// @ts-ignore
+export function getNodeText(node) {
+  let text = null
+
+  if (!node instanceof HTMLElement) {
+    return text
+  }
+
+  if (node.nodeName === 'A') {
+    text = node.innerText
+    if (normalizeText(text) === '' && node.querySelector('img[alt]')) {
+      text = node.querySelector('img[alt]').getAttribute('alt')
+    }
+
+  } else if (node.nodeName === 'IMG') {
+    if (node.hasAttribute('alt')) {
+      text = node.getAttribute('alt')
+    } else if (node.hasAttribute('title')) {
+      text = node.getAttribute('title')
+    }
+    return normalizeText(text)
+  }
 }
