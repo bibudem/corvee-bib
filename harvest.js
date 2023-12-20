@@ -1,14 +1,15 @@
 import readline from 'readline'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
+import { console, inspect } from 'corvee-core'
 import { Harvester } from 'corvee-harvester'
 import { fetchGuides } from './lib/fetch-guides.js'
 import { saveBrowsingContexts, saveReportCodes, saveRecords, saveSystemInfo } from './utils/index.js'
 import pageSnippetPlugin from './plugins/page-snippet.js'
-import { console, inspect } from 'corvee-core'
 
 import { harvesterConfig } from './config/index.js'
 import { savePageSnippets } from './utils/save-page-snippets.js'
+import { linkParser } from 'config/linkParser.js'
 
 const today = new Date();
 const year = today.getFullYear();
@@ -75,27 +76,7 @@ async function harvest() {
 
     harvester.addPlugins(pageSnippetPlugin)
 
-    harvester.setLinkParser(function linkParser() {
-        return Array
-            .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
-            // Exclude those inside a rss module
-            .filter(link => !(link.parentNode && link.parentNode instanceof HTMLAnchorElement && link.closest('.s-lg-rss')))
-            .map(link => ({
-                url: link.href,
-                text: link.tagName === 'IMG' ? link.getAttribute('alt') : link.innerText,
-                urlData: link.getAttribute('href'),
-                isNavigationRequest: true
-            }))
-            .concat(Array
-                .from(/** @type {NodeListOf<HTMLImageElement>} */(document.querySelectorAll('img[src]')))
-                .map(img => ({
-                    url: img.src,
-                    text: img.alt || img.title || null,
-                    urlData: img.getAttribute('src'),
-                    isNavigationRequest: false
-                }))
-            )
-    })
+    harvester.setLinkParser(linkParser)
 
     await harvester.addUrl(links);
 
