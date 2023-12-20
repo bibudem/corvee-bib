@@ -9,14 +9,14 @@ import pageSnippetPlugin from './plugins/page-snippet.js'
 
 import { harvesterConfig } from './config/index.js'
 import { savePageSnippets } from './utils/save-page-snippets.js'
-import { linkParser } from 'config/linkParser.js'
+import { linkParser } from './config/linkParser.js'
 
-const today = new Date();
-const year = today.getFullYear();
-const month = `${today.getMonth() + 1}`.padStart(2, '0');
-const day = `${today.getDate()}`.padStart(2, '0');
+const today = new Date()
+const year = today.getFullYear()
+const month = `${today.getMonth() + 1}`.padStart(2, '0')
+const day = `${today.getDate()}`.padStart(2, '0')
 
-const defaultJob = `${year}-${month}-${day}`;
+const defaultJob = `${year}-${month}-${day}`
 
 const argv = yargs(hideBin(process.argv))
     .options({
@@ -35,9 +35,9 @@ const argv = yargs(hideBin(process.argv))
         }
     })
     .help()
-    .parseSync();
+    .parseSync()
 
-const job = argv.job;
+const job = argv.job
 
 let internLinks = new Set()
 let externLinks = new Set()
@@ -48,21 +48,21 @@ async function harvest() {
 
     (await fetchGuides()).forEach(guide => guidesParams.add(guide.aliasUrl.split('?tab=')[1]))
 
-    readline.emitKeypressEvents(process.stdin);
-    process.stdin.setRawMode(true);
+    readline.emitKeypressEvents(process.stdin)
+    process.stdin.setRawMode(true)
     process.stdin.on('keypress', (str, key) => {
         if (key.ctrl && key.name === 'p') {
             if (harvester.isPaused) {
-                harvester.resume();
+                harvester.resume()
             } else {
-                harvester.pause();
+                harvester.pause()
             }
         }
 
         if (key.ctrl && key.name === 'c') {
             process.exit()
         }
-    });
+    })
 
     console.log('Using job ' + job)
 
@@ -78,10 +78,10 @@ async function harvest() {
 
     harvester.setLinkParser(linkParser)
 
-    await harvester.addUrl(links);
+    await harvester.addUrl(links)
 
     harvester.on('request', function onRequest(request) {
-        console.info(`[${request.retryCount}] Request url: ${request.url}`);
+        console.info(`[${request.retryCount}] Request url: ${request.url}`)
 
         if (request.userData.extern) {
             externLinks.add(request.url)
@@ -108,17 +108,17 @@ async function harvest() {
 
     saveRecords(harvester, job)
 
-    saveBrowsingContexts(harvester, job);
+    saveBrowsingContexts(harvester, job)
 
-    saveReportCodes(harvester, job);
+    saveReportCodes(harvester, job)
 
     saveSystemInfo(harvester, job)
 
     // savePageTitles(harvester)
 
-    const task = argv.resume ? 'resume' : 'run';
+    const task = argv.resume ? 'resume' : 'run'
 
-    console.info(`Running with config: ${inspect(harvester.config)}`);
+    console.info(`Running with config: ${inspect(harvester.config)}`)
 
     harvester.on('start', function onStart() {
         console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
@@ -146,4 +146,4 @@ async function harvest() {
     }
 }
 
-harvest();
+harvest()
