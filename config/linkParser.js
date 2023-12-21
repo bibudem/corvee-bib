@@ -1,4 +1,38 @@
 export function linkParser() {
+
+  function normalizeText(str) {
+    if (typeof str !== 'string') {
+      return str
+    }
+
+    return str.replace(/\n/g, '').trim()
+  }
+
+  // @ts-ignore
+  function getNodeText(node) {
+    let text = null
+
+    if (!(node instanceof HTMLElement)) {
+      return text
+    }
+
+    if (node.nodeName === 'A') {
+      text = node.innerText
+      if (!normalizeText(text) && node.querySelector('img[alt]')) {
+        text = node.querySelector('img[alt]').getAttribute('alt')
+      }
+
+    } else if (node.nodeName === 'IMG') {
+      if (node.hasAttribute('alt')) {
+        text = node.getAttribute('alt')
+      } else if (node.hasAttribute('title')) {
+        text = node.getAttribute('title')
+      }
+    }
+
+    return normalizeText(text)
+  }
+
   return Array
     .from(/** @type {NodeListOf<HTMLAnchorElement>} */(document.querySelectorAll('a[href]')))
     // Exclude those inside a rss module
@@ -20,32 +54,4 @@ export function linkParser() {
         isNavigationRequest: false
       }))
     )
-}
-
-function normalizeText(str) {
-  return str.replace(/\n/g, '').trim()
-}
-
-// @ts-ignore
-export function getNodeText(node) {
-  let text = null
-
-  if (!node instanceof HTMLElement) {
-    return text
-  }
-
-  if (node.nodeName === 'A') {
-    text = node.innerText
-    if (normalizeText(text) === '' && node.querySelector('img[alt]')) {
-      text = node.querySelector('img[alt]').getAttribute('alt')
-    }
-
-  } else if (node.nodeName === 'IMG') {
-    if (node.hasAttribute('alt')) {
-      text = node.getAttribute('alt')
-    } else if (node.hasAttribute('title')) {
-      text = node.getAttribute('title')
-    }
-    return normalizeText(text)
-  }
 }
