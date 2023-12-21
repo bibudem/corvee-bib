@@ -76,7 +76,7 @@ export const harvesterConfig = {
     logLevel: 'verbose',
     maxConcurrency: 8,
     maxRequestRetries: 3,
-    // maxRequests: 10,
+    // maxRequestsPerCrawl: 50,
     navigationOnly: true,
     // navigationTimeoutSecs: 5,
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
