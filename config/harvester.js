@@ -9,6 +9,7 @@ export const harvesterConfig = {
     checkExtern: true,
     fetchLinksOnce: true,
     getPerfData: false,
+
     // URLs matching the given regular expressions / strings will be ignored and not checked.
     ignore: [
         ...adressesSimplifiees,
@@ -16,6 +17,7 @@ export const harvesterConfig = {
         // /^https:\/\/bib\.umontreal\.ca\/[^#?]/, 
         /^https:\/\/bib\.umontreal\.ca\/activites/i,
         /^https:\/\/bib\.umontreal\.ca\/communications\/nouvelles/i,
+        /^https:\/\/bib\.umontreal\.ca\/les\-bibliotheques\-udem\/nouvelles/i,
         'https://www.bib.umontreal.ca/une-question',
         /^https:\/\/unequestion\.bib\.umontreal\.ca\//i,
         /^https:\/\/www\.bib\.umontreal\.ca\/ideale/i,
@@ -65,11 +67,11 @@ export const harvesterConfig = {
         /^https:\/\/news\.google\.com\//i, // 
     ],
     internLinks: [
-        /https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
-        /https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
-        /https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
-        /https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
-        /https:\/\/87128\.account\.worldcat\.org(\/.*)?/,
+        /^https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
+        // /^https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
+        /^https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
+        /^https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
+        // /^https:\/\/87128\.account\.worldcat\.org(\/.*)?/,
         // 'http://localhost[.*]'
     ],
     linkParserDelay: false,
@@ -79,6 +81,7 @@ export const harvesterConfig = {
     // maxRequestsPerCrawl: 50,
     navigationOnly: true,
     // navigationTimeoutSecs: 5,
+
     // Check but do not recurse into URLs matching the given strings / regular expressions. 
     noFollow: [
         /^https:\/\/umontreal\.on\.worldcat\.org/,
