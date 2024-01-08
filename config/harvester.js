@@ -101,6 +101,7 @@ export const harvesterConfig = {
         /^https:\/\/umontreal\.libapps\.com/,
         /^https:\/\/bib\.umontreal\.ca\/(?:.+)\/news\/\-\/\-\//, // Liens vers une nouvelle qui n'a pas d'URL
         'https://bib.umontreal.ca/en/',
+        /^https:\/\/docs\.bib\.umontreal\.ca\//,
     ],
     normalizeUrlFunction: (url) => {
 
