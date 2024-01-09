@@ -84,7 +84,7 @@ export default [
       {
         key: 'chercher',
         title: "Chercher de l'information",
-        urls: ['https://bib.umontreal.ca/chercher', 'https://bib.umontreal.ca/guides', 'https://bib.umontreal.ca/emprunter'],
+          urls: ['https://bib.umontreal.ca/chercher', 'https://bib.umontreal.ca/guides', 'https://bib.umontreal.ca/emprunter', 'https://bib.umontreal.ca/obtenir'],
       },
       {
         key: 'utiliser',
@@ -118,9 +118,14 @@ export default [
       },
       {
         key: 'www',
-        title: 'Anciennes pages sur www.bib.umontreal.ca',
+          title: 'Pages sur www.bib.umontreal.ca',
         urls: ['https://www.bib.umontreal.ca'],
       },
+        {
+          key: 'autres',
+          title: 'Autres',
+          urls: ['https://bib.umontreal.ca/conditions-bibliotheques', 'https://bib.umontreal.ca/recherche-documentaire-subventions-et-laboratoires', 'https://bib.umontreal.ca/accessibilite'],
+        },
     ],
   },
 ]
