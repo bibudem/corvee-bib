@@ -25,7 +25,7 @@ export const standardFilters = [
         ignoreWww: false,
         level: 'error',
         priority: 1,
-        limit: 243,
+        // limit: 243,
         // exclude: true
     }),
     new _.Http30xRootToPathPermanentRedirect(),
