@@ -4,6 +4,7 @@
     "filter",
     "parser",
     "harvester",
-    "sections"
+    "sections",
+    "script"
   ]
 }
