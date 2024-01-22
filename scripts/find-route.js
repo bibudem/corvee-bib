@@ -6,8 +6,13 @@ import { join, basename } from 'node:path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
-const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 --job=2022-09-01 http://www.example.com')
+const y = yargs(hideBin(process.argv))
+
+const argv = y
+  .wrap(Math.min(125, y.terminalWidth()))
+  .usage('Usage: $0 <options> <url>')
+  .example('npm run find-route -- --job=2022-09-01 http://www.example.com', 'Trouve la route du robot vers le lien http://www.example.com')
+  .example('node $0 --job=2022-09-01 http://www.example.com', 'Même commande que la précédente, mais en passant par node')
   .demandOption(['job'])
   .alias('j', 'job')
   .help()
