@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { MongoClient } from 'mongodb'
-import { db } from '../config/local.js'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { console, inspect } from 'corvee-core'
+import { db } from '../config/local.js'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --job=2022-09-01')
