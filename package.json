@@ -32,7 +32,7 @@
         "corvee-processor": "file:../corvee/packages/processor",
         "es-main": "^1.3.0",
         "fast-csv": "^5.0.1",
-        "mongodb": "^6.7.0",
+        "mongodb": "^6.8.0",
         "progress": "^2.0.3",
         "readline": "^1.3.0",
         "table": "^6.8.2",
