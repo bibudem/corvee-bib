@@ -24,7 +24,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "algoliasearch": "^4.23.3",
+        "algoliasearch": "^5.0.0",
         "axios": "^1.7.3",
         "colors": "^1.4.0",
         "corvee-core": "file:../corvee/packages/core",
