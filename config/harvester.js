@@ -71,7 +71,6 @@ export const harvesterConfig = {
         // /^https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
         /^https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
         /^https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
-        // /^https:\/\/87128\.account\.worldcat\.org(\/.*)?/,
         // 'http://localhost[.*]'
     ],
     linkParserDelay: false,
@@ -90,7 +89,6 @@ export const harvesterConfig = {
         /^https?:\/\/bibres\.bib\.umontreal\.ca/,
         /^https:\/\/calendrier\.bib\.umontreal\.ca/,
         /^https?:\/\/calypso\.bib\.umontreal\.ca/,
-        'https://jupiter.bib.umontreal.ca/GIF',
         'http://mentor.bib.umontreal.ca',
         'http://opurl.bib.umontreal.ca',
         'https://papyrus.bib.umontreal.ca',
@@ -99,11 +97,13 @@ export const harvesterConfig = {
         /^https:\/\/libguides\.bib\.umontreal\.ca\/sb\.php/,
         /^https:\/\/libguides\.bib\.umontreal\.ca\/srch\.php/,
         /^https:\/\/umontreal\.libapps\.com/,
+        /^https:\/\/docs\.bib\.umontreal\.ca\//,
+        // URL périmées?
+        'https://jupiter.bib.umontreal.ca/GIF',
         /^https:\/\/bib\.umontreal\.ca\/(?:.+)\/news\/\-\/\-\//, // Liens vers une nouvelle qui n'a pas d'URL
         'https://bib.umontreal.ca/en/',
-        /^https:\/\/docs\.bib\.umontreal\.ca\//,
-        /^https:\/\/bib\.umontreal\.ca\/developpement-edimestre\//, // Section de développement de l'édimestre
-        /^https:\/\/bib\.umontreal\.ca\/(index\.php)?\?id=\d+/, // URLs internes à TYPO3
+        // /^https:\/\/bib\.umontreal\.ca\/developpement-edimestre\//, // Section de développement de l'édimestre
+        // /^https:\/\/bib\.umontreal\.ca\/(index\.php)?\?id=\d+/, // URLs internes à TYPO3
     ],
     normalizeUrlFunction: (url) => {
 
@@ -122,38 +122,7 @@ export const harvesterConfig = {
     },
     // requestHandlerTimeoutSecs: 60,
     schemes: ['mailto'],
-    // startUrl: 'https://sium.umontreal.ca/',
     startUrl: 'https://bib.umontreal.ca/',
-    // startUrl: 'https://bib.umontreal.ca/typo3conf/ext/udem_bib/Resources/Public/Images/logo-bib.svg',
-    // startUrl: 'https://api.bib.umontreal.ca/guides/embed/729885?tab=5238527',
-    // startUrl: 'https://www.cairn.info/', // DataDome
-    // startUrl: 'http://www.canlii.org/fr/', // http-429
-    // startUrl: 'https://bib.umontreal.ca/amenagement/architecture',
-    // startUrl: 'https://playwright.dev/docs/api/class-response', // http-200
-    // startUrl: 'https://secretariatgeneral.umontreal.ca/public/secretariatgeneral/documents/doc_officiels/reglements/recherche/rech60_13-politique-universite-de-montreal-propriete-intellectuelle.pdf', // http-200
-    // startUrl: 'http://www.jpma.or.jp/english/', // http-301
-    // startUrl: 'https://eudocs.lib.byu.edu/index.php/main_page', // http-30x-permanent-redirect-successful
-    // startUrl: 'https://nouveau.eureka.cc/Search/AdvancedMobile', // redirect-to-login-page
-    // startUrl: 'https://reseau.umontreal.ca/bib', // http-302
-    // startUrl: 'http://www.facebook.com/Banquemondiale', // http-307-HSTS-redirect
-    // startUrl: 'http://www.zotero.org/support/screencast_tutorials', // http-HSTS-redirect
-    // startUrl: 'http://localhost/t.html', // redirected asset
-    // startUrl: 'https://fnp-ppn.aadnc-aandc.gc.ca/fnp/Main/?lang=fra', // http-403
-    // startUrl: 'http://awefdkiofkdjnxmsklwoidjmsmsdldoslld.coz', // http-404
-    // startUrl: 'http://www.collectionscanada.gc.ca/thesescanada/', // http-404
-    // startUrl: 'https://www.icj-cij.org/files/publications/bibliography-en.pdf', // http-404
-    // startUrl: 'https://oer.avu.org/handle/123456789/89', // net-connection-refused
-    // startUrl: 'https://ebm-tools.knowledgetranslation.net/', // NET::ERR_CERT_DATE_INVALID
-    // startUrl: 'https://www.hivebench.com/', // net-empty-response (net-http)
-    // startUrl: 'https://incites.help.clarivate.com/content/indicators-handbook/ih-about.htm', // net-invalid-response (net-http)
-    // startUrl: 'http://mesh.inserm.fr/frenchmesh/search/index.jsp', // net-too-many-redirects (net-http)
-    // startUrl: 'http://Ensembles de données du recensement', // url-invalid-url
-    // startUrl: 'https://1findr.1science.com/home', // net-empty-response (net-http)
-    // startUrl: 'http://www.worldcat.org/oclc/196570217', // http-503
-    // startUrl: 'http://www.openthesis.org/', // http-504 Gateway Timeout
-    // startUrl: 'http://www.cnbksy.cn/shlib_tsdc/en/do', // http-412
-    // startUrl: 'http://www.legislation.gov.uk/ukpga/Geo5/22-23/4', // http-504
-    // startUrl: 'http://www.baisserlesbarrieres.org/videos/BLB-film_1-Entreprises_et_stagiaires_BLB_%28Daniel%29-fra.mp4', // TimeoutError (config.requestHandlerTimeoutSecs)
     storageDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.storage'),
     userDataDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.userData'),
     useCache: true,
