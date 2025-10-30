@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.0](https://github.com/bibudem/corvee-bib/compare/v2.1.0...v2.2.0) (2025-10-30)
+
+
+### Features
+
+* Renommage des modules corvee-* par @corvee/* ([8892f99](https://github.com/bibudem/corvee-bib/commit/8892f99a8a08699a4ba0d23ba2b345bd704b647a))
+* **script:** Amélioration de l'aide du script find-route ([9b3612e](https://github.com/bibudem/corvee-bib/commit/9b3612e50a2165c0c6f66846395d6baaf5e8bc07))
+
 ## [2.1.0](https://github.com/bibudem/corvee-bib/compare/v2.0.0...v2.1.0) (2024-01-09)
 
 
