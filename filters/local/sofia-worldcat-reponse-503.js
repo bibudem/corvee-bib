@@ -1,4 +1,4 @@
-import { HttpReport } from 'corvee-harvester'
+import { HttpReport } from '@corvee/harvester'
 
 export default {
   code: 'sofia-reponse-503',

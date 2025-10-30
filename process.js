@@ -5,20 +5,20 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe.js'
-import { CorveeProcessor } from 'corvee-processor'
+import { CorveeProcessor } from '@corvee/processor'
 import { addSections } from './lib/sections.js'
 import { filters, messages } from './filters/index.js'
 import { toSql } from './utils/to-sql.js'
 // import { addContexts } from './lib/add-contexts.js'
-import { console, inspect } from 'corvee-core'
+import { console, inspect } from '@corvee/core'
 
-const start = Date.now();
-const today = new Date();
-const year = today.getFullYear();
-const month = `${today.getMonth() + 1}`.padStart(2, '0');
-const day = `${today.getDate()}`.padStart(2, '0');
+const start = Date.now()
+const today = new Date()
+const year = today.getFullYear()
+const month = `${today.getMonth() + 1}`.padStart(2, '0')
+const day = `${today.getDate()}`.padStart(2, '0')
 
-const defaultTodayDashedPrefix = `${year}-${month}-${day}`;
+const defaultTodayDashedPrefix = `${year}-${month}-${day}`
 
 const argv = yargs(hideBin(process.argv))
     .options({
@@ -30,12 +30,12 @@ const argv = yargs(hideBin(process.argv))
         }
     })
     .help()
-    .parseSync();
+    .parseSync()
 
-const job = argv.job;
-const baseDir = join(dirname(fileURLToPath(import.meta.url)), 'data');
-const processedFilePath = join(baseDir, `${job}_processed.json`);
-const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`);
+const job = argv.job
+const baseDir = join(dirname(fileURLToPath(import.meta.url)), 'data')
+const processedFilePath = join(baseDir, `${job}_processed.json`)
+const unfilteredFilePath = join(baseDir, `${job}_unfiltered.json`)
 // const browsingContextsPath = join(baseDir, `${job}_browsing-contexts.json`)
 const harvestedDataPath = join(baseDir, `${job}_harvested.json`)
 const reportTypesPath = join(baseDir, `${job}_reports-types.json`)
@@ -59,7 +59,7 @@ function n(n) {
 }
 
 /**
- * @param {Array<import('corvee-harvester').RecordType>} records
+ * @param {Array<import('@corvee/harvester').RecordType>} records
  */
 async function doProcess(records) {
 
@@ -92,7 +92,7 @@ async function doProcess(records) {
             // tmpPlugin
         ],
         messages
-    });
+    })
 
     processor.on('http-30x-root-to-path-permanent-redirect', function (record) {
         // console.log(inspect(record))
@@ -134,7 +134,7 @@ async function doProcess(records) {
 
     console.log('Starting processor...')
 
-    let result = await processor.process(records);
+    let result = await processor.process(records)
 
     // console.log('Adding browsing contexts...')
 
@@ -151,7 +151,7 @@ async function doProcess(records) {
     })
 
     result.records = result.records.filter(record => {
-        return record.reports && record.reports.length > 0;
+        return record.reports && record.reports.length > 0
     })
 
     silentReports.forEach((value, silentErrorCode) => {
@@ -160,24 +160,24 @@ async function doProcess(records) {
         }
     })
 
-    const timing = Date.now() - start;
+    const timing = Date.now() - start
 
     const perFilterData = result.perFilter
         .map(filterData => {
-            filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('-') : colors.green('✓');
+            filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('-') : colors.green('✓')
 
-            return filterData;
+            return filterData
         })
         .sort((a, b) => {
-            const codeA = a.code.toUpperCase(); // ignore upper and lowercase
-            const codeB = b.code.toUpperCase(); // ignore upper and lowercase
+            const codeA = a.code.toUpperCase() // ignore upper and lowercase
+            const codeB = b.code.toUpperCase() // ignore upper and lowercase
             if (codeA < codeB) {
-                return -1;
+                return -1
             }
             if (codeA > codeB) {
-                return 1;
+                return 1
             }
-            return 0;
+            return 0
         })
         .map(filter => {
             const values = Object.values(filter).map((value, i) => {
@@ -186,17 +186,17 @@ async function doProcess(records) {
                     case 0:
                         return filter.excluded ? colors.gray(value) : value
                     case 1:
-                        return n(value);
+                        return n(value)
                     case 3:
                         return value === Infinity ? '' : `${value}`
                     case 5:
                         return value ? colors.green('✓') : ''
                     default:
-                        return `${value}`;
+                        return `${value}`
                 }
             })
-            return values;
-        });
+            return values
+        })
 
     const perFilterTable = table([Object.keys(result.perFilter[0]), ...perFilterData], {
         border: getBorderCharacters('norc'),
@@ -220,15 +220,15 @@ async function doProcess(records) {
                 alignment: 'center'
             }
         }
-    });
+    })
 
-    console.log(`Plugins stats:\n${perFilterTable}`);
+    console.log(`Plugins stats:\n${perFilterTable}`)
 
     console.debug(`Processing done in ${timing / 1000}sec.`)
-    console.log(`${n(result.nbIn)} items in.`);
-    console.log(`${n(result.filtered)} items filtered.`);
-    console.log(`${n(result.unfilteredRecords.length)} items unfiltered.`);
-    console.log(`${n(result.nbOut)} items out.`);
+    console.log(`${n(result.nbIn)} items in.`)
+    console.log(`${n(result.filtered)} items filtered.`)
+    console.log(`${n(result.unfilteredRecords.length)} items unfiltered.`)
+    console.log(`${n(result.nbOut)} items out.`)
 
     // console.log(`Records properties: ${[...reportProperties.values()].sort().join(', ')}`)
     console.log(`Filters that triggered an exclusion on a record that has a http status code of 301: ${inspect([...excluded301Redirections.entries()])}`)
@@ -248,10 +248,10 @@ async function doProcess(records) {
 
     result.records = result.records
         .map(record => {
-            record.reports = record.reports.filter(report => report.level !== 'info');
-            return record;
+            record.reports = record.reports.filter(report => report.level !== 'info')
+            return record
         })
-        .filter(record => record.reports.length > 0);
+        .filter(record => record.reports.length > 0)
 
     console.log(colors.bold(`Found ${colors.green(n(result.records.length))} records with problem.`))
 
@@ -263,9 +263,9 @@ async function doProcess(records) {
 
     const sortedSilentErrors = [...silentReports.entries()]
         .sort((a, b) => {
-            if (a[1] < b[1]) { return -1; }
-            if (a[1] > b[1]) { return 1; }
-            return 0;
+            if (a[1] < b[1]) { return -1 }
+            if (a[1] > b[1]) { return 1 }
+            return 0
         })
         .reverse()
         .map(item => [item[0], n(item[1])])
@@ -276,9 +276,9 @@ async function doProcess(records) {
 
     const sortedHttpStatuses = [...httpStatuses.entries()]
         .sort((a, b) => {
-            if (a[0] < b[0]) { return -1; }
-            if (a[0] > b[0]) { return 1; }
-            return 0;
+            if (a[0] < b[0]) { return -1 }
+            if (a[0] > b[0]) { return 1 }
+            return 0
         })
         .map(item => {
             const status = item[0]
@@ -293,7 +293,7 @@ async function doProcess(records) {
                 case status < 300:
                 case status === 302:
                 case status === 307:
-                    break;
+                    break
 
                 default:
                     totalErrorsByStatusCode += counts
@@ -323,9 +323,9 @@ async function doProcess(records) {
 };
 
 try {
-    await doProcess(harvestedData);
+    await doProcess(harvestedData)
     process.exit()
 } catch (error) {
-    console.error(error);
-    process.exit();
+    console.error(error)
+    process.exit()
 }

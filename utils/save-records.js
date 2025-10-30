@@ -2,23 +2,23 @@ import { createWriteStream, WriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { console } from 'corvee-core'
+import { console } from '@corvee/core'
 
 /**
- * @param {import("corvee-harvester").Harvester} harvester
+ * @param {import("@corvee/harvester").Harvester} harvester
  * @param {string} job
  * @param {{ (record: any): boolean; (arg0: any): any; }} [filter]
  */
 export async function saveRecords(harvester, job, filter) {
 
-    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
-    const fileName = join(dir, `${job}_harvested.json`);
-    var i = 1;
+    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data')
+    const fileName = join(dir, `${job}_harvested.json`)
+    var i = 1
 
     /**
      * @type WriteStream
      */
-    let stream;
+    let stream
 
     try {
         stream = createWriteStream(fileName, {
@@ -35,10 +35,10 @@ export async function saveRecords(harvester, job, filter) {
     function write(data) {
         if (stream.pending) {
             process.nextTick(() => {
-                write(data);
+                write(data)
             })
         } else {
-            stream.write(data);
+            stream.write(data)
         }
     }
 
@@ -50,18 +50,18 @@ export async function saveRecords(harvester, job, filter) {
      * @param { Object<string, *> } data
      */
     function json(data) {
-        let str = '';
+        let str = ''
         try {
-            str = JSON.stringify(data, null, 2);
+            str = JSON.stringify(data, null, 2)
         } catch (e) {
 
-            console.warn(`Could not stringify data, so removing responses array. Data: ${data}`);
+            console.warn(`Could not stringify data, so removing responses array. Data: ${data}`)
 
             if ('request' in data) {
                 data.request = '[request]'
 
                 try {
-                    str = JSON.stringify(data, null, 2);
+                    str = JSON.stringify(data, null, 2)
                 } catch (e) {
                     console.warn('Could not stringify data with `responseChain` removed.')
                     console.warn(e)
@@ -78,7 +78,7 @@ export async function saveRecords(harvester, job, filter) {
     /**
      * 
      */
-    harvester.on('record', function onRecord(/** @type {import('corvee-harvester').RecordType} */ record) {
+    harvester.on('record', function onRecord(/** @type {import('@corvee/harvester').RecordType} */ record) {
         if (filter && !filter(record)) {
             return
         }
@@ -95,7 +95,7 @@ export async function saveRecords(harvester, job, filter) {
     harvester.on('end', () => {
         console.info('harvester on end...')
         try {
-            stream.end('\n]');
+            stream.end('\n]')
         } catch (e) {
             console.todo(e)
         }

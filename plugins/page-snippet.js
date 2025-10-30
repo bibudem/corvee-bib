@@ -1,10 +1,10 @@
-import { console } from 'corvee-core'
+import { console } from '@corvee/core'
 
 export default {
   name: 'page-snippet',
   emits: true,
   /**
-   * @this import('corvee-harvester').Harvester
+   * @this import('@corvee/harvester').Harvester
    * 
   */
   onNavigationResponse: async function getPageSnippet({ page, response }) {

@@ -1,17 +1,17 @@
 import { createWriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 
-import { console } from 'corvee-core'
+import { console } from '@corvee/core'
 
 export async function savePageTitles(harvester, filter) {
 
-    const today = new Date();
-    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
-    const fileName = join(dir, `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}_page-titles.json`);
-    const urlIdx = new Set();
+    const today = new Date()
+    const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data')
+    const fileName = join(dir, `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}_page-titles.json`)
+    const urlIdx = new Set()
 
 
-    let stream;
+    let stream
     try {
         stream = createWriteStream(fileName, {
             flags: 'w'
@@ -23,18 +23,18 @@ export async function savePageTitles(harvester, filter) {
 
     function write(data) {
         if (!urlIdx.has(data.url)) {
-            urlIdx.add(data.url);
-            doWrite(json(data));
+            urlIdx.add(data.url)
+            doWrite(json(data))
         }
     }
 
     function doWrite(data) {
         if (stream.pending) {
             process.nextTick(() => {
-                write(data);
+                write(data)
             })
         } else {
-            stream.write(data);
+            stream.write(data)
         }
     }
 
@@ -43,17 +43,17 @@ export async function savePageTitles(harvester, filter) {
     })
 
     function json(data) {
-        let str = '';
+        let str = ''
         try {
-            str = JSON.stringify(data, null, 2);
+            str = JSON.stringify(data, null, 2)
         } catch (e) {
-            console.warn('Could not stringify data, so removing responses array.');
+            console.warn('Could not stringify data, so removing responses array.')
             // console.warn(data);
             if ('request' in data) {
-                delete data.request;
+                delete data.request
 
                 try {
-                    str = JSON.stringify(data, null, 2);
+                    str = JSON.stringify(data, null, 2)
                 } catch (e) {
                     console.warn('Could not stringify data with `responseChain` removed.')
                     console.warn(e)
@@ -72,8 +72,8 @@ export async function savePageTitles(harvester, filter) {
         name: 'save-page-info',
         onNavigationResponse: async (req, res, page) => {
             try {
-                const title = page.title();
-                const url = page.url();
+                const title = page.title()
+                const url = page.url()
                 write({
                     url,
                     title
@@ -86,7 +86,7 @@ export async function savePageTitles(harvester, filter) {
 
     harvester.on('end', () => {
         try {
-            stream.end('\n]');
+            stream.end('\n]')
             console.info(`${urlIdx.size} pages titles saved to ${fileName}.`)
         } catch (e) {
             console.todo(e)

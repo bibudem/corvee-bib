@@ -1,6 +1,6 @@
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { normalizeUrl } from 'corvee-core'
+import { normalizeUrl } from '@corvee/core'
 
 import { adressesSimplifiees } from './adresses-simplifiees.js'
 
