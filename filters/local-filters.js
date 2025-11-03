@@ -9,12 +9,10 @@ import bibExamensAnneesAnterieures from './local/bib-examens-annees-anterieures.
 import bibGif from './local/bib-gif.js'
 import bibHttp30xRedirectionTypo3 from './local/bib-http-30x-redirection-typo3.js'
 import bibLienBeTypo3 from './local/bib-lien-be-typo3.js'
-import bibLienDeveloppementEdimestre from './local/bib-lien-developpement-edimestre.js'
 import bibLienDeveloppementWebmestre from './local/bib-lien-developpement-webmestre.js'
 import bibLienGuidesBibUmontrealCa from './local/bib-lien-guides-bib-umontreal-ca.js'
 import bibLienGuidesWithOldTab from './local/bib-lien-guides-with-old-tab.js'
 import bibLienLibguidesAdmin from './local/bib-lien-libguides-admin.js'
-import bibLienLibguidesGuides from './local/bib-lien-libguides-guides.js'
 import bibLienLibguidesNatif from './local/bib-lien-libguides-natif.js'
 import bibLienTypo3Interne from './local/bib-lien-typo3-interne.js'
 import bibLienGuideEmbed from './local/bib-liens-guide-embed.js'
@@ -35,7 +33,7 @@ import pupTimeoutRedirect from './local/pup-timeout-redirect.js'
 
 import messages from './local/messages.js'
 
-export const localMessages = messages;
+export const localMessages = messages
 
 export const localFilters = [
     {
@@ -57,11 +55,9 @@ export const localFilters = [
     },
     bibLienGuidesBibUmontrealCa,
     bibLienBeTypo3,
-    bibLienDeveloppementEdimestre,
     bibLienDeveloppementWebmestre,
     bibLienGuidesWithOldTab,
     bibLienLibguidesAdmin,
-    bibLienLibguidesGuides,
     bibLienLibguidesNatif,
     bibLienTypo3Interne,
     bibLienGuideEmbed,

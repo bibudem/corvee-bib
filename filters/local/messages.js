@@ -30,10 +30,6 @@ export default {
         msg: "Évitez ces liens <code class=\"cvw-url\">http://bib.umontreal.ca/index.php?id=12345</code> générés par TYPO3. Utilisez plutôt le lien tel qu'obtenu en navigant dans le site."
     },
 
-    "bib-lien-developpement-edimestre": {
-        msg: "Ce lien pointe vers l'espace de développement de l'édimestre. Ces pages ne sont pas destinées à être rendues publiques."
-    },
-
     "bib-lien-guide-embed": {
         msg: "Utilisez l'URL publique du guide, celle débutant par <code class=\"cvw-url\">https://bib.umontreal.ca/</code>...."
     },
