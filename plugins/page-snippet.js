@@ -1,5 +1,7 @@
 import { console } from '@corvee/core'
 
+const TEXT_SNIPPET_MAX_LENGTH = 175
+
 export default {
   name: 'page-snippet',
   emits: true,
@@ -21,15 +23,21 @@ export default {
         const title = await page.title()
         let text = ''
 
-        if (/https:\/\/api\.bib\.umontreal\.ca\/guides\/embed\/\d+(\?|$)/.test(url)) {
-          text = (await page.$eval('#s-lg-guide-main', node => node.innerText)).slice(0, 200)
-        } else {
-          try {
-            text = (await page.$eval('.content-main', node => node.innerText)).slice(0, 200)
-          } catch {
-            // failed to find element matching selector ".content-main"
-            text = (await page.$eval('body', node => node.innerText)).slice(0, 200)
+        try {
+          if (url.startsWith('https://boite-outils.bib.umontreal.ca/')) {
+            text = (await page.$eval('#s-lg-guide-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
           }
+
+          else if (url.startsWith('https://studio.bib.umontreal.ca/')) {
+            text = (await page.$eval('article, main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          }
+          else if (url.startsWith('https://bib.umontreal.ca/')) {
+            text = (await page.$eval('#content-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          } else {
+            text = (await page.$eval('body', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          }
+        } catch {
+          console.warn(`Could not extract snippet for ${url}`)
         }
 
         return Promise.resolve({ url, title, text })
