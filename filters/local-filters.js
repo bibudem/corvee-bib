@@ -13,7 +13,7 @@ import bibLienDeveloppementWebmestre from './local/bib-lien-developpement-webmes
 import bibLienGuidesBibUmontrealCa from './local/bib-lien-guides-bib-umontreal-ca.js'
 import bibLienGuidesWithOldTab from './local/bib-lien-guides-with-old-tab.js'
 import bibLienLibguidesAdmin from './local/bib-lien-libguides-admin.js'
-import bibLienLibguidesNatif from './local/bib-lien-libguides-natif.js'
+import bibLienLibguides from './local/bib-lien-libguides.js'
 import bibLienTypo3Interne from './local/bib-lien-typo3-interne.js'
 import bibLienGuideEmbed from './local/bib-liens-guide-embed.js'
 import bibListeAZ from './local/bib-liste-az.js'
@@ -58,7 +58,7 @@ export const localFilters = [
     bibLienDeveloppementWebmestre,
     bibLienGuidesWithOldTab,
     bibLienLibguidesAdmin,
-    bibLienLibguidesNatif,
+    bibLienLibguides,
     bibLienTypo3Interne,
     bibLienGuideEmbed,
     {

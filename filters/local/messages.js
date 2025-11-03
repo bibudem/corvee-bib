@@ -48,12 +48,8 @@ export default {
         msg: "Ce lien pointe vers l'interface d'administration de LibGuides. Utilisez plutôt une adresse publique du guide (<code>https://bib.umontreal.ca/...</code>)."
     },
 
-    "bib-lien-libguides-guides": {
-        msg: "Ce lien pointe vers un guide hébergé sur LibGuides (<code>https://libguides.bib.umontreal.ca/c.php?...</code>). Utilisez plutôt une adresse pointant vers le guide sur le site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)."
-    },
-
-    "bib-lien-libguides-natif": {
-        msg: "Ce lien pointe vers une page sur LibGuides (<code>https://libguides.bib.umontreal.ca/...</code>). Utilisez plutôt une page du site Web des bibliothèques (<code>https://bib.umontreal.ca/...</code>)."
+    "bib-lien-libguides": {
+        msg: "Ce lien utilise l'ancien nom de LibGuides (<code>https://libguides.bib.umontreal.ca/...</code>). Utilisez plutôt la nouvelle adresse <code>https://boite-outils.bib.umontreal.ca/...</code>)."
     },
 
     "bib-lien-typo3-interne": {
