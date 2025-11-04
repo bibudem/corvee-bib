@@ -14,27 +14,18 @@ export const harvesterConfig = {
     ignore: [
         ...adressesSimplifiees,
         // 
-        // /^https:\/\/bib\.umontreal\.ca\/[^#?]/, 
-        /^https:\/\/bib\.umontreal\.ca\/activites/i,
-        /^https:\/\/bib\.umontreal\.ca\/communications\/nouvelles/i,
-        /^https:\/\/bib\.umontreal\.ca\/les\-bibliotheques\-udem\/nouvelles/i,
+        /^https:\/\/bib\.umontreal\.ca\/nouvelles/i,
         'https://www.bib.umontreal.ca/une-question',
         /^https:\/\/unequestion\.bib\.umontreal\.ca\//i,
-        /^https:\/\/www\.bib\.umontreal\.ca\/ideale/i,
         /^https:\/\/www\.bib\.umontreal\.ca\/publications/i,
 
         // Applications des Bibliothèques
         /^http:\/\/geoindex\.bib\.umontreal\.ca/i,
         'testproxy.umontreal.ca',
-        'http://expo.bib.umontreal.ca',
         'http://geos.bib.umontreal.ca',
-        // 'https://umontreal.on.worldcat.org',
         /^https:\/\/[^\/]+\.worldcat\.org\//i,
-        // /^https?:\/\/bib\.umontreal\.ca\/(.+)\?tab=([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])($|#)/i, // ?tab=0 à ?tab=9999
 
         // Liste AZ
-        'https://libguides.bib.umontreal.ca/az.php',
-        /^https:\/\/libguides\.bib\.umontreal\.ca\/[A-Za-z_]+/i,
         /^https:\/\/umontreal\.libapps\.com\/libapps\/login\.php/i,
 
         // Adresses UdeM connues
@@ -68,14 +59,13 @@ export const harvesterConfig = {
     ],
     internLinks: [
         /^https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
-        // /^https?:\/\/atrium\.umontreal\.ca(\/.*)?/,
         /^https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
         /^https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
         // 'http://localhost[.*]'
     ],
     linkParserDelay: false,
     logLevel: 'verbose',
-    maxConcurrency: 8,
+    maxConcurrency: 15,
     maxRequestRetries: 3,
     // maxRequestsPerCrawl: 50,
     navigationOnly: true,
@@ -90,7 +80,6 @@ export const harvesterConfig = {
         /^https:\/\/calendrier\.bib\.umontreal\.ca/,
         /^https?:\/\/calypso\.bib\.umontreal\.ca/,
         'http://mentor.bib.umontreal.ca',
-        'http://opurl.bib.umontreal.ca',
         'https://papyrus.bib.umontreal.ca',
         /^https:\/\/libguides\.bib\.umontreal\.ca\/c\.php/,
         /^https:\/\/libguides\.bib\.umontreal\.ca\/prf\.php/,
@@ -98,13 +87,17 @@ export const harvesterConfig = {
         /^https:\/\/libguides\.bib\.umontreal\.ca\/srch\.php/,
         /^https:\/\/umontreal\.libapps\.com/,
         /^https:\/\/docs\.bib\.umontreal\.ca\//,
-        // URL périmées?
-        'https://jupiter.bib.umontreal.ca/GIF',
-        /^https:\/\/bib\.umontreal\.ca\/(?:.+)\/news\/\-\/\-\//, // Liens vers une nouvelle qui n'a pas d'URL
-        'https://bib.umontreal.ca/en/',
-        // /^https:\/\/bib\.umontreal\.ca\/developpement-edimestre\//, // Section de développement de l'édimestre
-        // /^https:\/\/bib\.umontreal\.ca\/(index\.php)?\?id=\d+/, // URLs internes à TYPO3
+        /^https:\/\/rel\.bib\.umontreal\.ca\//,
+        /^https:\/\/kerko\.bib\.umontreal\.ca\//,
+        /^https:\/\/bibliographies\.bib\.umontreal\.ca\//,
     ],
+    /**
+     * Function to normalize URLs for the purpose of the web crawler.
+     * By default, it returns the result of the normalizeUrl function.
+     * If the URL starts with 'https://libguides.bib.umontreal.ca/az.php?', it returns the URL up to the first '?' character.
+     * @param {string} url The URL to be normalized.
+     * @return {string} The normalized URL.
+     */
     normalizeUrlFunction: (url) => {
 
         url = normalizeUrl(url)
@@ -127,5 +120,5 @@ export const harvesterConfig = {
     userDataDir: join(dirname(fileURLToPath(import.meta.url)), '..', '.userData'),
     useCache: true,
     // useChrome: true,
-    waitInterval: 50,
+    waitInterval: 25,
 }

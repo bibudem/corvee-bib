@@ -34,22 +34,12 @@ export default {
         msg: "Utilisez l'URL publique du guide, celle débutant par <code class=\"cvw-url\">https://bib.umontreal.ca/</code>...."
     },
 
-    "bib-lien-guides-bib-umontreal-ca": {
-        pattern: "(.+)",
-        substitution: "<p>Ce lien pointe vers <em>À La Carte</em>. Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers.</p><p class=\"cv-download-asset--container text-center\"><a href=\"$1\" download class=\"cv-download-asset btn btn-primary\"><span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span> Télécharger ce fichier</a></p>",
-        msg: "Ce lien pointe vers <em>À La Carte</em> (https://guides.bib.umontreal.ca/...). Or ce serveur va être prochainement fermé. Utilisez plutôt LibGuides pour héberger vos fichiers."
-    },
-
     "bib-lien-guides-with-old-tab": {
         msg: "Ce lien pointe vers À La Carte. Veuillez mettre à jour le numéro de tab dans l'URL."
     },
 
     "bib-lien-libguides-admin": {
         msg: "Ce lien pointe vers l'interface d'administration de LibGuides. Utilisez plutôt une adresse publique du guide (<code>https://bib.umontreal.ca/...</code>)."
-    },
-
-    "bib-lien-libguides": {
-        msg: "Ce lien utilise l'ancien nom de LibGuides (<code>https://libguides.bib.umontreal.ca/...</code>). Utilisez plutôt la nouvelle adresse <code>https://boite-outils.bib.umontreal.ca/...</code>)."
     },
 
     "bib-lien-typo3-interne": {

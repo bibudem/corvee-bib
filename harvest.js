@@ -44,9 +44,9 @@ let externLinks = new Set()
 
 async function harvest() {
 
-    const guidesParams = new Set();
+    const guidesParams = new Set()
 
-    (await fetchGuides()).forEach(guide => guidesParams.add(guide.aliasUrl.split('?tab=')[1]))
+    // (await fetchGuides()).forEach(guide => guidesParams.add(guide.aliasUrl.split('?tab=')[1]))
 
     readline.emitKeypressEvents(process.stdin)
     process.stdin.setRawMode(true)
@@ -104,46 +104,70 @@ async function harvest() {
 
     })
 
-    savePageSnippets(harvester, job)
+    harvester.on('add-link', function onAddLink(link) {
 
-    saveRecords(harvester, job)
+        const analyticsQueryParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', '_gl']
 
-    saveBrowsingContexts(harvester, job)
+        function stripAnalyticsQueryParams(url) {
+            try {
+                const u = new URL(url)
+                u.searchParams.forEach((_, key) => {
+                    if (analyticsQueryParams.includes(key)) {
+                        u.searchParams.delete(key)
+                    }
+                })
+                return u.href
+            } catch (e) {
+                return url
+            }
+        }
 
-    saveReportCodes(harvester, job)
-
-    saveSystemInfo(harvester, job)
-
-    // savePageTitles(harvester)
-
-    const task = argv.resume ? 'resume' : 'run'
-
-    console.info(`Running with config: ${inspect(harvester.config)}`)
-
-    harvester.on('start', function onStart() {
-        console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
-    })
-
-    harvester.on('end', function onEnd() {
-        console.info(`Found ${internLinks.size} intern pages.`)
-        console.info(`Found ${externLinks.size} extern pages.`)
-    })
-
-    console.info(`autoscaledPool options: ${inspect(harvester.autoscaledPoolOptions)}`)
-    console.info(`browserPool options: ${inspect(harvester.browserPoolOptions)}`)
-    console.info(`launchContext options: ${inspect(harvester.launchContextOptions)}`)
-    console.info(`playwrightCrawler options: ${inspect(harvester.playwrightCrawlerOptions)}`)
-
-    console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
-
-    try {
-        await harvester[task]()
-    } catch (e) {
-        console.error(e)
-        process.nextTick(function () {
-            process.exit()
+        ['finalUrl', 'parent', 'url'].forEach(prop => {
+            if (link[prop]) {
+                link[prop] = stripAnalyticsQueryParams(link[prop])
+            }
         })
+
+        savePageSnippets(harvester, job)
+
+        saveRecords(harvester, job)
+
+        saveBrowsingContexts(harvester, job)
+
+        saveReportCodes(harvester, job)
+
+        saveSystemInfo(harvester, job)
+
+        // savePageTitles(harvester)
+
+        const task = argv.resume ? 'resume' : 'run'
+
+        console.info(`Running with config: ${inspect(harvester.config)}`)
+
+        harvester.on('start', function onStart() {
+            console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
+        })
+
+        harvester.on('end', function onEnd() {
+            console.info(`Found ${internLinks.size} intern pages.`)
+            console.info(`Found ${externLinks.size} extern pages.`)
+        })
+
+        console.info(`autoscaledPool options: ${inspect(harvester.autoscaledPoolOptions)}`)
+        console.info(`browserPool options: ${inspect(harvester.browserPoolOptions)}`)
+        console.info(`launchContext options: ${inspect(harvester.launchContextOptions)}`)
+        console.info(`playwrightCrawler options: ${inspect(harvester.playwrightCrawlerOptions)}`)
+
+        console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
+
+        try {
+            await harvester[task]()
+        } catch (e) {
+            console.error(e)
+            process.nextTick(function () {
+                process.exit()
+            })
+        }
     }
-}
 
 harvest()

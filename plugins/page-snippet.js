@@ -25,16 +25,16 @@ export default {
 
         try {
           if (url.startsWith('https://boite-outils.bib.umontreal.ca/')) {
-            text = (await page.$eval('#s-lg-guide-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+            text = (await page.evaluate('#s-lg-guide-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
           }
 
           else if (url.startsWith('https://studio.bib.umontreal.ca/')) {
-            text = (await page.$eval('article, main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+            text = (await page.evaluate('article, main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
           }
           else if (url.startsWith('https://bib.umontreal.ca/')) {
-            text = (await page.$eval('#content-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+            text = (await page.evaluate('#content-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
           } else {
-            text = (await page.$eval('body', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+            text = (await page.evaluate('body', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
           }
         } catch {
           console.warn(`Could not extract snippet for ${url}`)

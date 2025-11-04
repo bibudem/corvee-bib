@@ -29,6 +29,7 @@ const argv = yargs(hideBin(process.argv))
             type: 'string'
         }
     })
+    .example(`$0 -- --job ${defaultTodayDashedPrefix}`, 'process the data harvested today')
     .help()
     .parseSync()
 
@@ -253,7 +254,7 @@ async function doProcess(records) {
         })
         .filter(record => record.reports.length > 0)
 
-    console.log(colors.bold(`Found ${colors.green(n(result.records.length))} records with problem.`))
+    console.log(colors.bold(`Found ${colors.green(n(result.records.length))} records with problems.`))
 
     await toSql({
         data: result.records,
@@ -303,7 +304,7 @@ async function doProcess(records) {
         })
 
     sortedHttpStatuses.unshift(['Code HTTP', ' '])
-    sortedHttpStatuses.push(['Total errors', n(totalErrorsByStatusCode)])
+    sortedHttpStatuses.push(['Total reports', n(totalErrorsByStatusCode)])
     sortedHttpStatuses.push(['Total', n(totalHttpStatuses)])
 
     const tableConfig = {
