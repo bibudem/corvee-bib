@@ -38,5 +38,5 @@ export const dbLocal = {
       deprecationErrors: true
     }
   },
-  name: 'corvee-prod'
+  name: 'corvee-localhost'
 }
