@@ -12,7 +12,24 @@ export const db = {
   options: {
     auth: {
       username: 'some user',
-      password: 'some password]85$9'
+      password: 'some password'
+    },
+    authSource: 'auth collection',
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true
+    }
+  },
+  name: 'corvee-prod'
+}
+
+export const dbLocal = {
+  url: 'mongodb://localhost:27017/',
+  options: {
+    auth: {
+      username: 'some user',
+      password: 'some password'
     },
     authSource: 'auth collection',
     serverApi: {
