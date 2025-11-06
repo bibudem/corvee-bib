@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.2.0](https://github.com/bibudem/corvee-bib/compare/v2.1.0...v2.2.0) (2025-11-06)
+
+
+### Features
+
+* Added example config file. ([e2a6734](https://github.com/bibudem/corvee-bib/commit/e2a67342347c71032570e8ce69c93168aeb2e7c9))
+* Fixed example config file. ([f70b711](https://github.com/bibudem/corvee-bib/commit/f70b711e45ed7ede8e1f250d492093ce3d76e383))
+* Fixed example config file. ([5e24c43](https://github.com/bibudem/corvee-bib/commit/5e24c43bf541d10d212d1c1b82497e6d0b865a9b))
+* Renommage des modules corvee-* par @corvee/* ([8892f99](https://github.com/bibudem/corvee-bib/commit/8892f99a8a08699a4ba0d23ba2b345bd704b647a))
+* **script:** Amélioration de l'aide du script find-route ([9b3612e](https://github.com/bibudem/corvee-bib/commit/9b3612e50a2165c0c6f66846395d6baaf5e8bc07))
+* **sections:** Mise à jour de la liste des sections du site. ([0adfb09](https://github.com/bibudem/corvee-bib/commit/0adfb099c78a34d5d9ceac54df8e669428d46a95))
+
+
+### Bug Fixes
+
+* **filter:** Ajustement d'un filtre afin de capturer les liens utilisant l'ancien nom de Libguides. ([79a8cf2](https://github.com/bibudem/corvee-bib/commit/79a8cf29eba49f53bc5a75f53523848392c7a836))
+* **filter:** Ajustement découlant du nouveau site Web. ([afd4315](https://github.com/bibudem/corvee-bib/commit/afd4315e0328fd049fdab98471aa65e6d0598cd2))
+* **filter:** Suppression de 2 filtres rendus inutiles avec l'architecture du nouveau site. ([ad358b4](https://github.com/bibudem/corvee-bib/commit/ad358b4a3930cc8892bdae76e206e0460cbd6d94))
+* **harvester:** Correction du script qui génère les "page snippets" afin de l'ajuster à la nouvelle réalité de nos sites Web. ([7dc4b5c](https://github.com/bibudem/corvee-bib/commit/7dc4b5cffd36b1333382ff7f1f5b1ecfb3caf76b))
+
 ## [2.1.0](https://github.com/bibudem/corvee-bib/compare/v2.0.0...v2.1.0) (2024-01-09)
 
 
