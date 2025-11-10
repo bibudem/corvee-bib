@@ -27,7 +27,7 @@
         "@corvee/core": "file:../corvee/packages/core",
         "@corvee/harvester": "file:../corvee/packages/harvester",
         "@corvee/processor": "file:../corvee/packages/processor",
-        "algoliasearch": "^5.42.0",
+        "algoliasearch": "^5.43.0",
         "axios": "^1.13.1",
         "colors": "^1.4.0",
         "es-main": "^1.3.0",
