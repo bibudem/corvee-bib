@@ -1,5 +1,5 @@
-import * as config from '../config/index.js'
 import { filters as _, messagesFrCA } from '@corvee/processor'
+import * as config from '../config/index.js'
 
 export const standardFilters = [
     _.http30xAllTempRedirects,
