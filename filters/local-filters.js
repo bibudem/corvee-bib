@@ -16,7 +16,8 @@ import bibMaestro from './local/bib-Maestro.js'
 import bibPermalienBibUmontrealCa from './local/bib-permalien-bib-umontreal-ca.js'
 
 import externalIgnoreUrls from './local/external-ignore-urls.js'
-import microsoft from './local/microsoft-forward-link.js'
+import microsoftForwardLink from './local/microsoft-forward-link.js'
+import microsoftOutlinkSafelinkProtection from './local/microsoft-outlink-safelink-protection.js'
 import publicAuthServices from './local/public-auth-services.js'
 
 import sofiaRedirectionLinker2 from './local/sofia-redirection-linker2.js'
@@ -66,9 +67,10 @@ export const localFilters = [
         exclude: true
     },
     {
-        ...microsoft,
+        ...microsoftForwardLink,
         exclude: true
     },
+    microsoftOutlinkSafelinkProtection,
     {
         ...publicAuthServices,
         exclude: true

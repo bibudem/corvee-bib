@@ -59,6 +59,10 @@ export default {
         msg: "Le site de la Didacthèque a été retiré. Veuillez corriger le lien."
     },
 
+    "microsoft-safelink-protection": {
+        msg: "Le lien utilisé est une redirection Outlook. Utilisez plutôt le lien direct (final) vers la ressource."
+    },
+
     "pup-timeout-redirect": {
         msg: "Redirection permanente. Vous devez mettre à jour ce lien.",
         pattern: "(.+)",
