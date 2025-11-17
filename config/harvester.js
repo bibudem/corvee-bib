@@ -71,6 +71,7 @@ export const harvesterConfig = {
         /^https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
         /^https:\/\/umontreal\.on\.worldcat\.org(\/.*)?/,
         /^https:\/\/umontreal\.account\.worldcat\.org(\/.*)?/,
+        /^https:\/\/umontreal\.scholaris\.ca\//i,
         // 'http://localhost[.*]'
     ],
     linkParserDelay: false,
