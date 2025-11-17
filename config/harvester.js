@@ -25,6 +25,12 @@ export const harvesterConfig = {
         'http://geos.bib.umontreal.ca',
         /^https:\/\/[^\/]+\.worldcat\.org\//i,
 
+        //
+        // LibGuides et cie.
+        //
+
+        'https://boite-outils.bib.umontreal.ca/srch.php',
+
         // Liste AZ
         /^https:\/\/umontreal\.libapps\.com\/libapps\/login\.php/i,
 
@@ -55,7 +61,11 @@ export const harvesterConfig = {
         /^https:\/\/fusion\.google\.com/i,
         /^https:\/\/books\.google\.com/i,
         /^https:\/\/documents\.un\.org\//i,
-        /^https:\/\/news\.google\.com\//i, // 
+        /^https:\/\/news\.google\.com\//i, //
+
+        // TEMP
+        'https://kerko.bib.umontreal.ca',
+        'https://bibliographies.bib.umontreal.ca',
     ],
     internLinks: [
         /^https?:\/\/[^\/]*bib\.umontreal\.ca(:\d+)?(\/.*)?/,
