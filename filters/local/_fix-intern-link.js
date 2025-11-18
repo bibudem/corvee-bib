@@ -13,7 +13,7 @@ export default {
       }
 
       report.oldExtern = report.extern
-      report.extern = !sitePseudoURLs.matches(report.finalUrl)
+      report.extern = isExtern
       return true
     }
 

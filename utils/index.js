@@ -1,3 +1,4 @@
+export * from './fix-extern.js'
 export * from './save-browsing-contexts.js'
 export * from './save-report-codes.js'
 export * from './save-intern-links.js'

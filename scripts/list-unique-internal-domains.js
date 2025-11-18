@@ -1,7 +1,24 @@
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 import { table } from 'table'
-import data from '../data/2025-10-30_harvested.json' with { type: 'json' }
 
-function main() {
+const argv = yargs(hideBin(process.argv))
+  .usage('Usage: $0 --job=2025-11-13')
+  .demandOption(['job'])
+  .alias('j', 'job')
+  .help()
+  .argv
+
+const job = argv.job
+
+async function main() {
+
+  const jobFileURL = new URL(`../data/${job}_harvested.json`, import.meta.url)
+
+  console.log(`Listing links per internal domain for job ${job}...`)
+
+  const { default: data } = await import(jobFileURL, { with: { type: 'json' } })
+
   const domains = new Map()
 
   data.forEach(record => {
@@ -26,6 +43,6 @@ function main() {
   return Array.from(domains).sort((a, b) => b[1] - a[1])
 }
 
-const result = main()
+const result = await main()
 console.log(table(result))
 console.log(`\nTotal unique internal domains: ${result.length}`)

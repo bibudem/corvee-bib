@@ -4,22 +4,26 @@ import { fileURLToPath } from 'node:url'
 import { MongoClient } from 'mongodb'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { console, inspect } from '@corvee/core'
-import { db } from '../config/local.js'
+import { console } from '@corvee/core'
+import { db, dbLocal } from '../config/local.js'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --job=2022-09-01')
+  .example('npm run upload -- --job=2022-09-01', 'Upload the data from the job 2022-09-01 to the production database.')
+  .example('npm run upload -- --local --job=2022-09-01', 'Upload the data from the job 2022-09-01 to the local database.')
+  .boolean('local')
   .demandOption(['job'])
   .alias('j', 'job')
   .help()
   .argv
 
 const job = argv.job
+const dbConfig = argv.local ? dbLocal : db
 const dataDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data')
 
 const records = JSON.parse(await readFile(join(dataDir, `${job}_processed.json`)))
 
-const client = new MongoClient(db.url, db.options)
+const client = new MongoClient(dbConfig.url, dbConfig.options)
 
 const insertToLinksAggregation = [
   {
@@ -128,6 +132,10 @@ async function run() {
 
     const reportsColl = client.db(db.name).collection('reports')
     const linksColl = client.db(db.name).collection('links')
+
+    if (argv.local) {
+      console.log('Uploading to local database.')
+    }
 
     console.log(`Read ${records.length} records from job ${job}.`)
 

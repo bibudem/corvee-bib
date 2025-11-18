@@ -4,7 +4,7 @@ import { hideBin } from 'yargs/helpers'
 import { console, inspect } from '@corvee/core'
 import { Harvester } from '@corvee/harvester'
 import { fetchGuides } from './lib/fetch-guides.js'
-import { saveBrowsingContexts, saveReportCodes, saveRecords, saveSystemInfo } from './utils/index.js'
+import { fixExtern, saveBrowsingContexts, saveReportCodes, saveRecords, saveSystemInfo } from './utils/index.js'
 import pageSnippetPlugin from './plugins/page-snippet.js'
 
 import { harvesterConfig } from './config/index.js'
@@ -80,6 +80,7 @@ async function harvest() {
 
     await harvester.addUrl(links)
 
+    // Counting internal and external links
     harvester.on('request', function onRequest(request) {
         console.info(`[${request.retryCount}] Request url: ${request.url}`)
 
@@ -88,20 +89,6 @@ async function harvest() {
         } else {
             internLinks.add(request.url)
         }
-    })
-
-    harvester.on('add-link', function onAddLink(link) {
-        try {
-            const url = new URL(link.url)
-            if (url.hostname === 'bib.umontreal.ca' && url.searchParams.has('tab') && guidesParams.has(url.searchParams.get('tab'))) {
-                url.searchParams.delete('tab')
-                link.url = url.href
-                link.userData.url = url.href
-            }
-        } catch (e) {
-            console.error(e)
-        }
-
     })
 
     harvester.on('add-link', function onAddLink(link) {
@@ -127,47 +114,50 @@ async function harvest() {
                 link[prop] = stripAnalyticsQueryParams(link[prop])
             }
         })
+    })
 
-        savePageSnippets(harvester, job)
+    harvester.on('record', fixExtern)
 
-        saveRecords(harvester, job)
+    savePageSnippets(harvester, job)
 
-        saveBrowsingContexts(harvester, job)
+    saveRecords(harvester, job)
 
-        saveReportCodes(harvester, job)
+    saveBrowsingContexts(harvester, job)
 
-        saveSystemInfo(harvester, job)
+    saveReportCodes(harvester, job)
 
-        // savePageTitles(harvester)
+    saveSystemInfo(harvester, job)
 
-        const task = argv.resume ? 'resume' : 'run'
+    // savePageTitles(harvester)
 
-        console.info(`Running with config: ${inspect(harvester.config)}`)
+    const task = argv.resume ? 'resume' : 'run'
 
-        harvester.on('start', function onStart() {
-            console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
+    console.info(`Running with config: ${inspect(harvester.config)}`)
+
+    harvester.on('start', function onStart() {
+        console.info(`Running with run options: ${inspect(harvester.runOptions)}`)
+    })
+
+    harvester.on('end', function onEnd() {
+        console.info(`Found ${internLinks.size} intern pages.`)
+        console.info(`Found ${externLinks.size} extern pages.`)
+    })
+
+    console.info(`autoscaledPool options: ${inspect(harvester.autoscaledPoolOptions)}`)
+    console.info(`browserPool options: ${inspect(harvester.browserPoolOptions)}`)
+    console.info(`launchContext options: ${inspect(harvester.launchContextOptions)}`)
+    console.info(`playwrightCrawler options: ${inspect(harvester.playwrightCrawlerOptions)}`)
+
+    console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
+
+    try {
+        await harvester[task]()
+    } catch (e) {
+        console.error(e)
+        process.nextTick(function () {
+            process.exit()
         })
-
-        harvester.on('end', function onEnd() {
-            console.info(`Found ${internLinks.size} intern pages.`)
-            console.info(`Found ${externLinks.size} extern pages.`)
-        })
-
-        console.info(`autoscaledPool options: ${inspect(harvester.autoscaledPoolOptions)}`)
-        console.info(`browserPool options: ${inspect(harvester.browserPoolOptions)}`)
-        console.info(`launchContext options: ${inspect(harvester.launchContextOptions)}`)
-        console.info(`playwrightCrawler options: ${inspect(harvester.playwrightCrawlerOptions)}`)
-
-        console.log(`${task === 'resume' ? 'Resuming' : 'Running'} harvesting.`)
-
-        try {
-            await harvester[task]()
-        } catch (e) {
-            console.error(e)
-            process.nextTick(function () {
-                process.exit()
-            })
-        }
     }
+}
 
 harvest()

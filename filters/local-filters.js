@@ -14,6 +14,7 @@ import bibListeAZ from './local/bib-liste-az.js'
 import bibMaestro from './local/bib-Maestro.js'
 import bibPermalienBibUmontrealCa from './local/bib-permalien-bib-umontreal-ca.js'
 
+import doiOrg from './local/doi-org.js'
 import externalIgnoreUrls from './local/external-ignore-urls.js'
 import hdlHandleNet from './local/hdl-handle-net.js'
 import microsoftForwardLink from './local/microsoft-forward-link.js'
@@ -77,4 +78,5 @@ export const localFilters = [
     udemHttp30xCalendrier,
     pupTimeoutRedirect,
     hdlHandleNet,
+    doiOrg,
 ]
