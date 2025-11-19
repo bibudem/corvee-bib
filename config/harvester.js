@@ -101,6 +101,7 @@ export const harvesterConfig = {
         /^https:\/\/rel\.bib\.umontreal\.ca\//,
         /^https:\/\/kerko\.bib\.umontreal\.ca\//,
         /^https:\/\/bibliographies\.bib\.umontreal\.ca\//,
+        /^https:\/\/umontreal\.scholaris\.ca\//i,
     ],
     /**
      * Function to normalize URLs for the purpose of the web crawler.
