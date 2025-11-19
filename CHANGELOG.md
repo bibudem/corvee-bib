@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.2.0](https://github.com/bibudem/corvee-bib/compare/v2.1.0...v2.2.0) (2025-11-19)
+
+
+### Features
+
+* Added example config file. ([e2a6734](https://github.com/bibudem/corvee-bib/commit/e2a67342347c71032570e8ce69c93168aeb2e7c9))
+* **filter:** Ajout d'un filtre pour les redirections Outlook ([456123e](https://github.com/bibudem/corvee-bib/commit/456123e5475a127255f4bce8b1be575e0f7808bf))
+* **filter:** Ajout et retrait de filtres ([7f8eb13](https://github.com/bibudem/corvee-bib/commit/7f8eb130f6846987ef53f5f496b8263a1ac2f4a7))
+* Fixed example config file. ([f70b711](https://github.com/bibudem/corvee-bib/commit/f70b711e45ed7ede8e1f250d492093ce3d76e383))
+* Fixed example config file. ([5e24c43](https://github.com/bibudem/corvee-bib/commit/5e24c43bf541d10d212d1c1b82497e6d0b865a9b))
+* **harvester:** Ajout de scholaris dans les liens internes du site ([37534fb](https://github.com/bibudem/corvee-bib/commit/37534fb1d6b0761cf51d401f05293a012b9ba2c8))
+* **harvester:** Ne pas indexer les pages de Scholaris. ([d9d78c5](https://github.com/bibudem/corvee-bib/commit/d9d78c582407ea572f48cf52932e4d92d79d28de))
+* Renommage des modules corvee-* par @corvee/* ([8892f99](https://github.com/bibudem/corvee-bib/commit/8892f99a8a08699a4ba0d23ba2b345bd704b647a))
+* **script:** Amélioration de l'aide du script find-route ([9b3612e](https://github.com/bibudem/corvee-bib/commit/9b3612e50a2165c0c6f66846395d6baaf5e8bc07))
+* **sections:** Mise à jour de la liste des sections du site. ([0adfb09](https://github.com/bibudem/corvee-bib/commit/0adfb099c78a34d5d9ceac54df8e669428d46a95))
+
+
+### Bug Fixes
+
+* **filter:** Ajustement d'un filtre afin de capturer les liens utilisant l'ancien nom de Libguides. ([79a8cf2](https://github.com/bibudem/corvee-bib/commit/79a8cf29eba49f53bc5a75f53523848392c7a836))
+* **filter:** Ajustement découlant du nouveau site Web. ([afd4315](https://github.com/bibudem/corvee-bib/commit/afd4315e0328fd049fdab98471aa65e6d0598cd2))
+* **filter:** Suppression de 2 filtres rendus inutiles avec l'architecture du nouveau site. ([ad358b4](https://github.com/bibudem/corvee-bib/commit/ad358b4a3930cc8892bdae76e206e0460cbd6d94))
+* **harvester:** Correction du script qui génère les "page snippets" afin de l'ajuster à la nouvelle réalité de nos sites Web. ([7dc4b5c](https://github.com/bibudem/corvee-bib/commit/7dc4b5cffd36b1333382ff7f1f5b1ecfb3caf76b))
+
 ## [2.1.0](https://github.com/bibudem/corvee-bib/compare/v2.0.0...v2.1.0) (2024-01-09)
 
 
