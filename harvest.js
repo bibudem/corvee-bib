@@ -44,10 +44,6 @@ let externLinks = new Set()
 
 async function harvest() {
 
-    const guidesParams = new Set()
-
-    // (await fetchGuides()).forEach(guide => guidesParams.add(guide.aliasUrl.split('?tab=')[1]))
-
     readline.emitKeypressEvents(process.stdin)
     process.stdin.setRawMode(true)
     process.stdin.on('keypress', (str, key) => {

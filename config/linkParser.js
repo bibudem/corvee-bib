@@ -1,11 +1,12 @@
 export function linkParser() {
 
   function normalizeText(str) {
-    if (typeof str !== 'string') {
+    if (!str) {
       return str
     }
-
-    return str.replace(/\n/g, '').trim()
+    str = str.replace(/[\n\r\t\s]+/g, ' ')
+    str = str.trim()
+    return str
   }
 
   // @ts-ignore
@@ -16,9 +17,11 @@ export function linkParser() {
       return text
     }
 
+
     if (node.nodeName === 'A') {
       text = node.innerText
-      if (!normalizeText(text) && node.querySelector('img[alt]')) {
+      if (normalizeText(text) === '' && node.querySelector('img[alt]')) {
+        // @ts-ignore
         text = node.querySelector('img[alt]').getAttribute('alt')
       }
 

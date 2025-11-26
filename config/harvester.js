@@ -91,22 +91,22 @@ export const harvesterConfig = {
         /^https:\/\/calendrier\.bib\.umontreal\.ca/,
         /^https?:\/\/calypso\.bib\.umontreal\.ca/,
         'http://mentor.bib.umontreal.ca',
-        'https://papyrus.bib.umontreal.ca',
-        /^https:\/\/libguides\.bib\.umontreal\.ca\/c\.php/,
-        /^https:\/\/libguides\.bib\.umontreal\.ca\/prf\.php/,
-        /^https:\/\/libguides\.bib\.umontreal\.ca\/sb\.php/,
-        /^https:\/\/libguides\.bib\.umontreal\.ca\/srch\.php/,
+        /^https:\/\/boite-outils\.bib\.umontreal\.ca\/c\.php/,
+        /^https:\/\/boite-outils\.bib\.umontreal\.ca\/prf\.php/,
+        /^https:\/\/boite-outils\.bib\.umontreal\.ca\/sb\.php/,
+        /^https:\/\/boite-outils\.bib\.umontreal\.ca\/srch\.php/,
         /^https:\/\/umontreal\.libapps\.com/,
         /^https:\/\/docs\.bib\.umontreal\.ca\//,
         /^https:\/\/rel\.bib\.umontreal\.ca\//,
         /^https:\/\/kerko\.bib\.umontreal\.ca\//,
         /^https:\/\/bibliographies\.bib\.umontreal\.ca\//,
-        /^https:\/\/umontreal\.scholaris\.ca\//i,
+        /^https:\/\/umontreal\.scholaris\.ca\//,
+        /^https:\/\/claude-gingras\.bib\.umontreal\.ca\//,
     ],
     /**
      * Function to normalize URLs for the purpose of the web crawler.
      * By default, it returns the result of the normalizeUrl function.
-     * If the URL starts with 'https://libguides.bib.umontreal.ca/az.php?', it returns the URL up to the first '?' character.
+     * If the URL starts with 'https://boite-outils.bib.umontreal.ca/az.php?', it returns the URL up to the first '?' character.
      * @param {string} url The URL to be normalized.
      * @return {string} The normalized URL.
      */
@@ -114,7 +114,7 @@ export const harvesterConfig = {
 
         url = normalizeUrl(url)
 
-        if (url.startsWith('https://libguides.bib.umontreal.ca/az.php?')) {
+        if (url.startsWith('https://boite-outils.bib.umontreal.ca/az.php?')) {
             return url.split('?')[0]
         }
 
