@@ -1,5 +1,5 @@
 export default {
-  code: 'microsoft-safelink-protection',
+  code: 'microsoft-outlink-safelink-protection',
   test: (report) => {
     try {
       const url = new URL(report.url)

@@ -26,40 +26,16 @@ export default {
         substitution: "L'adresse a changé. Veuillez utiliser $1."
     },
 
-    "bib-lien-be-typo3": {
-        msg: "Évitez ces liens <code class=\"cvw-url\">http://bib.umontreal.ca/index.php?id=12345</code> générés par TYPO3. Utilisez plutôt le lien tel qu'obtenu en navigant dans le site."
-    },
-
-    "bib-lien-guide-embed": {
-        msg: "Utilisez l'URL publique du guide, celle débutant par <code class=\"cvw-url\">https://bib.umontreal.ca/</code>...."
-    },
-
-    "bib-lien-guides-with-old-tab": {
-        msg: "Ce lien pointe vers À La Carte. Veuillez mettre à jour le numéro de tab dans l'URL."
-    },
-
     "bib-lien-libguides-admin": {
-        msg: "Ce lien pointe vers l'interface d'administration de LibGuides. Utilisez plutôt une adresse publique du guide (<code>https://bib.umontreal.ca/...</code>)."
-    },
-
-    "bib-lien-typo3-interne": {
-        msg: "Il s'agit d'une URL interne de TTPO3 (<code>https://bib.umontreal.ca/index.php?id=...</code>). Utilise plutôt L'URL canonique de la page, par exemple: <code class=\"cvw-url\">https://bib.umontreal.ca/etudes-religieuses-histoire-philosophie/etudes-classiques</code>)."
+        msg: "Ce lien pointe vers l'interface d'administration de LibGuides. Utilisez plutôt une adresse publique du guide (<code>https://boite-outils.bib.umontreal.ca/...</code>)."
     },
 
     "bib-Maestro": {
         code: "bib-Maestro",
-        msg: "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://libguides.bib.umontreal.ca/az.php\"><code class=\"cvw-url\">https://libguides.bib.umontreal.ca/az.php</code></a>)"
+        msg: "Ce lien pointe vers Maestro. Veuillez utiliser la nouvelle liste de bases de données de A à Z (<a href=\"https://boite-outils.bib.umontreal.ca/az.php\"><code class=\"cvw-url\">https://boite-outils.bib.umontreal.ca/az.php</code></a>)"
     },
 
-    "bib-wrong-domain": {
-        msg: "Veuillez utiliser une adresse débutant par <code>http://<strong>www.</strong>bib.umontreal.ca</code> dans les liens hypertextes plutôt que <code>http://bib.umontreal.ca</code>. Ceci évite une redirection inutile."
-    },
-
-    "bib-retrait-di": {
-        msg: "Le site de la Didacthèque a été retiré. Veuillez corriger le lien."
-    },
-
-    "microsoft-safelink-protection": {
+    "microsoft-outlink-safelink-protection": {
         msg: "Le lien utilisé est une redirection Outlook. Utilisez plutôt le lien direct (final) vers la ressource."
     },
 
