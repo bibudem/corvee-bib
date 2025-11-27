@@ -76,7 +76,7 @@ export const harvesterConfig = {
     ],
     linkParserDelay: false,
     logLevel: 'verbose',
-    maxConcurrency: 15,
+    maxConcurrency: 30,
     maxRequestRetries: 3,
     // maxRequestsPerCrawl: 50,
     navigationOnly: true,
