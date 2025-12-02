@@ -316,7 +316,7 @@ async function doProcess(records) {
         }
     }
 
-    console.log(`Found ${n(silentReports.size)} silent report types:\n${table(sortedSilentErrors, tableConfig)}`)
+    console.log(`Found ${n(silentReports.size)} silent report types (reports whose filter never matched a record):\n${table(sortedSilentErrors, tableConfig)}`)
 
     console.log(`Found http status codes:\n${table(sortedHttpStatuses, tableConfig)}`)
 

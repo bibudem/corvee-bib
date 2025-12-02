@@ -13,6 +13,8 @@ import bibLienLibguidesAdmin from './local/bib-lien-libguides-admin.js'
 import bibListeAZ from './local/bib-liste-az.js'
 import bibMaestro from './local/bib-Maestro.js'
 import bibPermalienBibUmontrealCa from './local/bib-permalien-bib-umontreal-ca.js'
+import boiteOutilsCPhpLinks from './local/boite-outils-c.php-links.js'
+import boiteOutilsWelcomeRedirect from './local/boite-outils-welcome-redirect.js'
 
 import doiOrg from './local/doi-org.js'
 import externalIgnoreUrls from './local/external-ignore-urls.js'
@@ -59,6 +61,8 @@ export const localFilters = [
         // exclude: true
     },
     bibPermalienBibUmontrealCa,
+    boiteOutilsCPhpLinks,
+    boiteOutilsWelcomeRedirect,
     {
         ...externalIgnoreUrls,
         exclude: true
