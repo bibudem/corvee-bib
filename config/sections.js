@@ -122,9 +122,9 @@ export default [
         urls: ['https://boite-outils.bib.umontreal.ca/etudes-religieuses-histoire-philosophie'],
       },
       {
-        key: 'boite-outils/informatique-mathematique-sciences-nature',
+        key: 'boite-outils/informatique-mathematiques-sciences-nature',
         title: 'Informatique, mathématiques, sciences de la nature',
-        urls: ['https://boite-outils.bib.umontreal.ca/informatique-mathematique-sciences-nature'],
+        urls: ['https://boite-outils.bib.umontreal.ca/informatique-mathematiques-sciences-nature'],
       },
       {
         key: 'boite-outils/langues-litteratures',
