@@ -24,20 +24,23 @@ export default {
         let text = ''
 
         try {
-          if (url.startsWith('https://boite-outils.bib.umontreal.ca/')) {
-            text = (await page.evaluate('#s-lg-guide-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
-          }
+          const selector = '#s-lg-guide-main, article, main, #content-main, body'
+          text = (await page.$eval(selector, node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          // if (url.startsWith('https://boite-outils.bib.umontreal.ca/')) {
+          //   // s-lg-guide-main
+          //   text = (await page.evaluate('#s-lg-guide-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          // }
 
-          else if (url.startsWith('https://studio.bib.umontreal.ca/')) {
-            text = (await page.evaluate('article, main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
-          }
-          else if (url.startsWith('https://bib.umontreal.ca/')) {
-            text = (await page.evaluate('#content-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
-          } else {
-            text = (await page.evaluate('body', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
-          }
-        } catch {
-          console.warn(`Could not extract snippet for ${url}`)
+          // else if (url.startsWith('https://studio.bib.umontreal.ca/')) {
+          //   text = (await page.evaluate('article, main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          // }
+          // else if (url.startsWith('https://bib.umontreal.ca/')) {
+          //   text = (await page.evaluate('#content-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          // } else {
+          //   text = (await page.evaluate('body', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          // }
+        } catch (error) {
+          console.warn(`Could not extract snippet for ${url}`, error)
         }
 
         return Promise.resolve({ url, title, text })

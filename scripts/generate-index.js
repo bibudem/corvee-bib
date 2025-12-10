@@ -2,7 +2,7 @@ import { writeFile, readFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
-import algoliasearch from 'algoliasearch'
+import { algoliasearch } from 'algoliasearch'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { console, inspect } from '@corvee/core'
@@ -58,7 +58,9 @@ const sections = sectionsData
             .filter(url => url !== '')
         }
 
-        return urls.some(urlPrefix => url.startsWith(urlPrefix))
+        return urls.some(urlPrefix => {
+          return typeof urlPrefix === 'string' ? url.startsWith(urlPrefix) : urlPrefix.test(url)
+        })
       }
     }
   })
@@ -248,19 +250,25 @@ pageSnippetsIndex.sort((a, b) => {
 writeFile(outFilePath, JSON.stringify(pageSnippetsIndex, null, 2))
 
 const client = algoliasearch(algoliasearchOptions.applicationId, algoliasearchOptions.writeApiKey)
-const index = client.initIndex(algoliasearchOptions.index)
+// const index = client.initIndex(algoliasearchOptions.index)
 
 console.log(`Deleting records for job ${job}`)
 
-await index.deleteBy({
-  filters: `job:${job}`
+await client.deleteBy({
+  indexName: algoliasearchOptions.index,
+  deleteByParams: {
+    filters: `job:${job}`
+  }
 })
 
 console.log(`Deleted.`)
 
 console.log(`Saving ${pageSnippetsIndex.length} new pages snippets for job ${job}`)
 
-await index.saveObjects(pageSnippetsIndex)
+await client.saveObjects({
+  indexName: algoliasearchOptions.index,
+  objects: pageSnippetsIndex
+})
 
 console.log(`Saved.`)
 

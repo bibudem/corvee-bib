@@ -169,17 +169,22 @@ async function doProcess(records) {
 
             return filterData
         })
+        // Alphabetical sort
         .sort((a, b) => {
-            const codeA = a.code.toUpperCase() // ignore upper and lowercase
-            const codeB = b.code.toUpperCase() // ignore upper and lowercase
-            if (codeA < codeB) {
-                return -1
-            }
-            if (codeA > codeB) {
-                return 1
-            }
-            return 0
+            return b.matches - a.matches
         })
+        // Alphabetical sort
+        // .sort((a, b) => {
+        //     const codeA = a.code.toUpperCase() // ignore upper and lowercase
+        //     const codeB = b.code.toUpperCase() // ignore upper and lowercase
+        //     if (codeA < codeB) {
+        //         return -1
+        //     }
+        //     if (codeA > codeB) {
+        //         return 1
+        //     }
+        //     return 0
+        // })
         .map(filter => {
             const values = Object.values(filter).map((value, i) => {
 
