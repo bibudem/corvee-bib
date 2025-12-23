@@ -68,11 +68,13 @@ Le site de Corvée comprend un moteur de recherche, lequel nécessite quelques o
 npm run index -- --job=2025-12-18
 ```
 
-**Versement du fichier d'index auprès du service chargé de la recherche (Algoliasearch) sur le site de Corvée**
+**Versement du fichier d'index auprès du service Algoliasearch chargé de la recherche sur le site de Corvée**
 
 ```
 npm run upload -- --job=2025-12-18
 ```
+
+Cette tâche télé-verse sur Algoliasearch l'index généré.
 
 ## Base de données
 
