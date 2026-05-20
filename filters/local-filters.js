@@ -19,6 +19,7 @@ import boiteOutilsWelcomeRedirect from './local/boite-outils-welcome-redirect.js
 import doiOrg from './local/doi-org.js'
 import externalIgnoreUrls from './local/external-ignore-urls.js'
 import hdlHandleNet from './local/hdl-handle-net.js'
+import http403 from './local/http-403.js'
 import microsoftForwardLink from './local/microsoft-forward-link.js'
 import microsoftOutlinkSafelinkProtection from './local/microsoft-outlink-safelink-protection.js'
 import publicAuthServices from './local/public-auth-services.js'
@@ -67,6 +68,8 @@ export const localFilters = [
         ...externalIgnoreUrls,
         exclude: true
     },
+    hdlHandleNet,
+    http403,
     {
         ...microsoftForwardLink,
         exclude: true
@@ -81,6 +84,5 @@ export const localFilters = [
     studiumLogin,
     udemHttp30xCalendrier,
     pupTimeoutRedirect,
-    hdlHandleNet,
     doiOrg,
 ]
