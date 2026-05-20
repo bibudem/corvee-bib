@@ -90,6 +90,7 @@ export const harvesterConfig = {
         /^https?:\/\/bibres\.bib\.umontreal\.ca/,
         /^https:\/\/calendrier\.bib\.umontreal\.ca/,
         /^https?:\/\/calypso\.bib\.umontreal\.ca/,
+        /^https?:\/\/collections-speciales\.bib\.umontreal\.ca/,
         'http://mentor.bib.umontreal.ca',
         /^https:\/\/boite-outils\.bib\.umontreal\.ca\/c\.php/,
         /^https:\/\/boite-outils\.bib\.umontreal\.ca\/prf\.php/,
