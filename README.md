@@ -54,9 +54,84 @@ Versement des données dans la base de données MongoDB
 
 Les fichiers `<job>_harvested.json` et `<job>_processed.json` doivent ensuite être versés dans la base de données MongoDB du serveur Corvée. Pour ce faire, utilisez l'utilitaire MongoDB Compass.
 
-Dans MongoDB Compass, connectez-vous à la base Corvée, puis versez dans la collection `harvested` le fichier `<job>_harvested.json`, puis versez le fichier `<job>_harvested.json` dans la collection `reports`.
+Dans MongoDB Compass, connectez-vous à la base Corvée, puis versez dans la collection `harvested` le fichier `<job>_harvested.json`, puis versez le fichier `<job>_processed.json` dans la collection `reports`.
 
 Les données de la collection reports doivent ensuite être convertis dans un format plus approprié pour le serveur Corvée. Ceci est fait via une suite de tâches d'aggrégations effectuées depuis la collection `reports`. Le fruit de ces aggrégations est ensuite versé dans la collection `links`. C'est cette collection qui est utilisée par le serveur Corvée.
+
+Voici le script d'aggrégation à utiliser (mettez à jour la date de la variable job avant de l'exécuter):
+
+```javascript
+;[
+  {
+    $match: {
+      job: '2026-05-20',
+    },
+  },
+  {
+    $set: {
+      messages: {
+        $reduce: {
+          input: '$reports',
+          initialValue: '',
+          in: {
+            $concat: ['$$value', '<msg error-code="', '$$this.code', '">', '$$this.message', '</msg>'],
+          },
+        },
+      },
+    },
+  },
+  {
+    $set: {
+      errorCodes: {
+        $map: {
+          input: '$reports',
+          in: {
+            $concat: ['$$this.code'],
+          },
+        },
+      },
+    },
+  },
+  {
+    $set: {
+      linkId: '$id',
+      action: 'to-be-fixed',
+    },
+  },
+  {
+    $set: {
+      status: {
+        $switch: {
+          branches: [
+            {
+              case: {
+                $in: ['error', '$reports.level'],
+              },
+              then: 'error',
+            },
+            {
+              case: {
+                $in: ['warning', '$reports.level'],
+              },
+              then: 'warning',
+            },
+          ],
+          default: 'info',
+        },
+      },
+    },
+  },
+  {
+    $unset: ['_id', 'contentLength', 'created', 'httpStatusCode', 'httpStatusText', 'id', 'size', 'trials', 'level', '_from', '_filtered', 'timing', 'isNavigationRequest', 'redirectChain', 'resourceType', 'reports'],
+  },
+  {
+    $merge: {
+      into: 'links',
+      whenMatched: 'replace',
+    },
+  },
+]
+```
 
 **Génération de l'index de recherche**
 
