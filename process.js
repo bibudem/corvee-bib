@@ -5,11 +5,13 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { table, getBorderCharacters } from 'table'
 import colors from 'colors/safe.js'
+// @ts-ignore
 import { CorveeProcessor } from '@corvee/processor'
 import { addSections } from './lib/add-sections.js'
 import { filters, messages } from './filters/index.js'
 import { toSql } from './utils/to-sql.js'
 // import { addContexts } from './lib/add-contexts.js'
+// @ts-ignore
 import { console, inspect } from '@corvee/core'
 
 const start = Date.now()
@@ -87,6 +89,7 @@ async function doProcess(records) {
     })
 
     const processor = new CorveeProcessor({
+        // @ts-ignore
         filters: [
             // devExcludeUrlsPlugin,
             ...filters,
@@ -95,12 +98,14 @@ async function doProcess(records) {
         messages
     })
 
+    // @ts-ignore
     processor.on('http-30x-root-to-path-permanent-redirect', function (record) {
         // console.log(inspect(record))
     })
 
     const excluded301Redirections = new Map()
 
+    // @ts-ignore
     processor.on('filtered', function (record, filter) {
         if ((record?.httpStatusCode === 301 || record?.httpStatusCode === 308) && filter.exclude) {
             if (!excluded301Redirections.has(filter.code)) {
@@ -118,12 +123,15 @@ async function doProcess(records) {
         }
     })
 
+    // @ts-ignore
     processor.on('filtered', (record, filter) => {
         noisyErrors.add(filter.code)
     })
 
 
+    // @ts-ignore
     processor.on('filtered', record => {
+        // @ts-ignore
         record.reports?.forEach(report => {
             if (!reportTypes.has(report.code)) {
                 reportTypes.set(report.code, new Set())
@@ -145,6 +153,7 @@ async function doProcess(records) {
 
     addSections(result)
 
+    // @ts-ignore
     result.records.forEach(record => record.job = job)
 
     result.records.forEach(record => {
@@ -155,6 +164,7 @@ async function doProcess(records) {
         return record.reports && record.reports.length > 0
     })
 
+    // @ts-ignore
     silentReports.forEach((value, silentErrorCode) => {
         if (noisyErrors.has(silentErrorCode)) {
             silentReports.delete(silentErrorCode)
@@ -165,12 +175,14 @@ async function doProcess(records) {
 
     const perFilterData = result.perFilter
         .map(filterData => {
+            // @ts-ignore
             filterData['has message'] = result.filtersWithoutMessages.includes(filterData.code) ? colors.red('-') : colors.green('✓')
 
             return filterData
         })
         // Alphabetical sort
         .sort((a, b) => {
+            // @ts-ignore
             return b.matches - a.matches
         })
         // Alphabetical sort
@@ -190,8 +202,10 @@ async function doProcess(records) {
 
                 switch (i) {
                     case 0:
+                        // @ts-ignore
                         return filter.excluded ? colors.gray(value) : value
                     case 1:
+                        // @ts-ignore
                         return n(value)
                     case 3:
                         return value === Infinity ? '' : `${value}`
@@ -248,15 +262,18 @@ async function doProcess(records) {
     const reportTypesObj = {}
     const sortedReportTypesKeys = [...reportTypes.keys()].sort()
     sortedReportTypesKeys.forEach(key => {
+        // @ts-ignore
         reportTypesObj[key] = [...reportTypes.get(key).values()].sort()
     })
     await writeFile(reportTypesPath, JSON.stringify(reportTypesObj, null, 2))
 
     result.records = result.records
         .map(record => {
+            // @ts-ignore
             record.reports = record.reports.filter(report => report.level !== 'info')
             return record
         })
+        // @ts-ignore
         .filter(record => record.reports.length > 0)
 
     console.log(colors.bold(`Found ${colors.green(n(result.records.length))} records with problems.`))
@@ -264,6 +281,7 @@ async function doProcess(records) {
     await toSql({
         data: result.records,
         dir: baseDir,
+        // @ts-ignore
         job
     })
 
@@ -321,8 +339,10 @@ async function doProcess(records) {
         }
     }
 
+    // @ts-ignore
     console.log(`Found ${n(silentReports.size)} silent report types (reports whose filter never matched a record):\n${table(sortedSilentErrors, tableConfig)}`)
 
+    // @ts-ignore
     console.log(`Found http status codes:\n${table(sortedHttpStatuses, tableConfig)}`)
 
     console.debug(`Results saved in ${processedFilePath}`)

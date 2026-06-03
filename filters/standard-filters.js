@@ -20,14 +20,14 @@ export const standardFilters = [
     _.http30xHttpsUpgradeAny,
     new _.Http30xHttpsUpgradeLoose({
         ignoreWww: true,
-        // exclude: true
+        exclude: false
     }),
     new _.Http30xHttpsUpgradeStrict({
         ignoreWww: false,
         level: 'error',
         priority: 1,
         // limit: 100,
-        exclude: true
+        exclude: false
     }),
     new _.Http30xRootToPathPermanentRedirect(),
     _.http30xRedirectToWelcomePage,

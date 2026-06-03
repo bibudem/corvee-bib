@@ -25,7 +25,7 @@ export default {
 
         try {
           const selector = '#s-lg-guide-main, article, main, #content-main, body'
-          text = (await page.$eval(selector, node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
+          text = (await page.$eval(selector, (/** @type {{ innerText: any; }} */ node) => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
           // if (url.startsWith('https://boite-outils.bib.umontreal.ca/')) {
           //   // s-lg-guide-main
           //   text = (await page.evaluate('#s-lg-guide-main', node => node.innerText)).slice(0, TEXT_SNIPPET_MAX_LENGTH)
