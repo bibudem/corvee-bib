@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.1.0](https://github.com/bibudem/corvee-bib/compare/v4.0.0...v4.1.0) (2026-06-03)
+
+
+### Features
+
+* Exclusion des requêtes avec statut http 403 ([3a5eec1](https://github.com/bibudem/corvee-bib/commit/3a5eec1a38e5508fe531a9f542e3d914cf4f1d86))
+* **filter:** Ajout d'un filtre http-403 pour exclure les pages visant à déterminer si un humain est derrière le navigateur. ([098a6b4](https://github.com/bibudem/corvee-bib/commit/098a6b429e66851627417aa84ae3f7840e63e3a2))
+* **harvester:** Ajout du site des collections spéciales à la liste à ne pas suivre (ne pas récurser) ([c232535](https://github.com/bibudem/corvee-bib/commit/c2325353bef7fe05404849ef4aca8800b0ecd6b9))
+
 ## 3.0.0 (2025-12-23)
 
 
