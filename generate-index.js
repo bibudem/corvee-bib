@@ -7,8 +7,8 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { console, inspect } from '@corvee/core'
 import { BrowsingContextStore } from '@corvee/harvester'
-import sectionsData from '../config/sections.js'
-import { algoliasearchOptions } from '../config/local.js'
+import sectionsData from './config/sections.js'
+import { algoliasearchOptions } from './config/local.js'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --job=2022-09-01')
@@ -66,7 +66,7 @@ const sections = sectionsData
   })
 
 // DEBUT TEMPORAIRE
-import { harvesterConfig } from '../config/harvester.js'
+import { harvesterConfig } from './config/harvester.js'
 import { isRegExp, isFunction } from 'underscore'
 function shouldIgnoreUrl(url) {
 

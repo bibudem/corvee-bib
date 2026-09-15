@@ -5,7 +5,7 @@ import { MongoClient } from 'mongodb'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { console } from '@corvee/core'
-import { db, dbLocal } from '../config/local.js'
+import { db, dbLocal } from './config/local.js'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --job=2022-09-01')

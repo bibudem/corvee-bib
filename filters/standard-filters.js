@@ -5,7 +5,7 @@ export const standardFilters = [
     _.http30xAllTempRedirects,
     new _.Http30xPermanentRedirectSuccessful({
         level: 'error',
-        // limit: 100,
+        // limit: 200,
         exclude: true,
     }),
     _.http30xPermanentRedirectFailure,
