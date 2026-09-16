@@ -187,7 +187,7 @@ La base de données MongoDB doit comporter 3 collections :
 
 ## Démarrage rapide
 
-Pour installer et exécuter correctement le projet de A à Z :
+Pour installer et exécuter correctement le projet:
 
 1. **Cloner le dépôt [`@corvee`](../corvee)** en tant que dossier voisin (`../corvee`) et y exécuter `npm ci` (voir son [README](../corvee/README.md)), puisque ses paquets (`core`, `harvester`, `processor`) sont référencés localement dans `package.json`.
 2. **Installer les dépendances** du projet avec `npm ci` (voir [Installation](#installation)).
@@ -199,6 +199,10 @@ Pour installer et exécuter correctement le projet de A à Z :
 8. **Générer l'index de recherche** avec `npm run index -- --job=<identifiant de la job>`, puis le téléverser vers Algoliasearch avec `npm run upload -- --job=<identifiant de la job>`.
 
 Une fois ces étapes complétées, le serveur Corvée dispose de toutes les données nécessaires (liens, rapports et index de recherche) pour fonctionner correctement.
+
+## Auteur
+
+Christian Rémillard
 
 ## Licence
 
