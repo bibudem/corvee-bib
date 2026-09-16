@@ -196,7 +196,7 @@ Pour installer et exécuter correctement le projet:
 5. **Lancer le moissonnage** du site Web avec `npm run harvest` afin de générer le fichier `data/<job>_harvested.json`.
 6. **Traiter les données moissonnées** avec `npm run process -- --job=<identifiant de la job>` afin de générer `data/<job>_processed.json`.
 7. **Verser les fichiers `harvested` et `processed`** dans les collections MongoDB correspondantes via MongoDB Compass, puis exécuter la chaîne d'agrégation fournie pour peupler la collection `links`.
-8. **Générer l'index de recherche** avec `npm run index -- --job=<identifiant de la job>`, puis le téléverser vers Algoliasearch avec `npm run upload -- --job=<identifiant de la job>`.
+8. **Générer l'index de recherche** avec `npm run index -- --job=<identifiant de la job>`. Ceci va créer le fichier d'index de recherche nécessaire à Algoliasearch, puis le téléverser vers Algoliasearch.
 
 Une fois ces étapes complétées, le serveur Corvée dispose de toutes les données nécessaires (liens, rapports et index de recherche) pour fonctionner correctement.
 
