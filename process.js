@@ -9,8 +9,6 @@ import colors from 'colors/safe.js'
 import { CorveeProcessor } from '@corvee/processor'
 import { addSections } from './lib/add-sections.js'
 import { filters, messages } from './filters/index.js'
-import { toSql } from './utils/to-sql.js'
-// import { addContexts } from './lib/add-contexts.js'
 // @ts-ignore
 import { console, inspect } from '@corvee/core'
 
@@ -277,13 +275,6 @@ async function doProcess(records) {
         .filter(record => record.reports.length > 0)
 
     console.log(colors.bold(`Found ${colors.green(n(result.records.length))} records with problems.`))
-
-    await toSql({
-        data: result.records,
-        dir: baseDir,
-        // @ts-ignore
-        job
-    })
 
     const sortedSilentErrors = [...silentReports.entries()]
         .sort((a, b) => {
