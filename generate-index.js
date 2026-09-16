@@ -18,7 +18,7 @@ const argv = yargs(hideBin(process.argv))
   .argv
 
 const job = argv.job
-const dataDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'data')
+const dataDir = join(dirname(fileURLToPath(import.meta.url)), 'data')
 
 const outFilePath = join(dataDir, `${job}_page-index.json`)
 
